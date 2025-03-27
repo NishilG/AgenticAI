@@ -1,0 +1,3428 @@
+2025-03-27 23:46:50 [INFO] Question: Make a graph with followers and the name from the excel sheet
+2025-03-27 23:46:50 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-27 23:46:50 [INFO] Prompt ID: ced75936-3dbe-47ba-ab33-5cd57467634b
+2025-03-27 23:46:50 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Duke Properties,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,7254856662,dukecute3624@gmail.com...,2566.0,234.0,5839624030,"Abuja, Nigeria",Abuja,NO,YES,
+IMMOBILIENMAKLER BIELEFELD,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,6555785944,info@kriemelmann-immob...,761.0,49.0,8242681639,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann-immobilien.de/
+DREAM WALLS REALTORS - RESALE,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,5573234040,dreamwallsrealtors@gma...,5.0,91.0,2058049728,,,NO,YES,https://www.facebook.com/share/19rhugvycC/
+SK Homes,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,6140242123,buildwithskhomes@gmail...,2.0,,9870542361,,,NO,YES,
+Espaces Atypiques Bordeaux - Arcachon - Cap Ferret,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,1222564076,bordeaux@espaces-atypi...,2286.0,33.0,6719303974,,,NO,NO,https://www.espaces-atypiques.com/bordeaux/
+</dataframe>
+
+<conversation>
+User 1: Make a graph with followers and the name from the excel sheet
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-27 23:46:55 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    # Step 1: Prepare
+    df = dfs[0].copy()
+    
+    # Ensure 'Full Name' and 'Followers count' are valid
+    df = df[['Full Name', 'Followers count']].dropna()
+    
+    # Convert Followers count to numeric if not already
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+
+    # Step 2: Process - sort by followers for better visualization
+    df = df.sort_values(by='Followers count', ascending=False)
+
+    # Step 3: Analyze - create plot
+    plt.figure(figsize=(12, 6))
+    plt.bar(df['Full Name'], df['Followers count'], color='skyblue')
+    plt.xlabel('Full Name')
+    plt.ylabel('Followers Count')
+    plt.title('Followers Count by Full Name')
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-03-27 23:46:55 [INFO] Saving charts to static/plots/ced75936-3dbe-47ba-ab33-5cd57467634b.png
+2025-03-27 23:46:55 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in static/plots/ced75936-3dbe-47ba-ab33-5cd57467634b.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "static/plots/ced75936-3dbe-47ba-ab33-5cd57467634b.png" }
+    """
+    df = dfs[0].copy()
+    df = df[['Full Name', 'Followers count']].dropna()
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+    df = df.sort_values(by='Followers count', ascending=False)
+    plt.figure(figsize=(12, 6))
+    plt.bar(df['Full Name'], df['Followers count'], color='skyblue')
+    plt.xlabel('Full Name')
+    plt.ylabel('Followers Count')
+    plt.title('Followers Count by Full Name')
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+    plt.savefig('static/plots/ced75936-3dbe-47ba-ab33-5cd57467634b.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'static/plots/ced75936-3dbe-47ba-ab33-5cd57467634b.png'}
+        ```
+2025-03-27 23:46:56 [INFO] Answer: {'type': 'plot', 'value': 'static/plots/ced75936-3dbe-47ba-ab33-5cd57467634b.png'}
+2025-03-27 23:46:56 [INFO] Executed in: 6.2856245040893555s
+2025-03-27 23:46:56 [INFO] 127.0.0.1 - - [27/Mar/2025 23:46:56] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-03-27 23:47:16 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/test.py', reloading
+2025-03-27 23:47:16 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/test.py', reloading
+2025-03-27 23:49:29 [INFO] Question: Make a graph with followers and the name from the excel sheet
+2025-03-27 23:49:29 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-27 23:49:29 [INFO] Prompt ID: e7c16e00-c549-4c79-81a0-bc950933e366
+2025-03-27 23:49:29 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,1409813167,dhncv0gdx@gmail.com,761.0,49.0,7795981141,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,9836879297,mgq22_mfmp5@zoho.com,2286.0,33.0,0858699215,,,NO,NO,https://www.espaces-at...
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,8594854798,xwwqerbru2yh@zoho.com,2566.0,234.0,4789962183,"Abuja, Nigeria",Abuja,NO,YES,
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,6132685677,y90arz@zoho.com,2.0,,0771538893,,,NO,YES,
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,6716951962,_d8_qytd@zoho.com,5.0,91.0,0449392484,,,NO,YES,https://www.facebook.c...
+</dataframe>
+
+<conversation>
+User 1: Make a graph with followers and the name from the excel sheet
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-27 23:49:35 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    # Step 1: Prepare
+    df = dfs[0].copy()
+    
+    # Ensure columns exist and data types are appropriate
+    if 'Full Name' not in df.columns or 'Followers count' not in df.columns:
+        return { "type": "string", "value": "Required columns are missing in the dataframe." }
+
+    # Drop rows with missing Full Name or Followers count
+    df = df.dropna(subset=['Full Name', 'Followers count'])
+
+    # Convert Followers count to numeric if not already
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+
+    # Drop rows with NaN followers count after conversion
+    df = df.dropna(subset=['Followers count'])
+
+    # Step 2: Process
+    # Sort by followers for better visualization
+    df_sorted = df.sort_values(by='Followers count', ascending=False)
+
+    # Step 3: Analyze
+    # Plotting
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.ylabel('Full Name')
+    plt.title('Followers Count by Full Name')
+    plt.gca().invert_yaxis()  # Highest follower on top
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-03-27 23:49:35 [INFO] Saving charts to static/plots/e7c16e00-c549-4c79-81a0-bc950933e366.png
+2025-03-27 23:49:35 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in static/plots/e7c16e00-c549-4c79-81a0-bc950933e366.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "static/plots/e7c16e00-c549-4c79-81a0-bc950933e366.png" }
+    """
+    df = dfs[0].copy()
+    if 'Full Name' not in df.columns or 'Followers count' not in df.columns:
+        return {'type': 'string', 'value': 'Required columns are missing in the dataframe.'}
+    df = df.dropna(subset=['Full Name', 'Followers count'])
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+    df_sorted = df.sort_values(by='Followers count', ascending=False)
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.ylabel('Full Name')
+    plt.title('Followers Count by Full Name')
+    plt.gca().invert_yaxis()
+    plt.tight_layout()
+    plt.savefig('static/plots/e7c16e00-c549-4c79-81a0-bc950933e366.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'static/plots/e7c16e00-c549-4c79-81a0-bc950933e366.png'}
+        ```
+2025-03-27 23:49:37 [INFO] Answer: {'type': 'plot', 'value': 'static/plots/e7c16e00-c549-4c79-81a0-bc950933e366.png'}
+2025-03-27 23:49:37 [INFO] Executed in: 7.613179683685303s
+2025-03-27 23:49:38 [INFO] 127.0.0.1 - - [27/Mar/2025 23:49:38] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-03-27 23:50:17 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/data_analysis_server.py', reloading
+2025-03-27 23:50:17 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/data_analysis_server.py', reloading
+2025-03-27 23:50:17 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/data_analysis_server.py', reloading
+2025-03-27 23:50:25 [INFO] Question: Make a graph with followers and the name from the excel sheet
+2025-03-27 23:50:25 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-27 23:50:25 [INFO] Prompt ID: a7d18ce0-535d-445e-98fa-ad3b3505ac95
+2025-03-27 23:50:25 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,2873491405,qj505mtc@protonmail.com,761.0,49.0,8225078909,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,1502290311,r8x5o0w1f47n@hotmail.com,2286.0,33.0,4227605852,,,NO,NO,https://www.espaces-at...
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,6891470502,ceeasi1@outlook.com,2.0,,9269950062,,,NO,YES,
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,5850848096,q_rzisc7m4@aol.com,5.0,91.0,3560735398,,,NO,YES,https://www.facebook.c...
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,7587294874,ihhm75t@icloud.com,2566.0,234.0,6293347308,"Abuja, Nigeria",Abuja,NO,YES,
+</dataframe>
+
+<conversation>
+User 1: Make a graph with followers and the name from the excel sheet
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-27 23:50:35 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0]
+
+    # Step 1: Prepare - Clean the data
+    df_cleaned = df[['Full Name', 'Followers count']].copy()
+    df_cleaned.dropna(subset=['Full Name', 'Followers count'], inplace=True)
+
+    # Step 2: Process - Convert followers to integer if necessary
+    df_cleaned['Followers count'] = df_cleaned['Followers count'].astype(float)
+
+    # Optional: Sort by followers (descending) for better visualization
+    df_cleaned.sort_values(by='Followers count', ascending=False, inplace=True)
+
+    # Step 3: Analyze - Create the bar plot
+    plt.figure(figsize=(12, 6))
+    plt.barh(df_cleaned['Full Name'], df_cleaned['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.title('Followers Count by Full Name')
+    plt.gca().invert_yaxis()  # Highest at the top
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-03-27 23:50:35 [INFO] Saving charts to static/plots/a7d18ce0-535d-445e-98fa-ad3b3505ac95.png
+2025-03-27 23:50:35 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in static/plots/a7d18ce0-535d-445e-98fa-ad3b3505ac95.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "static/plots/a7d18ce0-535d-445e-98fa-ad3b3505ac95.png" }
+    """
+    df = dfs[0]
+    df_cleaned = df[['Full Name', 'Followers count']].copy()
+    df_cleaned.dropna(subset=['Full Name', 'Followers count'], inplace=True)
+    df_cleaned['Followers count'] = df_cleaned['Followers count'].astype(float)
+    df_cleaned.sort_values(by='Followers count', ascending=False, inplace=True)
+    plt.figure(figsize=(12, 6))
+    plt.barh(df_cleaned['Full Name'], df_cleaned['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.title('Followers Count by Full Name')
+    plt.gca().invert_yaxis()
+    plt.tight_layout()
+    plt.savefig('static/plots/a7d18ce0-535d-445e-98fa-ad3b3505ac95.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'static/plots/a7d18ce0-535d-445e-98fa-ad3b3505ac95.png'}
+        ```
+2025-03-27 23:50:36 [INFO] Answer: {'type': 'plot', 'value': 'static/plots/a7d18ce0-535d-445e-98fa-ad3b3505ac95.png'}
+2025-03-27 23:50:36 [INFO] Executed in: 11.253849983215332s
+2025-03-27 23:50:38 [INFO] 127.0.0.1 - - [27/Mar/2025 23:50:38] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-03-27 23:51:25 [INFO] Question: what is the size of this excel file
+2025-03-27 23:51:25 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-27 23:51:25 [INFO] Prompt ID: a93d2390-1c5a-4a95-97e9-7e614df55f4f
+2025-03-27 23:51:25 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,Agence du réseau spéci...,waixttyw@outlook.com,2286.0,33.0,535544306.0,,,NO,NO,https://www.espaces-at...
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,Zuhause in Bielefeld 🏡...,mowtmse@hotmail.com,761.0,49.0,5219629217.0,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,SK Homes - Constructio...,j38fd98c1q@gmail.com,2.0,,,,,NO,YES,
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,Helping You To Find Yo...,w-mlax057go@protonmail.com,5.0,91.0,8530322076.0,,,NO,YES,https://www.facebook.c...
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,"📁RC 1972024
+☎️07036241...",k5zxa67m46@icloud.com,2566.0,234.0,7036241996.0,"Abuja, Nigeria",Abuja,NO,YES,
+</dataframe>
+
+<conversation>
+User 1: what is the size of this excel file
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-27 23:51:31 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    
+    # Step 1: Prepare
+    df = dfs[0]  # We are using the first (and only) dataframe
+    num_rows, num_columns = df.shape
+
+    # Step 2: Process - compute approximate size
+    # Estimate size in memory in bytes
+    memory_usage_bytes = df.memory_usage(deep=True).sum()
+    memory_usage_kb = memory_usage_bytes / 1024
+    memory_usage_mb = memory_usage_kb / 1024
+
+    # Step 3: Analyze - return the size as string
+    return {
+        "type": "string",
+        "value": f"The dataframe has {num_rows} rows and {num_columns} columns. Estimated size in memory is approximately {memory_usage_mb:.2f} MB."
+    }
+```
+
+2025-03-27 23:51:32 [INFO] Saving charts to static/plots/a93d2390-1c5a-4a95-97e9-7e614df55f4f.png
+2025-03-27 23:51:32 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in static/plots/a93d2390-1c5a-4a95-97e9-7e614df55f4f.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "static/plots/a93d2390-1c5a-4a95-97e9-7e614df55f4f.png" }
+    """
+    df = dfs[0]
+    num_rows, num_columns = df.shape
+    memory_usage_bytes = df.memory_usage(deep=True).sum()
+    memory_usage_kb = memory_usage_bytes / 1024
+    memory_usage_mb = memory_usage_kb / 1024
+    return {'type': 'string', 'value': f'The dataframe has {num_rows} rows and {num_columns} columns. Estimated size in memory is approximately {memory_usage_mb:.2f} MB.'}
+        ```
+2025-03-27 23:51:32 [INFO] Answer: {'type': 'string', 'value': 'The dataframe has 25 rows and 17 columns. Estimated size in memory is approximately 0.04 MB.'}
+2025-03-27 23:51:32 [INFO] Executed in: 6.888976335525513s
+2025-03-27 23:51:34 [INFO] 127.0.0.1 - - [27/Mar/2025 23:51:34] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-03-27 23:55:24 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/test.py', reloading
+2025-03-27 23:55:24 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/test.py', reloading
+2025-03-27 23:59:53 [INFO] Question: create a bar graph of the follower and names
+2025-03-27 23:59:53 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-27 23:59:53 [INFO] Prompt ID: 0c0a9eb3-12a0-4783-a2d2-be64d0b2eb96
+2025-03-27 23:59:53 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Duke Properties,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,5038993424,dukecute3624@gmail.com...,2566.0,234.0,6452572325,"Abuja, Nigeria",Abuja,NO,YES,
+Espaces Atypiques Bordeaux - Arcachon - Cap Ferret,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,1003191635,bordeaux@espaces-atypi...,2286.0,33.0,1215943082,,,NO,NO,https://www.espaces-atypiques.com/bordeaux/
+SK Homes,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,3083661478,buildwithskhomes@gmail...,2.0,,3677867284,,,NO,YES,
+DREAM WALLS REALTORS - RESALE,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,4673347114,dreamwallsrealtors@gma...,5.0,91.0,4363669004,,,NO,YES,https://www.facebook.com/share/19rhugvycC/
+IMMOBILIENMAKLER BIELEFELD,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,1051902661,info@kriemelmann-immob...,761.0,49.0,0160096141,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann-immobilien.de/
+</dataframe>
+
+<conversation>
+User 1: create a bar graph of the follower and names
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-27 23:59:58 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0]
+
+    # Prepare: Ensure 'Full Name' and 'Followers count' are usable
+    df_filtered = df[['Full Name', 'Followers count']].dropna()
+    
+    # Convert Followers count to numeric if it's not already
+    df_filtered['Followers count'] = pd.to_numeric(df_filtered['Followers count'], errors='coerce')
+    df_filtered = df_filtered.dropna(subset=['Followers count'])
+
+    # Optional: sort by followers count for better visualization
+    df_filtered = df_filtered.sort_values(by='Followers count', ascending=False)
+
+    # Plot
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_filtered['Full Name'], df_filtered['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.ylabel('Full Name')
+    plt.title('Followers Count by Profile')
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-03-27 23:59:58 [INFO] Saving charts to plots/0c0a9eb3-12a0-4783-a2d2-be64d0b2eb96.png
+2025-03-27 23:59:58 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in plots/0c0a9eb3-12a0-4783-a2d2-be64d0b2eb96.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "plots/0c0a9eb3-12a0-4783-a2d2-be64d0b2eb96.png" }
+    """
+    df = dfs[0]
+    df_filtered = df[['Full Name', 'Followers count']].dropna()
+    df_filtered['Followers count'] = pd.to_numeric(df_filtered['Followers count'], errors='coerce')
+    df_filtered = df_filtered.dropna(subset=['Followers count'])
+    df_filtered = df_filtered.sort_values(by='Followers count', ascending=False)
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_filtered['Full Name'], df_filtered['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.ylabel('Full Name')
+    plt.title('Followers Count by Profile')
+    plt.tight_layout()
+    plt.savefig('plots/0c0a9eb3-12a0-4783-a2d2-be64d0b2eb96.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'plots/0c0a9eb3-12a0-4783-a2d2-be64d0b2eb96.png'}
+        ```
+2025-03-27 23:59:59 [INFO] Answer: {'type': 'plot', 'value': 'plots/0c0a9eb3-12a0-4783-a2d2-be64d0b2eb96.png'}
+2025-03-27 23:59:59 [INFO] Executed in: 5.8802125453948975s
+2025-03-28 00:11:16 [INFO] Question: Create a bar graph of the follower and name
+2025-03-28 00:11:16 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-28 00:11:16 [INFO] Prompt ID: a33affa3-7f86-4780-a13e-4e0044b1b91e
+2025-03-28 00:13:43 [INFO] Question: Create a bar graph of the follower and name
+2025-03-28 00:13:43 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-28 00:13:43 [INFO] Prompt ID: 540fc139-178f-4fd7-ae7f-33f62203094d
+2025-03-28 00:15:01 [INFO] Question: Create a bar graph of the follower and name
+2025-03-28 00:15:01 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-28 00:15:01 [INFO] Prompt ID: 891ea817-14ae-429f-9276-43b7531288cb
+2025-03-28 00:15:01 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,0335496495,fz4r2v0hvy_@zoho.com,761.0,49.0,2757637534,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,9840616161,wxf5f9nm-cq@yahoo.com,2566.0,234.0,4193041486,"Abuja, Nigeria",Abuja,NO,YES,
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,7444436545,s6tfgpd0@gmail.com,2.0,,5562124355,,,NO,YES,
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,2399090129,_evg1ks_xhov@hotmail.com,5.0,91.0,4538431131,,,NO,YES,https://www.facebook.c...
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,8513583468,prqnh7wl@protonmail.com,2286.0,33.0,9907933227,,,NO,NO,https://www.espaces-at...
+</dataframe>
+
+<conversation>
+User 1: Create a bar graph of the follower and name
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-28 00:15:09 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+
+    # Step 1: Prepare
+    df = dfs[0].copy()
+
+    # Ensure the required columns exist and drop rows with missing followers or full name
+    df = df[['Full Name', 'Followers count']].dropna()
+
+    # Convert Followers count to numeric (in case there are any issues)
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+
+    # Keep only rows with non-null and positive follower counts
+    df = df[df['Followers count'] > 0]
+
+    # Step 2: Process - Select top 10 by followers for clearer bar chart
+    df_sorted = df.sort_values(by='Followers count', ascending=False).head(10)
+
+    # Step 3: Analyze - Plotting
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.ylabel('Account Name')
+    plt.title('Top 10 Instagram Accounts by Followers')
+    plt.gca().invert_yaxis()  # Highest at the top
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-03-28 00:15:09 [INFO] Saving charts to static/images/plots/891ea817-14ae-429f-9276-43b7531288cb.png
+2025-03-28 00:15:09 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in static/images/plots/891ea817-14ae-429f-9276-43b7531288cb.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "static/images/plots/891ea817-14ae-429f-9276-43b7531288cb.png" }
+    """
+    df = dfs[0].copy()
+    df = df[['Full Name', 'Followers count']].dropna()
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df[df['Followers count'] > 0]
+    df_sorted = df.sort_values(by='Followers count', ascending=False).head(10)
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.ylabel('Account Name')
+    plt.title('Top 10 Instagram Accounts by Followers')
+    plt.gca().invert_yaxis()
+    plt.tight_layout()
+    plt.savefig('static/images/plots/891ea817-14ae-429f-9276-43b7531288cb.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'static/images/plots/891ea817-14ae-429f-9276-43b7531288cb.png'}
+        ```
+2025-03-28 00:15:10 [INFO] Answer: {'type': 'plot', 'value': 'static/images/plots/891ea817-14ae-429f-9276-43b7531288cb.png'}
+2025-03-28 00:15:10 [INFO] Executed in: 8.90980339050293s
+2025-03-28 00:15:52 [INFO] Question: what is the size of the excel sheet
+2025-03-28 00:15:52 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-28 00:15:52 [INFO] Prompt ID: 475ecad4-9304-4a17-90d8-efe4fbbbaac2
+2025-03-28 00:15:52 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Duke Properties,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,5659103274,dukecute3624@gmail.com...,2566.0,234.0,3930326324,"Abuja, Nigeria",Abuja,NO,YES,
+Espaces Atypiques Bordeaux - Arcachon - Cap Ferret,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,6677205941,bordeaux@espaces-atypi...,2286.0,33.0,0641886153,,,NO,NO,https://www.espaces-atypiques.com/bordeaux/
+DREAM WALLS REALTORS - RESALE,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,8839265272,dreamwallsrealtors@gma...,5.0,91.0,8171858053,,,NO,YES,https://www.facebook.com/share/19rhugvycC/
+SK Homes,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,2681671509,buildwithskhomes@gmail...,2.0,,1541832392,,,NO,YES,
+IMMOBILIENMAKLER BIELEFELD,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,7111461630,info@kriemelmann-immob...,761.0,49.0,8062149744,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann-immobilien.de/
+</dataframe>
+
+<conversation>
+User 1: what is the size of the excel sheet
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-28 00:15:55 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+
+    # Get the shape of the first dataframe
+    df = dfs[0]
+    num_rows, num_columns = df.shape
+
+    return {
+        "type": "string",
+        "value": f"The Excel sheet has {num_rows} rows and {num_columns} columns."
+    }
+```
+
+2025-03-28 00:15:55 [INFO] Saving charts to static/images/plots/475ecad4-9304-4a17-90d8-efe4fbbbaac2.png
+2025-03-28 00:15:55 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in static/images/plots/475ecad4-9304-4a17-90d8-efe4fbbbaac2.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "static/images/plots/475ecad4-9304-4a17-90d8-efe4fbbbaac2.png" }
+    """
+    df = dfs[0]
+    num_rows, num_columns = df.shape
+    return {'type': 'string', 'value': f'The Excel sheet has {num_rows} rows and {num_columns} columns.'}
+        ```
+2025-03-28 00:15:55 [INFO] Answer: {'type': 'string', 'value': 'The Excel sheet has 25 rows and 17 columns.'}
+2025-03-28 00:15:55 [INFO] Executed in: 3.697235584259033s
+2025-03-28 00:17:32 [INFO] Question: Make a graph of the follower count and names
+2025-03-28 00:17:32 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-28 00:17:32 [INFO] Prompt ID: 1c5f371f-73b8-4b52-8952-163d08a61a30
+2025-03-28 00:17:32 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,Agence du réseau spéci...,sjp5lmir_s@hotmail.com,2286.0,33.0,535544306.0,,,NO,NO,https://www.espaces-at...
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,SK Homes - Constructio...,91n8wua9sq@outlook.com,2.0,,,,,NO,YES,
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,"📁RC 1972024
+☎️07036241...",12vp1-jt45nh@yahoo.com,2566.0,234.0,7036241996.0,"Abuja, Nigeria",Abuja,NO,YES,
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,Zuhause in Bielefeld 🏡...,3f99n7-5i@yahoo.com,761.0,49.0,5219629217.0,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,Helping You To Find Yo...,j46n-i@gmail.com,5.0,91.0,8530322076.0,,,NO,YES,https://www.facebook.c...
+</dataframe>
+
+<conversation>
+User 1: Make a graph of the follower count and names
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-28 00:17:42 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    # Step 1: Prepare
+    df = dfs[0].copy()
+    
+    # Ensure the 'Followers count' is numeric and drop rows with missing follower counts
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+
+    # Step 2: Process
+    names = df['Full Name']
+    followers = df['Followers count']
+
+    # Step 3: Analyze - Plotting
+    plt.figure(figsize=(10, 6))
+    plt.barh(names, followers, color='skyblue')
+    plt.xlabel('Follower Count')
+    plt.ylabel('Account Name')
+    plt.title('Follower Count by Instagram Account')
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-03-28 00:17:42 [INFO] Saving charts to static/images/plots/1c5f371f-73b8-4b52-8952-163d08a61a30.png
+2025-03-28 00:17:42 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in static/images/plots/1c5f371f-73b8-4b52-8952-163d08a61a30.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "static/images/plots/1c5f371f-73b8-4b52-8952-163d08a61a30.png" }
+    """
+    df = dfs[0].copy()
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+    names = df['Full Name']
+    followers = df['Followers count']
+    plt.figure(figsize=(10, 6))
+    plt.barh(names, followers, color='skyblue')
+    plt.xlabel('Follower Count')
+    plt.ylabel('Account Name')
+    plt.title('Follower Count by Instagram Account')
+    plt.tight_layout()
+    plt.savefig('static/images/plots/1c5f371f-73b8-4b52-8952-163d08a61a30.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'static/images/plots/1c5f371f-73b8-4b52-8952-163d08a61a30.png'}
+        ```
+2025-03-28 00:17:43 [INFO] Answer: {'type': 'plot', 'value': 'static/images/plots/1c5f371f-73b8-4b52-8952-163d08a61a30.png'}
+2025-03-28 00:17:43 [INFO] Executed in: 10.904072284698486s
+2025-03-28 00:19:07 [INFO] Question:  Make a graph of the follower count and names
+2025-03-28 00:19:07 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-28 00:19:07 [INFO] Prompt ID: a6513302-169a-4ac7-9578-4f1b0a89fa75
+2025-03-28 00:19:07 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,Agence du réseau spéci...,73r_9m7u42@icloud.com,2286.0,33.0,535544306.0,,,NO,NO,https://www.espaces-at...
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,SK Homes - Constructio...,5644avo@protonmail.com,2.0,,,,,NO,YES,
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,Helping You To Find Yo...,qd84585ddj-@protonmail.com,5.0,91.0,8530322076.0,,,NO,YES,https://www.facebook.c...
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,Zuhause in Bielefeld 🏡...,ygez7cx8@gmail.com,761.0,49.0,5219629217.0,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,"📁RC 1972024
+☎️07036241...",9i278dg6n@aol.com,2566.0,234.0,7036241996.0,"Abuja, Nigeria",Abuja,NO,YES,
+</dataframe>
+
+<conversation>
+User 1:  Make a graph of the follower count and names
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-28 00:19:12 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    """
+    df = dfs[0]
+
+    # Prepare: Ensure relevant columns are present and clean
+    df = df[["Full Name", "Followers count"]].dropna()
+    df["Followers count"] = pd.to_numeric(df["Followers count"], errors="coerce")
+    df = df.dropna(subset=["Followers count"])
+
+    # Sort by follower count for better visualization
+    df_sorted = df.sort_values("Followers count", ascending=False)
+
+    # Plot
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_sorted["Full Name"], df_sorted["Followers count"], color='skyblue')
+    plt.xlabel("Followers Count")
+    plt.ylabel("Full Name")
+    plt.title("Follower Count by Profile")
+    plt.gca().invert_yaxis()  # To show the highest follower count at the top
+    plt.tight_layout()
+    plt.savefig("temp_chart.png")
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-03-28 00:19:12 [INFO] Saving charts to static/images/plots/a6513302-169a-4ac7-9578-4f1b0a89fa75.png
+2025-03-28 00:19:12 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in static/images/plots/a6513302-169a-4ac7-9578-4f1b0a89fa75.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    """
+    df = dfs[0]
+    df = df[['Full Name', 'Followers count']].dropna()
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+    df_sorted = df.sort_values('Followers count', ascending=False)
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.ylabel('Full Name')
+    plt.title('Follower Count by Profile')
+    plt.gca().invert_yaxis()
+    plt.tight_layout()
+    plt.savefig('static/images/plots/a6513302-169a-4ac7-9578-4f1b0a89fa75.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'static/images/plots/a6513302-169a-4ac7-9578-4f1b0a89fa75.png'}
+        ```
+2025-03-28 00:19:13 [INFO] Answer: {'type': 'plot', 'value': 'static/images/plots/a6513302-169a-4ac7-9578-4f1b0a89fa75.png'}
+2025-03-28 00:19:13 [INFO] Executed in: 5.899178981781006s
+2025-03-28 00:22:54 [INFO] Question: /home/nishil/Downloads/test.xlsx
+2025-03-28 00:22:54 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-28 00:22:54 [INFO] Prompt ID: c135a735-14ad-4460-bd8a-f39f3a408eae
+2025-03-28 00:22:54 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Duke Properties,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,3631761573,dukecute3624@gmail.com...,2566.0,234.0,9023795644,"Abuja, Nigeria",Abuja,NO,YES,
+DREAM WALLS REALTORS - RESALE,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,5002561616,dreamwallsrealtors@gma...,5.0,91.0,9077511976,,,NO,YES,https://www.facebook.com/share/19rhugvycC/
+SK Homes,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,6614919544,buildwithskhomes@gmail...,2.0,,1928443169,,,NO,YES,
+Espaces Atypiques Bordeaux - Arcachon - Cap Ferret,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,6759385391,bordeaux@espaces-atypi...,2286.0,33.0,7924211745,,,NO,NO,https://www.espaces-atypiques.com/bordeaux/
+IMMOBILIENMAKLER BIELEFELD,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,5510704636,info@kriemelmann-immob...,761.0,49.0,6489082436,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann-immobilien.de/
+</dataframe>
+
+<conversation>
+User 1: /home/nishil/Downloads/test.xlsx
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    
+    使用提供的 dataframes ('dfs') 分析这个数据，过程中不要调用 dataframe set_index 对数据排序.
+    1. 准备: 如果有必要对数据做预处理和清洗
+    2. 执行: 对数据进行数据分析操作 (grouping, filtering, aggregating, etc.)
+    3. 分析: 进行实际分析（如果用户要求plot chart，请在代码中添加如下两行代码设置字体, 并将结果保存为图像文件temp_chart.png，并且不显示图表）
+    plt.rcParams['font.sans-serif']=['SimHei']
+    plt.rcParams['axes.unicode_minus']=False    
+        
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-28 00:23:08 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    使用提供的 dataframes ('dfs') 分析这个数据，过程中不要调用 dataframe set_index 对数据排序.
+    1. 准备: 如果有必要对数据做预处理和清洗
+    2. 执行: 对数据进行数据分析操作 (grouping, filtering, aggregating, etc.)
+    3. 分析: 进行实际分析（如果用户要求plot chart，请在代码中添加如下两行代码设置字体, 并将结果保存为图像文件temp_chart.png，并且不显示图表）
+    plt.rcParams['font.sans-serif']=['SimHei']
+    plt.rcParams['axes.unicode_minus']=False    
+
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0].copy()
+
+    # Step 1: Preprocessing
+    # Remove rows where 'Full Name' is missing (if any)
+    df = df[df['Full Name'].notna()]
+
+    # Convert numeric columns to appropriate types
+    numeric_columns = ['Followers count', 'Following count', 'Posts count']
+    for col in numeric_columns:
+        df[col] = pd.to_numeric(df[col], errors='coerce')
+
+    # Step 2: Analysis - Find the account with the highest number of followers
+    max_follower_row = df.loc[df['Followers count'].idxmax()]
+    name = max_follower_row['Full Name']
+    followers = int(max_follower_row['Followers count'])
+
+    # Step 3: Return result
+    return {
+        "type": "string",
+        "value": f"The account with the highest followers is '{name}' with {followers} followers."
+    }
+```
+
+2025-03-28 00:23:08 [INFO] Saving charts to static/images/plots/c135a735-14ad-4460-bd8a-f39f3a408eae.png
+2025-03-28 00:23:08 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    使用提供的 dataframes ('dfs') 分析这个数据，过程中不要调用 dataframe set_index 对数据排序.
+    1. 准备: 如果有必要对数据做预处理和清洗
+    2. 执行: 对数据进行数据分析操作 (grouping, filtering, aggregating, etc.)
+    3. 分析: 进行实际分析（如果用户要求plot chart，请在代码中添加如下两行代码设置字体, 并将结果保存为图像文件static/images/plots/c135a735-14ad-4460-bd8a-f39f3a408eae.png，并且不显示图表）
+    plt.rcParams['font.sans-serif']=['SimHei']
+    plt.rcParams['axes.unicode_minus']=False    
+
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "static/images/plots/c135a735-14ad-4460-bd8a-f39f3a408eae.png" }
+    """
+    df = dfs[0].copy()
+    df = df[df['Full Name'].notna()]
+    numeric_columns = ['Followers count', 'Following count', 'Posts count']
+    for col in numeric_columns:
+        df[col] = pd.to_numeric(df[col], errors='coerce')
+    max_follower_row = df.loc[df['Followers count'].idxmax()]
+    name = max_follower_row['Full Name']
+    followers = int(max_follower_row['Followers count'])
+    return {'type': 'string', 'value': f"The account with the highest followers is '{name}' with {followers} followers."}
+        ```
+2025-03-28 00:23:08 [INFO] Answer: {'type': 'string', 'value': "The account with the highest followers is 'الحور العقارية | عقارات البحرين' with 40077 followers."}
+2025-03-28 00:23:08 [INFO] Executed in: 14.429252862930298s
+2025-03-28 00:24:03 [INFO] Question: Make a graph of the follower count and names
+2025-03-28 00:24:04 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-28 00:24:04 [INFO] Prompt ID: 5ede4ef8-ae49-4dc5-99e5-34dbfda67907
+2025-03-28 00:24:04 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,3863670374,y3cq55a@zoho.com,761.0,49.0,0033745732,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,0472895921,cgbrgl8b@yahoo.com,2.0,,9296595724,,,NO,YES,
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,5653921007,7szo-psj@yahoo.com,2566.0,234.0,7618504320,"Abuja, Nigeria",Abuja,NO,YES,
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,9033881650,ms7o200@zoho.com,5.0,91.0,3692805952,,,NO,YES,https://www.facebook.c...
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,3768819246,e0vyud3l415@gmail.com,2286.0,33.0,3499418018,,,NO,NO,https://www.espaces-at...
+</dataframe>
+
+<conversation>
+User 1: Make a graph of the follower count and names
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    
+    使用提供的 dataframes ('dfs') 分析这个数据，过程中不要调用 dataframe set_index 对数据排序.
+    1. 准备: 如果有必要对数据做预处理和清洗
+    2. 执行: 对数据进行数据分析操作 (grouping, filtering, aggregating, etc.)
+    3. 分析: 进行实际分析（如果用户要求plot chart，请在代码中添加如下两行代码设置字体, 并将结果保存为图像文件temp_chart.png，并且不显示图表）
+    plt.rcParams['font.sans-serif']=['SimHei']
+    plt.rcParams['axes.unicode_minus']=False    
+        
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-28 00:24:09 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    使用提供的 dataframes ('dfs') 分析这个数据，过程中不要调用 dataframe set_index 对数据排序.
+    1. 准备: 如果有必要对数据做预处理和清洗
+    2. 执行: 对数据进行数据分析操作 (grouping, filtering, aggregating, etc.)
+    3. 分析: 进行实际分析（如果用户要求plot chart，请在代码中添加如下两行代码设置字体, 并将结果保存为图像文件temp_chart.png，并且不显示图表）
+    plt.rcParams['font.sans-serif']=['SimHei']
+    plt.rcParams['axes.unicode_minus']=False    
+        
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0]
+
+    # Step 1: Clean data - ensure 'Followers count' is numeric and 'Full Name' is string
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df['Full Name'] = df['Full Name'].astype(str)
+
+    # Step 2: Drop rows with missing follower count or name
+    df_clean = df.dropna(subset=['Followers count', 'Full Name'])
+
+    # Step 3: Plot
+    plt.rcParams['font.sans-serif']=['SimHei']
+    plt.rcParams['axes.unicode_minus']=False
+
+    plt.figure(figsize=(12, 6))
+    plt.bar(df_clean['Full Name'], df_clean['Followers count'], color='skyblue')
+    plt.xticks(rotation=90)
+    plt.xlabel('Full Name')
+    plt.ylabel('Followers Count')
+    plt.title('Follower Count by Name')
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-03-28 00:24:09 [INFO] Saving charts to static/images/plots/5ede4ef8-ae49-4dc5-99e5-34dbfda67907.png
+2025-03-28 00:24:09 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    使用提供的 dataframes ('dfs') 分析这个数据，过程中不要调用 dataframe set_index 对数据排序.
+    1. 准备: 如果有必要对数据做预处理和清洗
+    2. 执行: 对数据进行数据分析操作 (grouping, filtering, aggregating, etc.)
+    3. 分析: 进行实际分析（如果用户要求plot chart，请在代码中添加如下两行代码设置字体, 并将结果保存为图像文件static/images/plots/5ede4ef8-ae49-4dc5-99e5-34dbfda67907.png，并且不显示图表）
+    plt.rcParams['font.sans-serif']=['SimHei']
+    plt.rcParams['axes.unicode_minus']=False    
+        
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "static/images/plots/5ede4ef8-ae49-4dc5-99e5-34dbfda67907.png" }
+    """
+    df = dfs[0]
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df['Full Name'] = df['Full Name'].astype(str)
+    df_clean = df.dropna(subset=['Followers count', 'Full Name'])
+    plt.rcParams['font.sans-serif'] = ['SimHei']
+    plt.rcParams['axes.unicode_minus'] = False
+    plt.figure(figsize=(12, 6))
+    plt.bar(df_clean['Full Name'], df_clean['Followers count'], color='skyblue')
+    plt.xticks(rotation=90)
+    plt.xlabel('Full Name')
+    plt.ylabel('Followers Count')
+    plt.title('Follower Count by Name')
+    plt.tight_layout()
+    plt.savefig('static/images/plots/5ede4ef8-ae49-4dc5-99e5-34dbfda67907.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'static/images/plots/5ede4ef8-ae49-4dc5-99e5-34dbfda67907.png'}
+        ```
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:09 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:24:10 [INFO] Answer: {'type': 'plot', 'value': 'static/images/plots/5ede4ef8-ae49-4dc5-99e5-34dbfda67907.png'}
+2025-03-28 00:24:10 [INFO] Executed in: 6.416326284408569s
+2025-03-28 00:26:00 [INFO] Question: Make a graph of the follower count and names
+2025-03-28 00:26:00 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-28 00:26:00 [INFO] Prompt ID: 63bea365-e2a1-4d37-873b-192f4b92154f
+2025-03-28 00:26:00 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,1162511636,5avkb2efe1@protonmail.com,761.0,49.0,4979061151,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,0451274381,21e2ak9oxlr@aol.com,2.0,,0777494645,,,NO,YES,
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,8138250384,xikrlhw6t6hz@hotmail.com,2286.0,33.0,3028613910,,,NO,NO,https://www.espaces-at...
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,4531438828,-eysoqymc5@yahoo.com,2566.0,234.0,7213404618,"Abuja, Nigeria",Abuja,NO,YES,
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,6656408646,4qh6i7pe30e@aol.com,5.0,91.0,8091565385,,,NO,YES,https://www.facebook.c...
+</dataframe>
+
+<conversation>
+User 1: Make a graph of the follower count and names
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    
+    使用提供的 dataframes ('dfs') 分析这个数据，过程中不要调用 dataframe set_index 对数据排序.
+    1. 准备: 如果有必要对数据做预处理和清洗
+    2. 执行: 对数据进行数据分析操作 (grouping, filtering, aggregating, etc.)
+    3. 分析: 进行实际分析（如果用户要求plot chart，请在代码中添加如下两行代码设置字体, 并将结果保存为图像文件temp_chart.png，并且不显示图表）
+    plt.rcParams['font.sans-serif']=['SimHei']
+    plt.rcParams['axes.unicode_minus']=False    
+        
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-28 00:26:06 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    使用提供的 dataframes ('dfs') 分析这个数据，过程中不要调用 dataframe set_index 对数据排序.
+    1. 准备: 如果有必要对数据做预处理和清洗
+    2. 执行: 对数据进行数据分析操作 (grouping, filtering, aggregating, etc.)
+    3. 分析: 进行实际分析（如果用户要求plot chart，请在代码中添加如下两行代码设置字体, 并将结果保存为图像文件temp_chart.png，并且不显示图表）
+    plt.rcParams['font.sans-serif']=['SimHei']
+    plt.rcParams['axes.unicode_minus']=False    
+        
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    # Step 1: Load the dataframe
+    df = dfs[0]
+
+    # Step 2: Clean data - ensure 'Followers count' is numeric and drop rows with missing names
+    df = df[['Full Name', 'Followers count']].dropna(subset=['Full Name'])
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+
+    # Step 3: Sort by followers count descending and limit to top 10 for better visualization
+    df_sorted = df.sort_values(by='Followers count', ascending=False).head(10)
+
+    # Step 4: Plot
+    plt.rcParams['font.sans-serif']=['SimHei']
+    plt.rcParams['axes.unicode_minus']=False
+
+    plt.figure(figsize=(10,6))
+    plt.barh(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.title('Top 10 Accounts by Followers')
+    plt.gca().invert_yaxis()  # Highest at top
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-03-28 00:26:06 [INFO] Saving charts to static/images/plots/63bea365-e2a1-4d37-873b-192f4b92154f.png
+2025-03-28 00:26:06 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    使用提供的 dataframes ('dfs') 分析这个数据，过程中不要调用 dataframe set_index 对数据排序.
+    1. 准备: 如果有必要对数据做预处理和清洗
+    2. 执行: 对数据进行数据分析操作 (grouping, filtering, aggregating, etc.)
+    3. 分析: 进行实际分析（如果用户要求plot chart，请在代码中添加如下两行代码设置字体, 并将结果保存为图像文件static/images/plots/63bea365-e2a1-4d37-873b-192f4b92154f.png，并且不显示图表）
+    plt.rcParams['font.sans-serif']=['SimHei']
+    plt.rcParams['axes.unicode_minus']=False    
+        
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "static/images/plots/63bea365-e2a1-4d37-873b-192f4b92154f.png" }
+    """
+    df = dfs[0]
+    df = df[['Full Name', 'Followers count']].dropna(subset=['Full Name'])
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+    df_sorted = df.sort_values(by='Followers count', ascending=False).head(10)
+    plt.rcParams['font.sans-serif'] = ['SimHei']
+    plt.rcParams['axes.unicode_minus'] = False
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.title('Top 10 Accounts by Followers')
+    plt.gca().invert_yaxis()
+    plt.tight_layout()
+    plt.savefig('static/images/plots/63bea365-e2a1-4d37-873b-192f4b92154f.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'static/images/plots/63bea365-e2a1-4d37-873b-192f4b92154f.png'}
+        ```
+2025-03-28 00:26:06 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:06 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:06 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:06 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:06 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:06 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:06 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:06 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:06 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:06 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:06 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:06 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:06 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:06 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:06 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:06 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [WARNING] findfont: Generic family 'sans-serif' not found because none of the following families were found: SimHei
+2025-03-28 00:26:07 [INFO] Answer: {'type': 'plot', 'value': 'static/images/plots/63bea365-e2a1-4d37-873b-192f4b92154f.png'}
+2025-03-28 00:26:07 [INFO] Executed in: 6.904772520065308s
+2025-03-28 00:34:54 [INFO] Question: Create a bar graph of the follower count and names
+2025-03-28 00:34:54 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-28 00:34:54 [INFO] Prompt ID: 68312966-4482-4833-a5a3-ad82b6e65e08
+2025-03-28 00:34:54 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Duke Properties,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,8388012723,dukecute3624@gmail.com...,2566.0,234.0,4299279681,"Abuja, Nigeria",Abuja,NO,YES,
+IMMOBILIENMAKLER BIELEFELD,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,5301125830,info@kriemelmann-immob...,761.0,49.0,6952299615,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann-immobilien.de/
+Espaces Atypiques Bordeaux - Arcachon - Cap Ferret,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,7253222662,bordeaux@espaces-atypi...,2286.0,33.0,2794611944,,,NO,NO,https://www.espaces-atypiques.com/bordeaux/
+SK Homes,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,2972321469,buildwithskhomes@gmail...,2.0,,1190995570,,,NO,YES,
+DREAM WALLS REALTORS - RESALE,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,1719058725,dreamwallsrealtors@gma...,5.0,91.0,7226114452,,,NO,YES,https://www.facebook.com/share/19rhugvycC/
+</dataframe>
+
+<conversation>
+User 1: Create a bar graph of the follower count and names
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-28 00:34:58 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+
+    # Step 1: Prepare
+    df = dfs[0].copy()
+
+    # Ensure 'Followers count' is numeric and drop rows with NaN follower count
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+
+    # Step 2: Process
+    names = df['Full Name']
+    followers = df['Followers count']
+
+    # Step 3: Analyze - Create bar chart
+    plt.figure(figsize=(10, 6))
+    plt.barh(names, followers, color='skyblue')
+    plt.xlabel('Follower Count')
+    plt.ylabel('Instagram Account')
+    plt.title('Follower Count by Instagram Account')
+    plt.tight_layout()
+    plt.savefig("temp_chart.png")
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-03-28 00:34:58 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0].copy()
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+    names = df['Full Name']
+    followers = df['Followers count']
+    plt.figure(figsize=(10, 6))
+    plt.barh(names, followers, color='skyblue')
+    plt.xlabel('Follower Count')
+    plt.ylabel('Instagram Account')
+    plt.title('Follower Count by Instagram Account')
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'temp_chart.png'}
+        ```
+2025-03-28 00:34:59 [INFO] Answer: {'type': 'plot', 'value': 'temp_chart.png'}
+2025-03-28 00:34:59 [INFO] Executed in: 5.426007270812988s
+2025-03-28 00:38:33 [INFO] Question: Create a bar graph with the names and follower count 
+2025-03-28 00:38:33 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-28 00:38:33 [INFO] Prompt ID: 64e8ad6e-0667-4f6f-8a1d-912a9d2d6ce8
+2025-03-28 00:38:34 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,4696701006,qexuyn29y@gmail.com,761.0,49.0,7459272992,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,2350447876,gsnardyku@outlook.com,2566.0,234.0,2739254382,"Abuja, Nigeria",Abuja,NO,YES,
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,6730758769,d9a5try0dz03@outlook.com,5.0,91.0,6548009883,,,NO,YES,https://www.facebook.c...
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,2183454708,yapjsybc4@yahoo.com,2.0,,1611402430,,,NO,YES,
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,6549232306,xxnuhzmu@aol.com,2286.0,33.0,7369306616,,,NO,NO,https://www.espaces-at...
+</dataframe>
+
+<conversation>
+User 1: Create a bar graph with the names and follower count 
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-28 00:38:38 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    """
+
+    # Step 1: Extract the dataframe
+    df = dfs[0]
+
+    # Step 2: Ensure relevant columns are present and drop rows with missing follower counts or names
+    df = df[['Full Name', 'Followers count']].dropna()
+
+    # Step 3: Sort by follower count descending and select top entries (optional for readability)
+    df_sorted = df.sort_values(by='Followers count', ascending=False)
+
+    # Step 4: Create a bar plot
+    plt.figure(figsize=(12, 6))
+    plt.barh(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.title('Instagram Accounts by Followers Count')
+    plt.gca().invert_yaxis()  # Highest follower count on top
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-03-28 00:38:38 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    """
+    df = dfs[0]
+    df = df[['Full Name', 'Followers count']].dropna()
+    df_sorted = df.sort_values(by='Followers count', ascending=False)
+    plt.figure(figsize=(12, 6))
+    plt.barh(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.title('Instagram Accounts by Followers Count')
+    plt.gca().invert_yaxis()
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'temp_chart.png'}
+        ```
+2025-03-28 00:38:39 [INFO] Answer: {'type': 'plot', 'value': 'temp_chart.png'}
+2025-03-28 00:38:39 [INFO] Executed in: 5.897127389907837s
+2025-03-28 00:41:08 [INFO] Question: what is the size of this excel file
+2025-03-28 00:41:09 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-28 00:41:09 [INFO] Prompt ID: 79c8ecbe-050c-4337-a353-8a1a0ef6f9d9
+2025-03-28 00:41:09 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,Agence du réseau spéci...,joofxyz04u7@yahoo.com,2286.0,33.0,535544306.0,,,NO,NO,https://www.espaces-at...
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,"📁RC 1972024
+☎️07036241...",k-yhb2t5kaa9@icloud.com,2566.0,234.0,7036241996.0,"Abuja, Nigeria",Abuja,NO,YES,
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,Zuhause in Bielefeld 🏡...,q4al7wfdm@outlook.com,761.0,49.0,5219629217.0,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,Helping You To Find Yo...,nlgbcnl@yahoo.com,5.0,91.0,8530322076.0,,,NO,YES,https://www.facebook.c...
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,SK Homes - Constructio...,sjyt7j@aol.com,2.0,,,,,NO,YES,
+</dataframe>
+
+<conversation>
+User 1: what is the size of this excel file
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-28 00:41:14 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+
+    # Step 1: Get the DataFrame
+    df = dfs[0]
+
+    # Step 2: Calculate the size of the DataFrame in Excel (rough estimate)
+    # Save to a temporary Excel file and get its size
+    temp_file_path = "temp_excel_output.xlsx"
+    df.to_excel(temp_file_path, index=False)
+
+    import os
+    file_size_bytes = os.path.getsize(temp_file_path)
+    file_size_kb = file_size_bytes / 1024  # Convert to kilobytes
+
+    # Step 3: Return the result
+    return {
+        "type": "string",
+        "value": f"The size of the Excel file is approximately {file_size_kb:.2f} KB."
+    }
+```
+
+2025-03-28 00:41:14 [INFO] Saving charts to static/plots/79c8ecbe-050c-4337-a353-8a1a0ef6f9d9.png
+2025-03-28 00:41:14 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in static/plots/79c8ecbe-050c-4337-a353-8a1a0ef6f9d9.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "static/plots/79c8ecbe-050c-4337-a353-8a1a0ef6f9d9.png" }
+    """
+    df = dfs[0]
+    temp_file_path = 'temp_excel_output.xlsx'
+    import os
+    file_size_bytes = os.path.getsize(temp_file_path)
+    file_size_kb = file_size_bytes / 1024
+    return {'type': 'string', 'value': f'The size of the Excel file is approximately {file_size_kb:.2f} KB.'}
+        ```
+2025-03-28 00:41:14 [WARNING] Error of executing code
+2025-03-28 00:41:14 [WARNING] Failed to execute code with a correction framework [retry number: 1]
+2025-03-28 00:41:14 [ERROR] Failed with error: Traceback (most recent call last):
+  File "/home/nishil/miniconda3/envs/excelchat/lib/python3.10/site-packages/pandasai/smart_datalake/__init__.py", line 337, in chat
+    result = self._code_manager.execute_code(
+  File "/home/nishil/miniconda3/envs/excelchat/lib/python3.10/site-packages/pandasai/helpers/code_manager.py", line 244, in execute_code
+    return analyze_data(self._get_originals(dfs))
+  File "<string>", line 21, in analyze_data
+ImportError: __import__ not found
+. Retrying
+2025-03-28 00:41:14 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames with the following metadata:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,Agence du réseau spéci...,joofxyz04u7@yahoo.com,2286.0,33.0,535544306.0,,,NO,NO,https://www.espaces-at...
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,"📁RC 1972024
+☎️07036241...",k-yhb2t5kaa9@icloud.com,2566.0,234.0,7036241996.0,"Abuja, Nigeria",Abuja,NO,YES,
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,Zuhause in Bielefeld 🏡...,q4al7wfdm@outlook.com,761.0,49.0,5219629217.0,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,Helping You To Find Yo...,nlgbcnl@yahoo.com,5.0,91.0,8530322076.0,,,NO,YES,https://www.facebook.c...
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,SK Homes - Constructio...,sjyt7j@aol.com,2.0,,,,,NO,YES,
+</dataframe>
+
+The user asked the following question:
+User 1: what is the size of this excel file
+
+You generated this python code:
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+
+    # Step 1: Get the DataFrame
+    df = dfs[0]
+
+    # Step 2: Calculate the size of the DataFrame in Excel (rough estimate)
+    # Save to a temporary Excel file and get its size
+    temp_file_path = "temp_excel_output.xlsx"
+    df.to_excel(temp_file_path, index=False)
+
+    import os
+    file_size_bytes = os.path.getsize(temp_file_path)
+    file_size_kb = file_size_bytes / 1024  # Convert to kilobytes
+
+    # Step 3: Return the result
+    return {
+        "type": "string",
+        "value": f"The size of the Excel file is approximately {file_size_kb:.2f} KB."
+    }
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "/home/nishil/miniconda3/envs/excelchat/lib/python3.10/site-packages/pandasai/smart_datalake/__init__.py", line 337, in chat
+    result = self._code_manager.execute_code(
+  File "/home/nishil/miniconda3/envs/excelchat/lib/python3.10/site-packages/pandasai/helpers/code_manager.py", line 244, in execute_code
+    return analyze_data(self._get_originals(dfs))
+  File "<string>", line 21, in analyze_data
+ImportError: __import__ not found
+
+
+Correct the python code and return a new python code that fixes the above mentioned error. Do not generate the same code again.
+
+2025-03-28 00:41:19 [INFO] Saving charts to static/plots/79c8ecbe-050c-4337-a353-8a1a0ef6f9d9.png
+2025-03-28 00:41:19 [WARNING] Failed to execute code with a correction framework [retry number: 2]
+2025-03-28 00:41:19 [ERROR] Failed with error: Traceback (most recent call last):
+  File "/home/nishil/miniconda3/envs/excelchat/lib/python3.10/site-packages/pandasai/smart_datalake/__init__.py", line 337, in chat
+    result = self._code_manager.execute_code(
+  File "/home/nishil/miniconda3/envs/excelchat/lib/python3.10/site-packages/pandasai/helpers/code_manager.py", line 217, in execute_code
+    code_to_run = self._clean_code(code)
+  File "/home/nishil/miniconda3/envs/excelchat/lib/python3.10/site-packages/pandasai/helpers/code_manager.py", line 401, in _clean_code
+    self._check_imports(node)
+  File "/home/nishil/miniconda3/envs/excelchat/lib/python3.10/site-packages/pandasai/helpers/code_manager.py", line 466, in _check_imports
+    raise BadImportError(library)
+pandasai.exceptions.BadImportError: Generated code includes import of os which is not in whitelist.
+. Retrying
+2025-03-28 00:41:20 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames with the following metadata:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,Agence du réseau spéci...,joofxyz04u7@yahoo.com,2286.0,33.0,535544306.0,,,NO,NO,https://www.espaces-at...
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,"📁RC 1972024
+☎️07036241...",k-yhb2t5kaa9@icloud.com,2566.0,234.0,7036241996.0,"Abuja, Nigeria",Abuja,NO,YES,
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,Zuhause in Bielefeld 🏡...,q4al7wfdm@outlook.com,761.0,49.0,5219629217.0,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,Helping You To Find Yo...,nlgbcnl@yahoo.com,5.0,91.0,8530322076.0,,,NO,YES,https://www.facebook.c...
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,SK Homes - Constructio...,sjyt7j@aol.com,2.0,,,,,NO,YES,
+</dataframe>
+
+The user asked the following question:
+User 1: what is the size of this excel file
+
+You generated this python code:
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+
+    # Step 1: Get the DataFrame
+    df = dfs[0]
+
+    # Step 2: Calculate the size of the DataFrame in Excel (rough estimate)
+    # Save to a temporary Excel file and get its size
+    temp_file_path = "temp_excel_output.xlsx"
+    df.to_excel(temp_file_path, index=False)
+
+    import os
+    file_size_bytes = os.path.getsize(temp_file_path)
+    file_size_kb = file_size_bytes / 1024  # Convert to kilobytes
+
+    # Step 3: Return the result
+    return {
+        "type": "string",
+        "value": f"The size of the Excel file is approximately {file_size_kb:.2f} KB."
+    }
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "/home/nishil/miniconda3/envs/excelchat/lib/python3.10/site-packages/pandasai/smart_datalake/__init__.py", line 337, in chat
+    result = self._code_manager.execute_code(
+  File "/home/nishil/miniconda3/envs/excelchat/lib/python3.10/site-packages/pandasai/helpers/code_manager.py", line 217, in execute_code
+    code_to_run = self._clean_code(code)
+  File "/home/nishil/miniconda3/envs/excelchat/lib/python3.10/site-packages/pandasai/helpers/code_manager.py", line 401, in _clean_code
+    self._check_imports(node)
+  File "/home/nishil/miniconda3/envs/excelchat/lib/python3.10/site-packages/pandasai/helpers/code_manager.py", line 466, in _check_imports
+    raise BadImportError(library)
+pandasai.exceptions.BadImportError: Generated code includes import of os which is not in whitelist.
+
+
+Correct the python code and return a new python code that fixes the above mentioned error. Do not generate the same code again.
+
+2025-03-28 00:41:26 [INFO] Saving charts to static/plots/79c8ecbe-050c-4337-a353-8a1a0ef6f9d9.png
+2025-03-28 00:41:26 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in static/plots/79c8ecbe-050c-4337-a353-8a1a0ef6f9d9.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "static/plots/79c8ecbe-050c-4337-a353-8a1a0ef6f9d9.png" }
+    """
+    df = dfs[0]
+    buffer = BytesIO()
+    buffer_size_bytes = buffer.tell()
+    buffer_size_kb = buffer_size_bytes / 1024
+    return {'type': 'string', 'value': f'The size of the Excel file is approximately {buffer_size_kb:.2f} KB.'}
+        ```
+2025-03-28 00:41:26 [INFO] Answer: {'type': 'string', 'value': 'The size of the Excel file is approximately 0.00 KB.'}
+2025-03-28 00:41:26 [INFO] Executed in: 17.534733533859253s
+2025-03-28 00:41:28 [INFO] 127.0.0.1 - - [28/Mar/2025 00:41:28] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-03-28 00:42:06 [INFO] Question: Create a bar graph with names and follower count
+2025-03-28 00:42:06 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-28 00:42:06 [INFO] Prompt ID: bce0b9f5-b71b-4af6-8e5e-3bd7c174f642
+2025-03-28 00:42:06 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Duke Properties,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,3290063715,dukecute3624@gmail.com...,2566.0,234.0,3330173001,"Abuja, Nigeria",Abuja,NO,YES,
+SK Homes,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,1836101632,buildwithskhomes@gmail...,2.0,,6730242782,,,NO,YES,
+IMMOBILIENMAKLER BIELEFELD,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,1075960831,info@kriemelmann-immob...,761.0,49.0,2566937786,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann-immobilien.de/
+Espaces Atypiques Bordeaux - Arcachon - Cap Ferret,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,6616304598,bordeaux@espaces-atypi...,2286.0,33.0,6692489533,,,NO,NO,https://www.espaces-atypiques.com/bordeaux/
+DREAM WALLS REALTORS - RESALE,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,7820380804,dreamwallsrealtors@gma...,5.0,91.0,4441947525,,,NO,YES,https://www.facebook.com/share/19rhugvycC/
+</dataframe>
+
+<conversation>
+User 1: Create a bar graph with names and follower count
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-28 00:42:12 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0]
+
+    # Prepare: Ensure relevant columns are the correct type
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df['Full Name'] = df['Full Name'].astype(str)
+
+    # Drop rows with missing follower count or name
+    df = df.dropna(subset=['Full Name', 'Followers count'])
+
+    # Sort data for better visualization
+    df_sorted = df.sort_values(by='Followers count', ascending=False)
+
+    # Plotting
+    plt.figure(figsize=(12, 6))
+    plt.bar(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Full Name')
+    plt.ylabel('Followers Count')
+    plt.title('Instagram Accounts and Their Follower Counts')
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-03-28 00:42:12 [INFO] Saving charts to static/plots/bce0b9f5-b71b-4af6-8e5e-3bd7c174f642.png
+2025-03-28 00:42:12 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in static/plots/bce0b9f5-b71b-4af6-8e5e-3bd7c174f642.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "static/plots/bce0b9f5-b71b-4af6-8e5e-3bd7c174f642.png" }
+    """
+    df = dfs[0]
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df['Full Name'] = df['Full Name'].astype(str)
+    df = df.dropna(subset=['Full Name', 'Followers count'])
+    df_sorted = df.sort_values(by='Followers count', ascending=False)
+    plt.figure(figsize=(12, 6))
+    plt.bar(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Full Name')
+    plt.ylabel('Followers Count')
+    plt.title('Instagram Accounts and Their Follower Counts')
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+    plt.savefig('static/plots/bce0b9f5-b71b-4af6-8e5e-3bd7c174f642.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'static/plots/bce0b9f5-b71b-4af6-8e5e-3bd7c174f642.png'}
+        ```
+2025-03-28 00:42:13 [INFO] Answer: {'type': 'plot', 'value': 'static/plots/bce0b9f5-b71b-4af6-8e5e-3bd7c174f642.png'}
+2025-03-28 00:42:13 [INFO] Executed in: 7.030970811843872s
+2025-03-28 00:42:16 [INFO] 127.0.0.1 - - [28/Mar/2025 00:42:16] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-03-28 00:43:16 [INFO] Question: Create a bar graph with the followers count and the names
+2025-03-28 00:43:16 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-28 00:43:16 [INFO] Prompt ID: aff55609-a6e5-481a-8769-7fb5a0e8ae37
+2025-03-28 00:43:16 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,3702908659,5to3q2n599iy@zoho.com,761.0,49.0,0738640652,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,5508858256,tw7o8183r3@aol.com,2.0,,7365335080,,,NO,YES,
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,5340234054,i_6pk8ufz5@outlook.com,5.0,91.0,9627892978,,,NO,YES,https://www.facebook.c...
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,8916237569,4d00ncyoyhbf@protonmail.com,2566.0,234.0,4923501213,"Abuja, Nigeria",Abuja,NO,YES,
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,9632191456,yixp-xpjrcga@hotmail.com,2286.0,33.0,0923809326,,,NO,NO,https://www.espaces-at...
+</dataframe>
+
+<conversation>
+User 1: Create a bar graph with the followers count and the names
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-28 00:43:21 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0]
+
+    # Prepare: Ensure 'Followers count' is numeric and drop rows with missing names or followers
+    df = df[['Full Name', 'Followers count']].dropna()
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+
+    # Process: Sort by follower count and select top entries if needed
+    df_sorted = df.sort_values(by='Followers count', ascending=False)
+
+    # Analyze: Create bar plot
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.ylabel('Full Name')
+    plt.title('Followers Count by Name')
+    plt.gca().invert_yaxis()  # Highest at the top
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-03-28 00:43:21 [INFO] Saving charts to static/plots/aff55609-a6e5-481a-8769-7fb5a0e8ae37.png
+2025-03-28 00:43:21 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in static/plots/aff55609-a6e5-481a-8769-7fb5a0e8ae37.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "static/plots/aff55609-a6e5-481a-8769-7fb5a0e8ae37.png" }
+    """
+    df = dfs[0]
+    df = df[['Full Name', 'Followers count']].dropna()
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+    df_sorted = df.sort_values(by='Followers count', ascending=False)
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.ylabel('Full Name')
+    plt.title('Followers Count by Name')
+    plt.gca().invert_yaxis()
+    plt.tight_layout()
+    plt.savefig('static/plots/aff55609-a6e5-481a-8769-7fb5a0e8ae37.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'static/plots/aff55609-a6e5-481a-8769-7fb5a0e8ae37.png'}
+        ```
+2025-03-28 00:43:21 [INFO] Answer: {'type': 'plot', 'value': 'static/plots/aff55609-a6e5-481a-8769-7fb5a0e8ae37.png'}
+2025-03-28 00:43:21 [INFO] Executed in: 4.936999559402466s
+2025-03-28 00:43:23 [INFO] 127.0.0.1 - - [28/Mar/2025 00:43:23] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-03-28 00:43:46 [INFO] 127.0.0.1 - - [28/Mar/2025 00:43:46] "[33mGET /static/plots/3bf8fd7182f846d9bf66f320c565849d.png HTTP/1.1[0m" 404 -
+2025-03-28 00:43:48 [INFO] 127.0.0.1 - - [28/Mar/2025 00:43:48] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-03-28 00:45:00 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/data_analysis_server.py', reloading
+2025-03-28 00:45:00 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/data_analysis_server.py', reloading
+2025-03-28 00:49:04 [INFO] Question: Create a bar graph with the followers count and the names
+2025-03-28 00:49:04 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-28 00:49:04 [INFO] Prompt ID: 81cbf9b2-a424-4393-aa77-6d2ed5b2726b
+2025-03-28 00:49:04 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,Agence du réseau spéci...,y_ax91gx@outlook.com,2286.0,33.0,535544306.0,,,NO,NO,https://www.espaces-at...
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,SK Homes - Constructio...,y5gyxg_y@outlook.com,2.0,,,,,NO,YES,
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,Zuhause in Bielefeld 🏡...,yh477bsd01@hotmail.com,761.0,49.0,5219629217.0,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,"📁RC 1972024
+☎️07036241...",3f5nn4ga@aol.com,2566.0,234.0,7036241996.0,"Abuja, Nigeria",Abuja,NO,YES,
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,Helping You To Find Yo...,g-5p76cb_g7@hotmail.com,5.0,91.0,8530322076.0,,,NO,YES,https://www.facebook.c...
+</dataframe>
+
+<conversation>
+User 1: Create a bar graph with the followers count and the names
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-28 00:49:13 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0]
+
+    # Step 1: Prepare
+    df = df[['Full Name', 'Followers count']].copy()
+    df = df.dropna(subset=['Full Name', 'Followers count'])
+
+    # Step 2: Process
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+
+    # Sort by followers count descending
+    df_sorted = df.sort_values(by='Followers count', ascending=False)
+
+    # Step 3: Analyze
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.ylabel('Account Name')
+    plt.title('Followers Count per Instagram Account')
+    plt.gca().invert_yaxis()  # To show highest value at top
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-03-28 00:49:13 [INFO] Saving charts to static/plots/81cbf9b2-a424-4393-aa77-6d2ed5b2726b.png
+2025-03-28 00:49:13 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in static/plots/81cbf9b2-a424-4393-aa77-6d2ed5b2726b.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "static/plots/81cbf9b2-a424-4393-aa77-6d2ed5b2726b.png" }
+    """
+    df = dfs[0]
+    df = df[['Full Name', 'Followers count']].copy()
+    df = df.dropna(subset=['Full Name', 'Followers count'])
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+    df_sorted = df.sort_values(by='Followers count', ascending=False)
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.ylabel('Account Name')
+    plt.title('Followers Count per Instagram Account')
+    plt.gca().invert_yaxis()
+    plt.tight_layout()
+    plt.savefig('static/plots/81cbf9b2-a424-4393-aa77-6d2ed5b2726b.png')
+    return {'type': 'plot', 'value': 'static/plots/81cbf9b2-a424-4393-aa77-6d2ed5b2726b.png'}
+        ```
+2025-03-28 00:49:14 [INFO] Answer: {'type': 'plot', 'value': 'static/plots/81cbf9b2-a424-4393-aa77-6d2ed5b2726b.png'}
+2025-03-28 00:49:14 [INFO] Executed in: 10.116211652755737s
+2025-03-28 00:49:16 [INFO] 127.0.0.1 - - [28/Mar/2025 00:49:16] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-03-28 00:49:48 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/data_analysis_server.py', reloading
+2025-03-28 00:49:48 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/data_analysis_server.py', reloading
+2025-03-28 00:49:48 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/data_analysis_server.py', reloading
+2025-03-28 00:50:43 [INFO] Question: Create a bar graph with the followers count and the names
+2025-03-28 00:50:43 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-28 00:50:43 [INFO] Prompt ID: 3294a14e-f332-48f7-a105-fb68ae7d1777
+2025-03-28 00:50:43 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,Agence du réseau spéci...,3a1lvfr-w4_l@yahoo.com,2286.0,33.0,535544306.0,,,NO,NO,https://www.espaces-at...
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,Helping You To Find Yo...,6kkoxjvz@yahoo.com,5.0,91.0,8530322076.0,,,NO,YES,https://www.facebook.c...
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,"📁RC 1972024
+☎️07036241...",zjfnz0kpcgh@protonmail.com,2566.0,234.0,7036241996.0,"Abuja, Nigeria",Abuja,NO,YES,
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,Zuhause in Bielefeld 🏡...,hiap55j5@outlook.com,761.0,49.0,5219629217.0,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,SK Homes - Constructio...,xa0xciy@aol.com,2.0,,,,,NO,YES,
+</dataframe>
+
+<conversation>
+User 1: Create a bar graph with the followers count and the names
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-28 00:50:47 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0]
+
+    # Step 1: Prepare - Clean column names if needed
+    df = df.copy()
+    df['Full Name'] = df['Full Name'].astype(str)
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce').fillna(0)
+
+    # Step 2: Process - Select relevant columns
+    names = df['Full Name']
+    followers = df['Followers count']
+
+    # Step 3: Analyze - Create the bar plot
+    plt.figure(figsize=(10, 6))
+    plt.barh(names, followers, color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.ylabel('Full Name')
+    plt.title('Followers Count by Full Name')
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-03-28 00:50:47 [INFO] Saving charts to static/plots/3294a14e-f332-48f7-a105-fb68ae7d1777.png
+2025-03-28 00:50:47 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in static/plots/3294a14e-f332-48f7-a105-fb68ae7d1777.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "static/plots/3294a14e-f332-48f7-a105-fb68ae7d1777.png" }
+    """
+    df = dfs[0]
+    df = df.copy()
+    df['Full Name'] = df['Full Name'].astype(str)
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce').fillna(0)
+    names = df['Full Name']
+    followers = df['Followers count']
+    plt.figure(figsize=(10, 6))
+    plt.barh(names, followers, color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.ylabel('Full Name')
+    plt.title('Followers Count by Full Name')
+    plt.tight_layout()
+    plt.savefig('static/plots/3294a14e-f332-48f7-a105-fb68ae7d1777.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'static/plots/3294a14e-f332-48f7-a105-fb68ae7d1777.png'}
+        ```
+2025-03-28 00:50:50 [INFO] Answer: {'type': 'plot', 'value': 'static/plots/3294a14e-f332-48f7-a105-fb68ae7d1777.png'}
+2025-03-28 00:50:50 [INFO] Executed in: 6.404386520385742s
+2025-03-28 00:50:52 [INFO] 127.0.0.1 - - [28/Mar/2025 00:50:52] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-03-28 00:51:22 [INFO] 127.0.0.1 - - [28/Mar/2025 00:51:22] "GET /None/streamlit/747a9bc5e6c54bd8bf09a8b93f21052c.png HTTP/1.1" 200 -
+2025-03-28 00:57:29 [INFO] Question: Give a bar graph of the follower count vs names in the given excel file
+2025-03-28 00:57:29 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-28 00:57:29 [INFO] Prompt ID: 4b3ab690-ead1-409d-abb0-1c4c454c9883
+2025-03-28 00:57:29 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Duke Properties,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,0882236697,dukecute3624@gmail.com...,2566.0,234.0,3375233385,"Abuja, Nigeria",Abuja,NO,YES,
+DREAM WALLS REALTORS - RESALE,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,0724021330,dreamwallsrealtors@gma...,5.0,91.0,7194257637,,,NO,YES,https://www.facebook.com/share/19rhugvycC/
+IMMOBILIENMAKLER BIELEFELD,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,3842162257,info@kriemelmann-immob...,761.0,49.0,7404831829,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann-immobilien.de/
+Espaces Atypiques Bordeaux - Arcachon - Cap Ferret,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,6910600140,bordeaux@espaces-atypi...,2286.0,33.0,2406097845,,,NO,NO,https://www.espaces-atypiques.com/bordeaux/
+SK Homes,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,6554621024,buildwithskhomes@gmail...,2.0,,3188699030,,,NO,YES,
+</dataframe>
+
+<conversation>
+User 1: Give a bar graph of the follower count vs names in the given excel file
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-28 00:57:37 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+
+    df = dfs[0]
+
+    # Prepare: Ensure the follower count is numeric and drop rows with missing names or follower counts
+    df = df[['Full Name', 'Followers count']].dropna()
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna()
+
+    # Process: Sort by follower count descending for better visual
+    df_sorted = df.sort_values(by='Followers count', ascending=False)
+
+    # Analyze: Create bar plot of Full Name vs Followers count
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.ylabel('Full Name')
+    plt.title('Followers Count by Full Name')
+    plt.gca().invert_yaxis()  # To show the highest follower at the top
+    plt.tight_layout()
+    plt.savefig("temp_chart.png")
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-03-28 00:57:37 [INFO] Saving charts to static/plots/4b3ab690-ead1-409d-abb0-1c4c454c9883.png
+2025-03-28 00:57:37 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in static/plots/4b3ab690-ead1-409d-abb0-1c4c454c9883.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "static/plots/4b3ab690-ead1-409d-abb0-1c4c454c9883.png" }
+    """
+    df = dfs[0]
+    df = df[['Full Name', 'Followers count']].dropna()
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna()
+    df_sorted = df.sort_values(by='Followers count', ascending=False)
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.ylabel('Full Name')
+    plt.title('Followers Count by Full Name')
+    plt.gca().invert_yaxis()
+    plt.tight_layout()
+    plt.savefig('static/plots/4b3ab690-ead1-409d-abb0-1c4c454c9883.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'static/plots/4b3ab690-ead1-409d-abb0-1c4c454c9883.png'}
+        ```
+2025-03-28 00:57:37 [INFO] Answer: {'type': 'plot', 'value': 'static/plots/4b3ab690-ead1-409d-abb0-1c4c454c9883.png'}
+2025-03-28 00:57:37 [INFO] Executed in: 8.333076477050781s
+2025-03-28 00:57:39 [INFO] 127.0.0.1 - - [28/Mar/2025 00:57:39] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-03-28 01:00:11 [INFO] Question: Create a bar graph with follower count and names from the excel file
+2025-03-28 01:00:11 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-28 01:00:11 [INFO] Prompt ID: 54030539-f598-452a-80d3-086d549da4da
+2025-03-28 01:00:11 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,6877169467,-22yp4ro@outlook.com,761.0,49.0,1207433265,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,8424798661,hmu9r2aa@yahoo.com,2286.0,33.0,7410278480,,,NO,NO,https://www.espaces-at...
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,4342429785,p9qeq78hd@yahoo.com,5.0,91.0,6396078640,,,NO,YES,https://www.facebook.c...
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,6003119771,3jpal3xwi@icloud.com,2.0,,2064792262,,,NO,YES,
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,5994014279,zr9pgx5rla@yahoo.com,2566.0,234.0,4469910567,"Abuja, Nigeria",Abuja,NO,YES,
+</dataframe>
+
+<conversation>
+User 1: Create a bar graph with follower count and names from the excel file
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-28 01:00:16 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    # Step 1: Prepare
+    df = dfs[0].copy()
+    df = df[['Full Name', 'Followers count']].dropna()
+
+    # Convert followers count to numeric if not already
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+
+    # Step 2: Process
+    # Sort by followers for better visualization
+    df_sorted = df.sort_values(by='Followers count', ascending=False)
+
+    # Step 3: Analyze
+    plt.figure(figsize=(12, 6))
+    plt.bar(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Full Name')
+    plt.ylabel('Followers Count')
+    plt.title('Follower Count by Full Name')
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+
+    # Save the plot instead of showing it
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-03-28 01:00:16 [INFO] Saving charts to static/plots/54030539-f598-452a-80d3-086d549da4da.png
+2025-03-28 01:00:16 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in static/plots/54030539-f598-452a-80d3-086d549da4da.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "static/plots/54030539-f598-452a-80d3-086d549da4da.png" }
+    """
+    df = dfs[0].copy()
+    df = df[['Full Name', 'Followers count']].dropna()
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+    df_sorted = df.sort_values(by='Followers count', ascending=False)
+    plt.figure(figsize=(12, 6))
+    plt.bar(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Full Name')
+    plt.ylabel('Followers Count')
+    plt.title('Follower Count by Full Name')
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+    plt.savefig('static/plots/54030539-f598-452a-80d3-086d549da4da.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'static/plots/54030539-f598-452a-80d3-086d549da4da.png'}
+        ```
+2025-03-28 01:00:16 [INFO] Answer: {'type': 'plot', 'value': 'static/plots/54030539-f598-452a-80d3-086d549da4da.png'}
+2025-03-28 01:00:16 [INFO] Executed in: 5.466261863708496s
+2025-03-28 01:00:18 [INFO] 127.0.0.1 - - [28/Mar/2025 01:00:18] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-03-28 01:00:18 [INFO] 127.0.0.1 - - [28/Mar/2025 01:00:18] "GET /None/streamlit/7cc39d2cd8904fa7af50d1d38403ecf4.png HTTP/1.1" 200 -
+2025-03-28 01:06:30 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/backend.py', reloading
+2025-03-28 01:06:30 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/backend.py', reloading
+2025-03-28 01:06:30 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/backend.py', reloading
+2025-03-28 01:09:57 [INFO] Question: Create a bar graph with follower count and names from the excel file
+2025-03-28 01:09:57 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-28 01:09:57 [INFO] Prompt ID: 99b7f502-8fbb-4b85-8c9e-cf428ce4fc26
+2025-03-28 01:09:57 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+SK Homes,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,SK Homes - Constructio...,_t4bjb8@yahoo.com,2.0,,,,,NO,YES,
+Duke Properties,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,"📁RC 1972024
+☎️07036241...",1gqll31a@hotmail.com,2566.0,234.0,7036241996.0,"Abuja, Nigeria",Abuja,NO,YES,
+DREAM WALLS REALTORS - RESALE,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,Helping You To Find Yo...,hfx9kf1a0a3y@gmail.com,5.0,91.0,8530322076.0,,,NO,YES,https://www.facebook.com/share/19rhugvycC/
+IMMOBILIENMAKLER BIELEFELD,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,Zuhause in Bielefeld 🏡...,rexvlwpb0@gmail.com,761.0,49.0,5219629217.0,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann-immobilien.de/
+Espaces Atypiques Bordeaux - Arcachon - Cap Ferret,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,Agence du réseau spéci...,55jvzv2ar@aol.com,2286.0,33.0,535544306.0,,,NO,NO,https://www.espaces-atypiques.com/bordeaux/
+</dataframe>
+
+<conversation>
+User 1: Create a bar graph with follower count and names from the excel file
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-28 01:10:12 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    # Step 1: Prepare
+    df = dfs[0].copy()
+
+    # Step 2: Process
+    # Ensure correct data types
+    df["Followers count"] = pd.to_numeric(df["Followers count"], errors='coerce')
+    df["Full Name"] = df["Full Name"].astype(str)
+
+    # Drop rows with missing follower counts or names
+    df = df.dropna(subset=["Followers count", "Full Name"])
+
+    # Sort by followers count for better visualization
+    df_sorted = df.sort_values(by="Followers count", ascending=False)
+
+    # Step 3: Analyze - Create bar plot
+    plt.figure(figsize=(12, 6))
+    plt.bar(df_sorted["Full Name"], df_sorted["Followers count"], color='skyblue')
+    plt.xlabel("Full Name")
+    plt.ylabel("Followers Count")
+    plt.title("Instagram Followers Count by Name")
+    plt.xticks(rotation=90)
+    plt.tight_layout()
+
+    # Save the plot
+    plt.savefig("temp_chart.png")
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-03-28 01:10:12 [INFO] Saving charts to static/plots/99b7f502-8fbb-4b85-8c9e-cf428ce4fc26.png
+2025-03-28 01:10:12 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in static/plots/99b7f502-8fbb-4b85-8c9e-cf428ce4fc26.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "static/plots/99b7f502-8fbb-4b85-8c9e-cf428ce4fc26.png" }
+    """
+    df = dfs[0].copy()
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df['Full Name'] = df['Full Name'].astype(str)
+    df = df.dropna(subset=['Followers count', 'Full Name'])
+    df_sorted = df.sort_values(by='Followers count', ascending=False)
+    plt.figure(figsize=(12, 6))
+    plt.bar(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Full Name')
+    plt.ylabel('Followers Count')
+    plt.title('Instagram Followers Count by Name')
+    plt.xticks(rotation=90)
+    plt.tight_layout()
+    plt.savefig('static/plots/99b7f502-8fbb-4b85-8c9e-cf428ce4fc26.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'static/plots/99b7f502-8fbb-4b85-8c9e-cf428ce4fc26.png'}
+        ```
+2025-03-28 01:10:13 [INFO] Answer: {'type': 'plot', 'value': 'static/plots/99b7f502-8fbb-4b85-8c9e-cf428ce4fc26.png'}
+2025-03-28 01:10:13 [INFO] Executed in: 15.812161207199097s
+2025-03-28 01:10:15 [INFO] 127.0.0.1 - - [28/Mar/2025 01:10:15] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-03-28 01:10:15 [INFO] 127.0.0.1 - - [28/Mar/2025 01:10:15] "GET /None/streamlit/a87b3f020bd947f59b31626f204e1157.png HTTP/1.1" 200 -
+2025-03-28 01:11:41 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/backend.py', reloading
+2025-03-28 01:11:41 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/backend.py', reloading
+2025-03-28 01:11:41 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/backend.py', reloading

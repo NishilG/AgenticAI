@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant Chatbot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            /* Light Theme Colors */
+            --primary-color-light: #0d6efd; --secondary-color-light: #6c757d; --light-bg-light: #f8f9fa; --white-bg-light: #ffffff; --border-color-light: #dee2e6; --text-color-light: #212529; --text-muted-light: #6c757d; --user-msg-bg-light: #e7f1ff; --bot-msg-bg-light: #f1f3f5; --link-color-light: #0d6efd; --success-color-light: #198754; --danger-color-light: #dc3545; --input-bg-light: #ffffff; --input-border-light: #ced4da; --header-color-light: #495057; --search-item-bg-light: #f1f3f5; --search-item-hover-bg-light: #e9ecef; --search-item-border-light: #dee2e6; --shadow-color-light: rgba(0,0,0,0.08); --tab-border-light: #dee2e6; --tab-active-border-light: var(--primary-color-light); --tab-text-light: var(--secondary-color-light); --tab-active-text-light: var(--primary-color-light); --more-sources-bg-light: #e9ecef; --steps-text-light: var(--secondary-color-light);
+
+            /* Dark Theme Colors (closer to image) */
+            --primary-color-dark: #4dabf7; --secondary-color-dark: #868e96; --light-bg-dark: #121212; --white-bg-dark: #1e1e1e; --border-color-dark: #343a40; --text-color-dark: #e9ecef; --text-muted-dark: #868e96; --user-msg-bg-dark: #2b4a6f; --bot-msg-bg-dark: #343a40; --link-color-dark: #74c0fc; --success-color-dark: #40c057; --danger-color-dark: #fa5252; --input-bg-dark: #2c2c2c; --input-border-dark: #495057; --header-color-dark: #dee2e6; --search-item-bg-dark: #2c2c2c; --search-item-hover-bg-dark: #343a40; --search-item-border-dark: #495057; --shadow-color-dark: rgba(0,0,0,0.3); --tab-border-dark: #343a40; --tab-active-border-dark: var(--primary-color-dark); --tab-text-dark: var(--text-muted-dark); --tab-active-text-dark: var(--primary-color-dark); --more-sources-bg-dark: #343a40; --steps-text-dark: var(--text-muted-dark);
+        }
+
+        /* Apply theme variables */
+        [data-theme="light"] {
+            --primary-color: var(--primary-color-light); --secondary-color: var(--secondary-color-light); --light-bg: var(--light-bg-light); --white-bg: var(--white-bg-light); --border-color: var(--border-color-light); --text-color: var(--text-color-light); --text-muted: var(--text-muted-light); --user-msg-bg: var(--user-msg-bg-light); --bot-msg-bg: var(--bot-msg-bg-light); --link-color: var(--link-color-light); --success-color: var(--success-color-light); --danger-color: var(--danger-color-light); --input-bg: var(--input-bg-light); --input-border: var(--input-border-light); --header-color: var(--header-color-light); --search-item-bg: var(--search-item-bg-light); --search-item-hover-bg: var(--search-item-hover-bg-light); --search-item-border: var(--search-item-border-light); --shadow-color: var(--shadow-color-light); --tab-border: var(--tab-border-light); --tab-active-border: var(--tab-active-border-light); --tab-text: var(--tab-text-light); --tab-active-text: var(--tab-active-text-light); --more-sources-bg: var(--more-sources-bg-light); --steps-text: var(--steps-text-light);
+        }
+        [data-theme="dark"] {
+            --primary-color: var(--primary-color-dark); --secondary-color: var(--secondary-color-dark); --light-bg: var(--light-bg-dark); --white-bg: var(--white-bg-dark); --border-color: var(--border-color-dark); --text-color: var(--text-color-dark); --text-muted: var(--text-muted-dark); --user-msg-bg: var(--user-msg-bg-dark); --bot-msg-bg: var(--bot-msg-bg-dark); --link-color: var(--link-color-dark); --success-color: var(--success-color-dark); --danger-color: var(--danger-color-dark); --input-bg-dark: #2c2c2c; --input-border-dark: #495057; --header-color-dark: #dee2e6; --search-item-bg: var(--search-item-bg-dark); --search-item-hover-bg: #343a40; --search-item-border-dark: #495057; --shadow-color-dark: rgba(0,0,0,0.3); --tab-border-dark: #343a40; --tab-active-border-dark: var(--primary-color-dark); --tab-text-dark: var(--text-muted-dark); --tab-active-text-dark: var(--primary-color-dark); --more-sources-bg-dark: #343a40; --steps-text-dark: var(--text-muted-dark);
+            /* Dark mode specific overrides */
+            .form-control, .form-select { background-color: var(--input-bg); color: var(--text-color); border-color: var(--input-border); }
+            .form-control::placeholder { color: var(--text-muted); }
+            .form-control:focus { background-color: var(--input-bg); color: var(--text-color); border-color: var(--primary-color); box-shadow: 0 0 0 0.25rem rgba(77, 171, 247, 0.25); }
+            .input-group .form-control { border-right: none; }
+            .input-group .btn { border-left: none; }
+            .btn-close { filter: invert(1) grayscale(100%) brightness(200%); }
+            .alert-success { background-color: #14452f; color: #a3cfbb; border-color: #2c6748; }
+            .alert-danger { background-color: #5a1a21; color: #f5c6cb; border-color: #84353f; }
+            .alert-warning { background-color: #664d03; color: #ffecb5; border-color: #997404; }
+            .alert-info { background-color: #0a5867; color: #bde6ee; border-color: #1f8a9d; }
+            .form-check-input { background-color: var(--input-bg); border-color: var(--input-border); }
+            .form-check-input:checked { background-color: var(--primary-color); border-color: var(--primary-color); }
+            .form-switch .form-check-input { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba(255,255,255,.25)'/%3e%3c/svg%3e"); }
+            .form-switch .form-check-input:checked { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e"); }
+            .nav-tabs .nav-link { color: var(--tab-text); }
+            .nav-tabs .nav-link.active { color: var(--tab-active-text); border-color: transparent transparent var(--tab-active-border) transparent; } /* Adjusted active border */
+            .nav-tabs .nav-item.form-switch .form-check-label { color: var(--tab-text); }
+            .nav-tabs .nav-item.form-switch .form-check-input:checked + .form-check-label { color: var(--tab-active-text); }
+            /* Dark mode for file input */
+            .form-control[type="file"] { background-color: var(--input-bg); color: var(--text-color); border-color: var(--input-border); }
+            .form-control[type="file"]::file-selector-button { background-color: var(--secondary-color); color: #fff; border: none; padding: 0.375rem 0.75rem; border-radius: 0.25rem; transition: background-color .15s ease-in-out; }
+            .form-control[type="file"]::file-selector-button:hover { background-color: #5a6268; }
+            /* Dark mode for tables */
+            .table { color: var(--text-color); border-color: var(--border-color); }
+            .table th, .table td { border-color: var(--border-color); }
+            .table-striped > tbody > tr:nth-of-type(odd) > * { background-color: rgba(255, 255, 255, 0.03); } /* Subtle striping */
+            .table-hover > tbody > tr:hover > * { background-color: rgba(255, 255, 255, 0.05); }
+        }
+
+        /* General Styles */
+        body { background-color: var(--light-bg); padding-top: 20px; padding-bottom: 40px; color: var(--text-color); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; transition: background-color 0.3s, color 0.3s; }
+        .container {
+            max-width: none;
+            width: 95%;
+            height: 95vh;
+            background-color: var(--white-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            margin: 20px auto;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--border-color);
+        }
+        /* .header-controls removed */
+
+        /* Theme Toggle */
+        .theme-switch-wrapper { display: flex; align-items: center; }
+        .theme-switch { display: inline-block; height: 24px; position: relative; width: 44px; }
+        .theme-switch input { display: none; }
+        .slider { background-color: var(--secondary-color); bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; border-radius: 24px; }
+        .slider:before { background-color: #fff; bottom: 3px; content: ""; height: 18px; left: 3px; position: absolute; transition: .4s; width: 18px; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--primary-color); }
+        input:checked + .slider:before { transform: translateX(20px); }
+        [data-theme="dark"] .slider:before { background-color: var(--light-bg); }
+
+        /* Tabs Section */
+        .search-tabs-container { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--tab-border); }
+        .nav-tabs { border-bottom: none; align-items: center; flex-grow: 1; }
+        .nav-tabs .nav-item { margin-bottom: 0; }
+        .nav-tabs .nav-link { border: none; border-bottom: 2px solid transparent; padding: 0.5rem 0.8rem; color: var(--tab-text); font-size: 0.9rem; font-weight: 500; margin-right: 5px; transition: color 0.2s, border-color 0.2s; display: flex; align-items: center; gap: 4px; }
+        .nav-tabs .nav-link:hover { border-bottom-color: var(--secondary-color); color: var(--text-color); }
+        .nav-tabs .nav-link.active { color: var(--tab-active-text); background-color: transparent; border-color: transparent transparent var(--tab-active-border) transparent; }
+        /* Pro Search Toggle within Tab Bar */
+        .nav-tabs .nav-item.form-switch { display: flex; align-items: center; padding: 0.5rem 0.8rem; margin-right: 5px; }
+        .nav-tabs .nav-item.form-switch .form-check-label { font-size: 0.9rem; font-weight: 500; color: var(--tab-text); margin-left: 0.5rem; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+        .nav-tabs .nav-item.form-switch .form-check-input { cursor: pointer; }
+        .nav-tabs .nav-item.form-switch .form-check-input:checked + .form-check-label { color: var(--tab-active-text); }
+        /* Steps Indicator */
+        .steps-indicator { font-size: 0.85rem; color: var(--steps-text); cursor: pointer; padding: 0.5rem 0.8rem; /* Align with tabs */ }
+        .steps-indicator i { font-size: 0.7rem; margin-left: 2px; }
+
+        /* Tab Content & Search Container */
+        .tab-content { padding-top: 10px; }
+        .search-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+
+        /* Source Item Styling */
+        .search-result-item, .more-sources-item { background-color: var(--search-item-bg); border: 1px solid var(--search-item-border); border-radius: 8px; padding: 10px 12px; display: flex; align-items: center; gap: 10px; transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; overflow: hidden; text-decoration: none; min-height: 50px; }
+        .search-result-item:hover, .more-sources-item:hover { background-color: var(--search-item-hover-bg); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .search-result-item img.favicon { width: 18px; height: 18px; flex-shrink: 0; border-radius: 4px; } /* Rounded favicon */
+        .search-result-item .title { font-size: 0.85rem; font-weight: 500; color: var(--text-color); white-space: normal; overflow: hidden; text-overflow: ellipsis; flex-grow: 1; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        /* "+N Sources" Item */
+        .more-sources-item { justify-content: flex-start; background-color: var(--more-sources-bg); cursor: default; }
+        .more-sources-icons { display: flex; align-items: center; margin-right: 8px; position: relative; height: 18px; /* Match favicon height */ }
+        .more-sources-icons img.favicon { width: 18px; height: 18px; border-radius: 4px; border: 1px solid var(--border-color); background-color: var(--white-bg); position: absolute; top: 0; }
+        /* Stacking effect */
+        .more-sources-icons img.favicon:nth-child(1) { left: 0px; z-index: 3; }
+        .more-sources-icons img.favicon:nth-child(2) { left: 10px; z-index: 2; } /* Adjust overlap */
+        .more-sources-icons img.favicon:nth-child(3) { left: 20px; z-index: 1; } /* Adjust overlap */
+        .more-sources-item span { font-size: 0.85rem; font-weight: 500; color: var(--text-muted); margin-left: calc(10px * var(--icon-count, 0) + 10px); /* Adjust text position based on icon count */ }
+
+        /* Chat Container */
+        .chat-container {
+            height: calc(100vh - 280px); /* Adjusted height for file input */
+            overflow-y: auto;
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--white-bg);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        /* Messages */
+        .message { padding: 8px 15px; border-radius: 18px; margin-bottom: 10px; max-width: 80%; word-wrap: break-word; line-height: 1.4; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: background-color 0.3s, color 0.3s; font-size: 0.95rem; }
+        .user-message { background-color: var(--user-msg-bg); margin-left: auto; color: var(--text-color); border-bottom-right-radius: 5px; }
+        [data-theme="light"] .user-message { color: #004085; }
+        .bot-message { background-color: var(--bot-msg-bg); margin-right: auto; color: var(--text-color); border-bottom-left-radius: 5px; }
+        [data-theme="light"] .bot-message { color: #383d41; }
+        .bot-message img { max-width: 100%; height: auto; border-radius: 8px; margin-top: 8px; }
+        .bot-message .table-responsive { margin-top: 8px; max-height: 300px; overflow-y: auto; }
+        .bot-message table { width: 100%; font-size: 0.85rem; }
+        /* Data Panel Plot Styling */
+        .data-panel .plot-container {
+            width: 100%;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            overflow: auto; /* Enable scroll if image is too large */
+        }
+        .data-panel .plot-image {
+            max-width: 95%; /* Adjust as needed */
+            max-height: 95%; /* Adjust as needed */
+            border-radius: 8px;
+        }
+
+        /* Loading Indicator */
+        .loading { display: none; align-items: center; justify-content: center; margin: 15px 0; color: var(--secondary-color); }
+        .spinner-border { width: 1.25rem; height: 1.25rem; color: var(--primary-color); }
+
+        /* Input Area */
+        .input-area { margin-top: 10px; } /* Container for file input + text input */
+        .file-input-wrapper { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .file-input-wrapper label { font-size: 0.9rem; color: var(--text-muted); }
+        .file-input-wrapper .form-control { flex-grow: 1; font-size: 0.85rem; }
+        #clearFileBtn { font-size: 0.8rem; padding: 4px 8px; }
+
+        /* Input Group */
+        .input-group { box-shadow: 0 2px 5px var(--shadow-color); border-radius: 25px; }
+        .input-group .form-control { border-radius: 25px 0 0 25px; padding: 10px 18px; background-color: var(--input-bg); color: var(--text-color); border: 1px solid var(--input-border); border-right: none; transition: background-color 0.3s, color 0.3s, border-color 0.3s; box-shadow: none; }
+        .input-group .btn { border-radius: 0 25px 25px 0; padding: 10px 18px; background-color: var(--primary-color); border: 1px solid var(--primary-color); color: #fff; transition: background-color 0.2s, border-color 0.2s; box-shadow: none; }
+        .input-group .btn:hover { opacity: 0.9; }
+
+        /* Settings & Email Panels */
+        .settings-panel { display: none; margin-top: 20px; padding: 20px; border: 1px solid var(--border-color); border-radius: 8px; background-color: var(--white-bg); transition: background-color 0.3s, border-color 0.3s; }
+        .settings-panel h4 { margin-bottom: 20px; color: var(--header-color); font-size: 1.1rem; transition: color 0.3s; }
+        .settings-panel .text-muted { color: var(--text-muted); }
+
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 350px;
+            flex-shrink: 0;
+        }
+
+        .data-panel, .email-form {
+            display: none;
+            width: 100%;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--white-bg);
+            transition: all 0.3s;
+            height: fit-content;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .data-panel h4, .email-form h4 {
+            margin-bottom: 15px;
+            color: var(--header-color);
+        }
+
+        .data-panel.visible, .email-form.visible {
+            display: block;
+            animation: popIn 0.3s ease-out forwards;
+        }
+        .email-form h4 { margin-bottom: 20px; color: var(--header-color); font-size: 1.1rem; transition: color 0.3s; }
+        .email-form .text-muted { color: var(--text-muted); }
+        #statusMessage { margin-top: 15px; padding: 10px 15px; font-size: 0.9rem; }
+
+        /* Layout */
+        .main-layout {
+            display: flex;
+            height: calc(100vh - 100px);
+            gap: 20px;
+            flex-direction: row;
+        }
+        .chat-history {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 300px;
+            background-color: var(--white-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 20px;
+            overflow-y: auto;
+            z-index: 1000;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+        .chat-history.visible {
+            transform: translateX(0);
+        }
+        .toggle-history {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1001;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .main-content {
+            flex-grow: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-history {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 300px;
+            background-color: var(--white-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 20px;
+            overflow-y: auto;
+            z-index: 1000;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+        .chat-history.visible {
+            transform: translateX(0);
+        }
+        .toggle-history {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1001;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .chat-history h4 {
+            margin-bottom: 15px;
+            color: var(--header-color);
+        }
+        .chat-history-item {
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            background-color: var(--search-item-bg);
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .chat-history-item:hover {
+            background-color: var(--search-item-hover-bg);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: scale(0.95);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .email-form.visible {
+            display: block;
+            animation: popIn 0.3s ease-out forwards;
+        }
+
+        /* Buttons */
+        .btn { transition: all 0.2s ease-in-out; font-size: 0.9rem; padding: 8px 16px; }
+        .btn-sm { font-size: 0.8rem; padding: 5px 10px; }
+        .btn i { margin-right: 4px; vertical-align: text-bottom; }
+        .btn-primary { background-color: var(--primary-color); border-color: var(--primary-color); color: #fff; }
+        .btn-secondary { background-color: var(--secondary-color); border-color: var(--secondary-color); color: #fff; }
+        .btn-success { background-color: var(--success-color); border-color: var(--success-color); color: #fff; }
+        .btn-danger { background-color: var(--danger-color); border-color: var(--danger-color); color: #fff; }
+        .btn-outline-secondary { color: var(--secondary-color); border-color: var(--secondary-color); }
+        .btn-outline-secondary:hover { background-color: var(--secondary-color); color: #fff; }
+        [data-theme="dark"] .btn-outline-secondary { color: var(--text-muted); border-color: var(--text-muted); }
+        [data-theme="dark"] .btn-outline-secondary:hover { background-color: var(--secondary-color); color: var(--text-color-dark); border-color: var(--secondary-color); }
+
+    </style>
+</head>
+<body data-theme="dark">
+    <div class="container position-relative">
+        <!-- Chat History Toggle Button -->
+        <button class="toggle-history" id="historyToggle">
+            <i class="bi bi-chevron-right"></i>
+        </button>
+
+        <!-- Chat History Sidebar -->
+        <div class="chat-history" id="chatHistory">
+            <h4><i class="bi bi-clock-history"></i> Previous Chats</h4>
+            <div class="chat-history-item">Recent Conversation 1</div>
+            <div class="chat-history-item">Recent Conversation 2</div>
+            <div class="chat-history-item">Recent Conversation 3</div>
+        </div>
+
+        <!-- Settings Panel (Hidden) -->
+        <div class="settings-panel" id="settingsPanel">
+             <h4><i class="bi bi-sliders"></i> Settings</h4>
+             <div class="mb-3"> <label for="senderEmail" class="form-label">Your Email:</label> <input type="email" class="form-control" id="senderEmail"> </div>
+             <div class="mb-3"> <label for="senderPassword" class="form-label">Email Password:</label> <input type="password" class="form-control" id="senderPassword"> <small class="text-muted">Use App Password for Gmail.</small> </div>
+             <div class="mb-3"> <label for="geminiApiKey" class="form-label">Gemini API Key:</label> <input type="text" class="form-control" id="geminiApiKey"> </div>
+             <div class="mb-3"> <label for="googleApiKey" class="form-label">Google Search API Key:</label> <input type="text" class="form-control" id="googleApiKey"> </div>
+             <div class="mb-3"> <label for="searchEngineId" class="form-label">Search Engine ID:</label> <input type="text" class="form-control" id="searchEngineId"> </div>
+             <!-- Theme Toggle Moved Here -->
+             <div class="mb-3 d-flex align-items-center justify-content-between">
+                 <label class="form-label mb-0">Dark Mode:</label>
+                 <div class="theme-switch-wrapper" title="Toggle Theme"> <label class="theme-switch" for="themeSwitch"> <input type="checkbox" id="themeSwitch"> <span class="slider round"></span> </label> </div>
+             </div>
+             <div class="d-flex gap-2 mt-4"> <button id="saveSettingsBtn" class="btn btn-primary"><i class="bi bi-check-lg"></i> Save</button> <button id="closeSettingsBtn" class="btn btn-secondary"><i class="bi bi-x-lg"></i> Close</button> </div>
+        </div>
+
+        <!-- Main Layout Wrapper -->
+        <div class="main-layout">
+            <!-- Main Content Area -->
+            <div class="main-content">
+                <!-- Settings Button removed from here -->
+                <!-- Search Tabs & Content -->
+                <div class="search-tabs-container">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <!-- Chat Tab (New Default) -->
+                            <button class="nav-link active" id="nav-chat-tab" data-bs-toggle="tab" data-bs-target="#chat-view" type="button" role="tab" aria-controls="chat-view" aria-selected="true">
+                                <i class="bi bi-chat-dots"></i> Chat
+                            </button>
+                            <!-- Sources Tab -->
+                            <button class="nav-link" id="nav-sources-tab" data-bs-toggle="tab" data-bs-target="#sources-view" type="button" role="tab" aria-controls="sources-view" aria-selected="false">
+                                <i class="bi bi-diagram-3"></i> Sources
+                            </button>
+                            <!-- Pro Search Toggle is moved near input -->
+                        </div>
+                    </nav>
+                    <!-- Settings Button (Moved Here) -->
+                    <button id="settingsBtn" class="btn btn-sm btn-outline-secondary ms-auto" title="Settings"> <i class="bi bi-gear-fill"></i> </button>
+                     <!-- Steps Indicator Removed -->
+                </div>
+                <div class="tab-content" id="nav-tabContent">
+                    <!-- Chat View (New Default) -->
+                    <div class="tab-pane fade show active" id="chat-view" role="tabpanel" aria-labelledby="nav-chat-tab" tabindex="0">
+                        <!-- Chat Container -->
+                        <div class="chat-container" id="chatContainer">
+                            <div class="message bot-message">Hi there! How can I help you today? Upload a CSV/Excel file to analyze data.</div>
+                        </div>
+
+                        <div class="loading" id="loadingIndicator">
+                            <div class="spinner-border" role="status"> <span class="visually-hidden">Loading...</span> </div>
+                        </div>
+
+                        <!-- Input Area -->
+                        <div class="input-area">
+                            <!-- File Input for Data Analysis -->
+                            <div class="file-input-wrapper">
+                                <label for="dataFile" class="form-label mb-0"><i class="bi bi-file-earmark-spreadsheet"></i> Data File (Optional):</label>
+                                <input class="form-control form-control-sm" type="file" id="dataFile" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, image/*">
+                                <button id="clearFileBtn" class="btn btn-sm btn-outline-secondary" title="Clear File Selection" style="display: none;"><i class="bi bi-x"></i></button>
+                            </div>
+
+                            <!-- Pro Search Toggle (Moved near input) -->
+                            <div class="form-check form-switch mb-2 d-flex justify-content-end align-items-center">
+                                <input class="form-check-input" type="checkbox" role="switch" id="proSearchToggleInput">
+                                <label class="form-check-label small ms-2" for="proSearchToggleInput"><i class="bi bi-stars"></i> Pro Search</label>
+                            </div>
+
+                            <!-- Input Group -->
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" id="userMessage" placeholder="Ask about data or anything else...">
+                                <button class="btn btn-primary" id="sendBtn" title="Send Message"> <i class="bi bi-arrow-up"></i> </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sources View -->
+                    <div class="tab-pane fade" id="sources-view" role="tabpanel" aria-labelledby="nav-sources-tab" tabindex="0">
+                        <div class="search-container" id="searchContainer">
+                            <!-- Full source items will be appended here by JS -->
+                            <p class="text-muted text-center">Sources will appear here when available.</p>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- End Main Content Area -->
+
+            <!-- Right Side Panels -->
+            <div class="right-panel">
+                <!-- Data Panel -->
+                <div class="data-panel" id="dataPanel">
+                    <h4><i class="bi bi-table"></i> Data Analysis</h4>
+                    <div id="dataPanelContent"></div>
+                </div>
+                
+                <!-- Email Form -->
+                <div class="email-form" id="emailForm">
+                 <h4><i class="bi bi-envelope-plus"></i> Compose Email</h4>
+                 <div class="mb-3"> <label for="receiverEmail" class="form-label">To:</label> <input type="email" class="form-control" id="receiverEmail"> </div>
+                 <div class="mb-3"> <label for="emailSubject" class="form-label">Subject:</label> <input type="text" class="form-control" id="emailSubject"> </div>
+                 <div class="mb-3"> <label for="emailBody" class="form-label">Body:</label> <textarea class="form-control" id="emailBody" rows="6"></textarea> </div>
+                 <div class="d-flex gap-2 mt-4"> <button id="sendEmailBtn" class="btn btn-success flex-grow-1"><i class="bi bi-send-check-fill"></i> Send</button> <button id="cancelEmailBtn" class="btn btn-secondary flex-grow-1"><i class="bi bi-x-circle"></i> Cancel</button> </div>
+            </div>
+        </div> <!-- End Main Layout Wrapper -->
+
+        <div id="statusMessage" class="alert d-none mt-3" role="alert"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Chat history toggle functionality
+            const historyToggle = document.getElementById('historyToggle');
+            const chatHistory = document.getElementById('chatHistory');
+
+            historyToggle.addEventListener('click', () => {
+                chatHistory.classList.toggle('visible');
+                const icon = historyToggle.querySelector('i');
+                if (chatHistory.classList.contains('visible')) {
+                    icon.classList.remove('bi-chevron-right');
+                    icon.classList.add('bi-chevron-left');
+                } else {
+                    icon.classList.remove('bi-chevron-left');
+                    icon.classList.add('bi-chevron-right');
+                }
+            });
+            // --- DOM Elements ---
+            const chatContainer = document.getElementById('chatContainer');
+            const userMessage = document.getElementById('userMessage');
+            const sendBtn = document.getElementById('sendBtn');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const statusMessage = document.getElementById('statusMessage');
+            const settingsBtn = document.getElementById('settingsBtn');
+            const settingsPanel = document.getElementById('settingsPanel');
+            const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+            const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+            const emailForm = document.getElementById('emailForm');
+            const sendEmailBtn = document.getElementById('sendEmailBtn');
+            const cancelEmailBtn = document.getElementById('cancelEmailBtn');
+            const proSearchToggleInput = document.getElementById('proSearchToggleInput');
+            const searchContainer = document.getElementById('searchContainer');
+            const themeSwitch = document.getElementById('themeSwitch');
+            const bodyElement = document.body;
+            const navChatTab = document.getElementById('nav-chat-tab');
+            const navSourcesTab = document.getElementById('nav-sources-tab');
+            const chatView = document.getElementById('chat-view');
+            const sourcesView = document.getElementById('sources-view');
+            const dataFileInput = document.getElementById('dataFile'); // Added File Input
+            const clearFileBtn = document.getElementById('clearFileBtn'); // Added Clear File Button
+
+            const MAX_SOURCES_DISPLAY_IN_CHAT = 3;
+            const MAX_MORE_ICONS = 3;
+
+            // --- Theme Handling ---
+            function applyTheme(theme) {
+                bodyElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                themeSwitch.checked = (theme === 'dark');
+            }
+            themeSwitch.addEventListener('change', function() { applyTheme(this.checked ? 'dark' : 'light'); });
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            applyTheme(savedTheme);
+
+
+            // --- Settings Panel ---
+            settingsBtn.addEventListener('click', () => {
+                const isDisplayed = settingsPanel.style.display === 'block';
+                settingsPanel.style.display = isDisplayed ? 'none' : 'block';
+                // Removed line that hides email form when settings are opened
+            });
+            closeSettingsBtn.addEventListener('click', () => { settingsPanel.style.display = 'none'; });
+            saveSettingsBtn.addEventListener('click', () => {
+                localStorage.setItem('senderEmail', document.getElementById('senderEmail').value);
+                localStorage.setItem('senderPassword', document.getElementById('senderPassword').value);
+                localStorage.setItem('geminiApiKey', document.getElementById('geminiApiKey').value);
+                localStorage.setItem('googleApiKey', document.getElementById('googleApiKey').value);
+                localStorage.setItem('searchEngineId', document.getElementById('searchEngineId').value);
+                localStorage.setItem('webSearchEnabled', proSearchToggleInput.checked);
+                showStatus('Settings saved!', 'success');
+                settingsPanel.style.display = 'none';
+            });
+
+            // --- File Input Handling ---
+            dataFileInput.addEventListener('change', () => {
+                clearFileBtn.style.display = dataFileInput.files.length > 0 ? 'inline-block' : 'none';
+            });
+            clearFileBtn.addEventListener('click', () => {
+                dataFileInput.value = ''; // Clear the file input
+                clearFileBtn.style.display = 'none';
+            });
+
+
+            // --- Message Sending & Tool Handling ---
+            sendBtn.addEventListener('click', determineToolAndSendMessage); // Changed function call
+            userMessage.addEventListener('keypress', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); determineToolAndSendMessage(); } }); // Changed function call
+            sendEmailBtn.addEventListener('click', sendEmail);
+            cancelEmailBtn.addEventListener('click', () => { emailForm.classList.remove('visible'); });
+
+            async function determineToolAndSendMessage() {
+                const message = userMessage.value.trim();
+                if (!message) return;
+
+                // Show loading indicator immediately
+                loadingIndicator.style.display = 'flex';
+                statusMessage.classList.add('d-none');
+                sendBtn.disabled = true; // Disable send button while processing
+
+                try {
+                    const geminiApiKey = document.getElementById('geminiApiKey').value;
+                    if (!geminiApiKey) {
+                        addMessage("Please set Gemini API key in settings.", 'bot');
+                        return; // Exit early
+                    }
+
+                    const toolResponse = await determineTool(message, geminiApiKey);
+                    if (!toolResponse.success) {
+                        addMessage("Error determining tool: " + toolResponse.error, 'bot');
+                        showStatus("Tool Error: " + toolResponse.error, 'danger');
+                        return; // Exit early
+                    }
+
+                    const tool = toolResponse.tool;
+                    const reason = toolResponse.reason;
+                    console.log(`Tool determined: ${tool}, Reason: ${reason}`); // For debugging
+
+                    addMessage(message, 'user'); // Add user message to chat AFTER tool determination
+                    userMessage.value = ''; // Clear input field after message is added
+
+                    switch (tool) {
+                        case 'Email':
+                            await handleEmailIntent(message, geminiApiKey);
+                            break;
+                        case 'BrowserUse':
+                            await handleBrowserIntent(message, geminiApiKey);
+                            break;
+                        case 'DataAnalysis': // Added DataAnalysis case
+                            await handleDataAnalysisIntent(message, geminiApiKey);
+                            break;
+                        case 'CSV': // Kept separate CSV placeholder if needed later
+                            await handleCsvIntent(message);
+                            break;
+                        case 'None':
+                        default:
+                            await handleChatIntent(message, geminiApiKey); // Default to chat
+                            break;
+                    }
+
+
+                } catch (error) {
+                    console.error("Error in determineToolAndSendMessage:", error);
+                    addMessage("Sorry, an unexpected error occurred.", 'bot');
+                    showStatus(`Error: ${error.message}`, 'danger');
+                } finally {
+                    // Hide loading indicator and re-enable button regardless of success/failure
+                    loadingIndicator.style.display = 'none';
+                    sendBtn.disabled = false;
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }
+            }
+
+
+            async function determineTool(message, geminiApiKey) {
+                try {
+                    const response = await fetch('/determine_tool', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message: message, gemini_api_key: geminiApiKey })
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    // Basic validation on the returned tool
+                    const validTools = ["Email", "BrowserUse", "DataAnalysis", "CSV", "None"];
+                    if (!validTools.includes(data.tool)) {
+                        console.warn(`Invalid tool '${data.tool}' received from backend. Defaulting to 'None'.`);
+                        data.tool = 'None';
+                        data.reason += " (Invalid tool received, defaulted to None)";
+                    }
+                    return { success: true, tool: data.tool, reason: data.reason };
+
+                } catch (error) {
+                    console.error("Error determining tool:", error);
+                    return { success: false, error: error.message };
+                }
+            }
+
+
+            async function handleBrowserIntent(message, geminiApiKey) {
+                addMessage("Using Browser Tool...", 'bot');
+                try {
+                    const response = await fetch('/browser_action', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ task: message, gemini_api_key: geminiApiKey })
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    if (data.success) {
+                        addMessage("Browser Tool Result:\n" + data.result, 'bot'); // Display browser result
+                    } else {
+                        throw new Error(data.error || "Unknown browser tool error");
+                    }
+
+                } catch (error) {
+                    console.error("Error in handleBrowserIntent:", error);
+                    addMessage(`Browser tool failed: ${error.message}`, 'bot');
+                    showStatus(`Browser Error: ${error.message}`, 'danger');
+                }
+            }
+
+            // --- New Data Analysis Intent Handler ---
+            async function handleDataAnalysisIntent(message, geminiApiKey) {
+                const file = dataFileInput.files[0];
+                const dataPanel = document.getElementById('dataPanel');
+                const dataPanelContent = document.getElementById('dataPanelContent');
+                
+                // Clear previous data and hide panel
+                dataPanelContent.innerHTML = '';
+                dataPanel.classList.remove('visible');
+                
+                if (!file) {
+                    addMessage("Please upload a CSV or Excel file first to use the Data Analysis tool.", 'bot');
+                    showStatus("No file selected for analysis.", 'warning');
+                    return;
+                }
+
+                addMessage(`Analyzing '${file.name}'...`, 'bot');
+
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('message', message);
+
+                try {
+                    // IMPORTANT: Do NOT set Content-Type header for FormData
+                    const response = await fetch('http://localhost:5001/data_analysis_action', {
+                        method: 'POST',
+                        body: formData,
+                        mode: 'cors'
+                    });
+
+                    if (!response.ok) {
+                        let errorData;
+                        try {
+                            errorData = await response.json();
+                        } catch (e) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+                    }
+
+                    let data;
+                    try {
+                        const responseText = await response.text();
+                        data = JSON.parse(responseText);
+                    } catch (e) {
+                        console.error("Failed to parse JSON response:", e);
+                        throw new Error("Invalid response format from server");
+                    }
+
+                    // Validate response structure
+                    if (typeof data !== 'object' || data === null) {
+                        throw new Error("Invalid response data format");
+                    }
+
+                    if (data.success) {
+                        if (data.type === 'text') {
+                            addMessage(data.content, 'bot');
+                        } else if (data.type === 'dataframe') {
+                            const dataPanel = document.getElementById('dataPanel');
+                            const dataPanelContent = document.getElementById('dataPanelContent');
+                            
+                            // Clear previous content
+                            dataPanelContent.innerHTML = '';
+                            
+                            // Hide email form if visible
+                            document.getElementById('emailForm').classList.remove('visible');
+                            
+                            // Create and show table
+                            if (data.content && data.content.length > 0) {
+                                dataPanelContent.innerHTML = createTableFromData(data.content, data.filename);
+                                dataPanel.classList.add('visible');
+                                addMessage(`Analysis results displayed in Data Panel for ${data.filename}`, 'bot');
+                            } else {
+                                addMessage("No data returned from analysis.", 'bot');
+                                dataPanel.classList.remove('visible');
+                            }
+                        } else if (data.type === 'plot') {
+                            // Display the plot image from base64 data
+                            let plotUrl = "http://localhost:5001"+data.content;
+                            const imgHtml = `<img src="${plotUrl}" alt="Generated Plot" class="plot-image">`;
+                            dataPanelContent.innerHTML = `<div class="plot-container">${imgHtml}</div>`;
+                            dataPanel.classList.add('visible');
+                            addMessage(`Analysis plot displayed in Data Panel for ${file.name}`, 'bot');
+                        } else {
+                            addMessage("Received unexpected analysis result type.", 'bot');
+                        }
+                    } else {
+                        throw new Error(data.error || "Unknown data analysis error");
+                    }
+
+                } catch (error) {
+                    console.error("Error in handleDataAnalysisIntent:", error);
+                    addMessage(`Data analysis failed: ${error.message}`, 'bot');
+                    showStatus(`Analysis Error: ${error.message}`, 'danger');
+                } finally {
+                    // Optionally clear the file input after processing?
+                    // dataFileInput.value = '';
+                    // clearFileBtn.style.display = 'none';
+                }
+            }
+
+            // Enhanced function to create HTML table from list of dicts
+            function createTableFromData(data, filename = "Data") {
+                if (!data || data.length === 0) {
+                    return "<p>No data to display.</p>";
+                }
+                
+                const headers = Object.keys(data[0]);
+                let table = `
+                    <div class="dataframe-container">
+                        <p>Showing analysis results from ${filename}:</p>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead class="table-dark">
+                                    <tr>`;
+                
+                // Create table headers with sorting indicators
+                headers.forEach(header => {
+                    table += `<th onclick="sortTable(this)">${escapeHtml(header)}
+                                <span class="sort-icon"><i class="bi bi-arrow-down-up"></i></span>
+                            </th>`;
+                });
+                
+                table += `</tr></thead><tbody>`;
+                
+                // Create table rows with formatted data
+                data.forEach(row => {
+                    table += `<tr>`;
+                    headers.forEach(header => {
+                        let value = row[header];
+                        // Format numeric values
+                        if (typeof value === 'number') {
+                            if (Number.isInteger(value)) {
+                                value = value.toLocaleString();
+                            } else {
+                                value = value.toFixed(2);
+                            }
+                        }
+                        // Handle NaN/undefined
+                        if (value === null || value === undefined || (typeof value === 'number' && isNaN(value))) {
+                            value = '-';
+                        }
+                        table += `<td>${escapeHtml(value)}</td>`;
+                    });
+                    table += `</tr>`;
+                });
+                
+                table += `</tbody></table>
+                        </div>
+                        <div class="table-footer">
+                            <small>Showing ${Math.min(data.length, 50)} of ${data.length} rows</small>
+                        </div>
+                    </div>`;
+                
+                return table;
+            }
+
+            // Add sorting functionality
+            function sortTable(header) {
+                const table = header.closest('table');
+                const tbody = table.querySelector('tbody');
+                const rows = Array.from(tbody.querySelectorAll('tr'));
+                const headerIndex = Array.from(header.parentNode.children).indexOf(header);
+                const isAscending = !header.classList.contains('asc');
+                
+                // Clear previous sort indicators
+                table.querySelectorAll('th').forEach(th => {
+                    th.classList.remove('asc', 'desc');
+                    const icon = th.querySelector('.sort-icon i');
+                    if (icon) icon.className = 'bi bi-arrow-down-up';
+                });
+                
+                // Set new sort indicator
+                header.classList.add(isAscending ? 'asc' : 'desc');
+                const icon = header.querySelector('.sort-icon i');
+                if (icon) icon.className = isAscending ? 'bi bi-arrow-down' : 'bi bi-arrow-up';
+                
+                // Sort rows
+                rows.sort((a, b) => {
+                    const aValue = a.children[headerIndex].textContent;
+                    const bValue = b.children[headerIndex].textContent;
+                    
+                    // Try numeric comparison first
+                    const aNum = parseFloat(aValue.replace(/,/g, ''));
+                    const bNum = parseFloat(bValue.replace(/,/g, ''));
+                    if (!isNaN(aNum) && !isNaN(bNum)) {
+                        return isAscending ? aNum - bNum : bNum - aNum;
+                    }
+                    
+                    // Fall back to string comparison
+                    return isAscending
+                        ? aValue.localeCompare(bValue)
+                        : bValue.localeCompare(aValue);
+                });
+                
+                // Rebuild table
+                rows.forEach(row => tbody.appendChild(row));
+            }
+
+            // Simple HTML escaping function
+            function escapeHtml(unsafe) {
+                if (unsafe === null || typeof unsafe === 'undefined') return '';
+                return String(unsafe)
+                     .replace(/&/g, "&amp;")
+                     .replace(/</g, "&lt;") // Also correcting < to &lt;
+                     .replace(/>/g, "&gt;") // Also correcting > to &gt;
+                     .replace(/"/g, "&quot;") // Correcting " to &quot;
+                     .replace(/'/g, "&#039;");
+            }
+
+
+            async function handleCsvIntent(message) {
+                addMessage("CSV Tool Requested (Placeholder)", 'bot');
+                showStatus('CSV tool is a placeholder.', 'info');
+                // TODO: Implement specific CSV Tool UI and backend logic if needed separately
+            }
+
+
+            async function handleEmailIntent(message, geminiApiKey) {
+                emailForm.classList.add('visible');
+                settingsPanel.style.display = 'none';
+                let receiver = extractEmail(message);
+                if (receiver) document.getElementById('receiverEmail').value = receiver;
+                if (!geminiApiKey) { addMessage("Please set Gemini API key.", 'bot'); return; }
+                addMessage("Generating email draft...", 'bot');
+                const googleApiKey = document.getElementById('googleApiKey').value;
+                const searchEngineId = document.getElementById('searchEngineId').value;
+                const searchEnabled = proSearchToggleInput.checked;
+                const emailContent = await getAIResponse(message, geminiApiKey, true, searchEnabled, googleApiKey, searchEngineId);
+                if (emailContent && emailContent.success) {
+                    document.getElementById('emailSubject').value = emailContent.subject || '';
+                    document.getElementById('emailBody').value = emailContent.body || '';
+                    addMessage("Draft ready. Review before sending.", 'bot');
+                } else {
+                    addMessage(`Couldn't generate email content. ${emailContent?.error || ''}`, 'bot');
+                    showStatus(`Email Gen Error: ${emailContent?.error || 'Unknown'}`, 'danger');
+                }
+            }
+
+            async function handleChatIntent(message, geminiApiKey) {
+                emailForm.classList.remove('visible');
+                const googleApiKey = document.getElementById('googleApiKey').value;
+                const searchEngineId = document.getElementById('searchEngineId').value;
+                let useSearch = proSearchToggleInput.checked;
+                if (useSearch && (!googleApiKey || !searchEngineId)) { addMessage("Pro Search enabled, but keys missing. Using standard chat.", 'bot'); useSearch = false; }
+                
+                const file = dataFileInput.files[0];
+                let formData = new FormData();
+                formData.append('query', message);
+                if (file) {
+                    formData.append('image', file);
+                }
+                formData.append('gemini_api_key', geminiApiKey);
+                formData.append('google_api_key', googleApiKey);
+                formData.append('search_engine_id', searchEngineId);
+                formData.append('useSearch', useSearch);
+
+                const aiResponseData = await getAIResponse(formData);
+
+                if (aiResponseData && typeof aiResponseData.ai_response !== 'undefined') {
+                    addMessage(aiResponseData.ai_response, 'bot', aiResponseData.search_results);
+                    if (aiResponseData.search_results && aiResponseData.search_results.length > 0) {
+                        displaySearchResults(aiResponseData.search_results, searchContainer, true); // Display in sources tab
+                    } else {
+                        displaySearchResults([], searchContainer); // Clear sources tab
+                    }
+                } else {
+                     addMessage("Sorry, couldn't get a response.", 'bot');
+                     showStatus("Error getting AI response.", 'danger');
+                }
+            }
+
+
+            async function sendEmail() {
+                const senderEmail = document.getElementById('senderEmail').value;
+                const senderPassword = document.getElementById('senderPassword').value;
+                const receiverEmail = document.getElementById('receiverEmail').value;
+                const subject = document.getElementById('emailSubject').value;
+                const body = document.getElementById('emailBody').value;
+                if (!senderEmail || !senderPassword || !receiverEmail || !subject || !body) { showStatus('Please fill all email fields.', 'warning'); return; }
+                emailForm.classList.remove('visible');
+                loadingIndicator.style.display = 'flex';
+                statusMessage.classList.add('d-none');
+                try {
+                    const response = await fetch('/send_email', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ sender_email: senderEmail, sender_password: senderPassword, receiver_email: receiverEmail, subject: subject, body: body }), });
+                    const data = await response.json();
+                    if (response.ok && data.success) { addMessage(`Email sent to ${receiverEmail}!`, 'bot'); showStatus(data.message || 'Email sent!', 'success'); document.getElementById('receiverEmail').value = ''; document.getElementById('emailSubject').value = ''; document.getElementById('emailBody').value = ''; }
+                    else throw new Error(data.message || `HTTP error ${response.status}`);
+                } catch (error) {
+                    console.error("Error sending email:", error);
+                    addMessage(`Failed to send email: ${error.message}`, 'bot');
+                    showStatus(`Email Error: ${error.message}`, 'danger');
+                    emailForm.classList.add('visible');
+                }
+                finally { loadingIndicator.style.display = 'none'; }
+            }
+
+            // Modified addMessage to optionally allow raw HTML
+            function addMessage(content, sender, sources = [], allowHtml = false) {
+                const messageWrapper = document.createElement('div');
+                messageWrapper.style.marginBottom = '10px'; // Keep spacing between messages
+
+                // Display sources above the message if applicable
+                if (sender === 'bot' && sources && sources.length > 0) {
+                    const sourcesDiv = document.createElement('div');
+                    sourcesDiv.className = 'search-container'; // Use existing styling
+                    sourcesDiv.style.marginBottom = '8px';
+                    sourcesDiv.style.maxWidth = '80%'; // Align with bot message width
+                    sourcesDiv.style.marginRight = 'auto'; // Align left like bot message
+                    displaySearchResults(sources, sourcesDiv); // Display compact sources
+                    messageWrapper.appendChild(sourcesDiv);
+                }
+
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
+                // messageDiv.style.marginBottom = '0'; // Remove bottom margin if sources are present?
+
+                if (allowHtml) {
+                    messageDiv.innerHTML = content; // Directly insert HTML (used for tables, plots)
+                } else {
+                    // Process text for markdown-like formatting and line breaks
+                    let text = content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                                     .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                                     .replace(/\n/g, '<br>');
+                    messageDiv.innerHTML = text;
+                }
+
+                messageWrapper.appendChild(messageDiv);
+                chatContainer.appendChild(messageWrapper);
+                chatContainer.scrollTop = chatContainer.scrollHeight; // Scroll to bottom
+            }
+
+            async function getAIResponse(formData) {
+                const endpoint = '/ai_search';
+
+                try {
+                    const response = await fetch(endpoint, { method: 'POST', body: formData });
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.error || `API Error: ${response.statusText}`);
+                    }
+                    const data = await response.json();
+
+                    return data;
+
+                } catch (error) {
+                    console.error(`Error calling ${endpoint}:`, error);
+                    addMessage(`API Error: ${error.message}. Falling back to standard chat.`, 'bot');
+                    return { ai_response: `AI connection error: ${error.message}.`, search_results: [] }; // Ensure consistent return structure on error
+                }
+            }
+
+            async function getStandardChatResponse(message, apiKey) {
+                const chatPrompt = `You are a helpful AI assistant. Respond clearly and concisely to: "${message}"`;
+                try {
+                    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`; // Use Flash for standard chat
+                    const headers = {'Content-Type': 'application/json'};
+                    const body = { "contents": [{"parts": [{"text": chatPrompt}]}], "generationConfig": { "temperature": 0.7, "maxOutputTokens": 1000 } };
+                    const response = await fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(body) });
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`Gemini Error: ${response.status}, ${errorText}`);
+                    }
+                    const json = await response.json();
+                    if (json.candidates?.[0]?.content?.parts?.[0]?.text) {
+                        return json.candidates[0].content.parts[0].text;
+                    } else {
+                        console.warn("Empty/blocked Gemini response:", json);
+                        let reason = json?.promptFeedback?.blockReason || "Unknown reason";
+                        return `Response empty or blocked by API (${reason}).`;
+                    }
+                } catch (error) {
+                    console.error("Standard chat error:", error);
+                    return `AI connection error: ${error.message}.`;
+                }
+            }
+
+            function displaySearchResults(results, containerElement = searchContainer, fullView = false) {
+                containerElement.innerHTML = ''; // Clear previous results
+                if (!results || results.length === 0) {
+                    if (containerElement === searchContainer) { // Only show placeholder in main Sources tab
+                        containerElement.innerHTML = '<p class="text-muted text-center">Sources will appear here when available.</p>';
+                    }
+                    return; // Don't display anything if no results
+                }
+
+                const numToDisplay = (fullView || containerElement === searchContainer) ? results.length : Math.min(results.length, MAX_SOURCES_DISPLAY_IN_CHAT);
+                const showMoreSourcesIndicator = !fullView && containerElement !== searchContainer && results.length > MAX_SOURCES_DISPLAY_IN_CHAT;
+
+                for (let i = 0; i < numToDisplay; i++) {
+                    const result = results[i];
+                    const itemLink = document.createElement('a');
+                    itemLink.className = 'search-result-item';
+                    itemLink.href = result.link;
+                    itemLink.target = '_blank';
+                    itemLink.rel = 'noopener noreferrer';
+                    itemLink.title = result.title + "\n" + result.snippet; // Add snippet to title
+
+                    const favicon = document.createElement('img');
+                    favicon.className = 'favicon';
+                    try { favicon.src = `https://www.google.com/s2/favicons?domain=${new URL(result.link).hostname}&sz=16`; }
+                    catch { favicon.src = 'https://www.google.com/favicon.ico'; } // Fallback icon
+                    favicon.alt = ''; // Decorative image
+
+                    const titleSpan = document.createElement('span');
+                    titleSpan.className = 'title';
+                    titleSpan.textContent = result.title;
+
+                    itemLink.appendChild(favicon);
+                    itemLink.appendChild(titleSpan);
+                    containerElement.appendChild(itemLink);
+                }
+
+                // "+N Sources" indicator for chat view
+                if (showMoreSourcesIndicator) {
+                    const remainingCount = results.length - MAX_SOURCES_DISPLAY_IN_CHAT;
+                    const moreItem = document.createElement('div');
+                    moreItem.className = 'more-sources-item'; // Use specific class
+                    moreItem.title = `${remainingCount} more sources available in the Sources tab`;
+
+                    const iconsDiv = document.createElement('div');
+                    iconsDiv.className = 'more-sources-icons';
+                    const iconCount = Math.min(remainingCount, MAX_MORE_ICONS); // Show max 3 stacked icons
+                    // Calculate width needed for stacked icons
+                    iconsDiv.style.width = `${iconCount * 10 + 8}px`; // 10px overlap + 8px for last icon width
+
+                    // Add stacked icons
+                    for (let i = 0; i < iconCount; i++) {
+                        const result = results[MAX_SOURCES_DISPLAY_IN_CHAT + i];
+                        const favicon = document.createElement('img');
+                        favicon.className = 'favicon';
+                        try { favicon.src = `https://www.google.com/s2/favicons?domain=${new URL(result.link).hostname}&sz=16`; }
+                        catch { favicon.src = 'https://www.google.com/favicon.ico'; }
+                        favicon.alt = '';
+                        favicon.style.left = `${i * 10}px`; // Overlap icons
+                        iconsDiv.appendChild(favicon);
+                    }
+
+                    const moreSpan = document.createElement('span');
+                    moreSpan.textContent = `+${remainingCount} sources`;
+                    // Adjust margin based on number of icons shown
+                    moreSpan.style.marginLeft = `${iconCount * 10 + 10}px`; // Position text after icons
+
+                    moreItem.appendChild(iconsDiv);
+                    moreItem.appendChild(moreSpan);
+                    containerElement.appendChild(moreItem);
+                }
+            }
+
+
+            function extractEmail(text) {
+                const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
+                return text.match(emailRegex)?.[0] || null;
+            }
+
+            function showStatus(message, type = 'info') {
+                statusMessage.textContent = message;
+                statusMessage.className = `alert alert-${type} mt-3`; // Ensure mt-3 is present
+                statusMessage.classList.remove('d-none');
+                statusMessage.setAttribute('role', 'alert');
+                // Auto-hide for success/warning after 4 seconds
+                if (type === 'success' || type === 'warning') {
+                    setTimeout(() => { statusMessage.classList.add('d-none'); }, 4000);
+                }
+            }
+
+            // --- Initialization ---
+            function loadSettings() {
+                document.getElementById('senderEmail').value = localStorage.getItem('senderEmail') || '';
+                document.getElementById('senderPassword').value = localStorage.getItem('senderPassword') || '';
+                document.getElementById('geminiApiKey').value = localStorage.getItem('geminiApiKey') || '';
+                document.getElementById('googleApiKey').value = localStorage.getItem('googleApiKey') || '';
+                document.getElementById('searchEngineId').value = localStorage.getItem('searchEngineId') || '';
+                proSearchToggleInput.checked = localStorage.getItem('webSearchEnabled') === 'true';
+            }
+
+            loadSettings();
+
+
+        });
+    </script>
+</body>
+</html>
