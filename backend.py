@@ -449,10 +449,15 @@ def ai_search_route():
     gemini_api_key = request.form.get('gemini_api_key')
     google_api_key = request.form.get('google_api_key')
     search_engine_id = request.form.get('search_engine_id')
+    use_search = request.form.get('useSearch', 'false').lower() == 'true' # Get search toggle state
     image_file = request.files.get('image')
 
-    if not all([query, gemini_api_key, google_api_key, search_engine_id]):
-        return jsonify({'success': False, 'error': 'Missing required fields'}), 400
+    # Check required fields, note google_api_key and search_engine_id are only needed if use_search is true
+    if not query or not gemini_api_key:
+         return jsonify({'success': False, 'error': 'Missing query or Gemini API key'}), 400
+    if use_search and (not google_api_key or not search_engine_id):
+        return jsonify({'success': False, 'error': 'Missing Google API Key or Search Engine ID for Pro Search'}), 400
+
 
     # Prepare image data
     image_data = None
@@ -463,25 +468,35 @@ def ai_search_route():
             print(f"Error encoding image: {e}")
             return jsonify({'success': False, 'error': f'Error encoding image: {str(e)}'}), 400
 
-    # First, get search results
-    search_results = search_information(query, google_api_key, search_engine_id)
-
-    # Handle search error string
+    search_results = []
+    search_results_for_json = []
     search_context = ""
-    if isinstance(search_results, str) and search_results.startswith("Error"):
-         print(f"Search error during AI Search: {search_results}")
-         search_context = f"\n\nNote: There was an error retrieving search results: {search_results}\n"
-         # Continue to AI generation, informing it about the search failure.
-         search_results_for_json = [] # Send empty list in JSON if search failed
-    elif isinstance(search_results, list):
-         search_context = "\n\nHere are some search results to help you answer:\n"
-         for item in search_results:
-              search_context += f"- Title: {item.get('title', 'N/A')}\n  Link: {item.get('link', 'N/A')}\n  Snippet: {item.get('snippet', 'N/A')}\n"
-         search_results_for_json = search_results # Use the actual results
+
+    if use_search:
+        # Perform search only if requested
+        search_results = search_information(query, google_api_key, search_engine_id)
+
+        # Handle search results or errors
+        if isinstance(search_results, str) and search_results.startswith("Error"):
+            print(f"Search error during AI Search: {search_results}")
+            search_context = f"\n\nNote: There was an error retrieving search results: {search_results}\n"
+            search_results_for_json = [] # Send empty list in JSON if search failed
+        elif isinstance(search_results, list) and search_results:
+            search_context = "\n\nHere are some search results to help you answer:\n"
+            for item in search_results:
+                search_context += f"- Title: {item.get('title', 'N/A')}\n  Link: {item.get('link', 'N/A')}\n  Snippet: {item.get('snippet', 'N/A')}\n"
+            search_results_for_json = search_results # Use the actual results
+        elif isinstance(search_results, list) and not search_results:
+             search_context = "\n\nNote: No relevant search results were found.\n"
+             search_results_for_json = []
+        else:
+            print(f"Unexpected search result type for AI Search: {type(search_results)}")
+            search_context = "\n\nNote: An unexpected error occurred during search.\n"
+            search_results_for_json = []
     else:
-         print(f"Unexpected search result type for AI Search: {type(search_results)}")
-         search_context = "\n\nNote: An unexpected error occurred during search.\n"
-         search_results_for_json = []
+        # No search requested
+        search_context = "\n\nNote: Web search was not used for this query.\n"
+        search_results_for_json = []
 
 
     # Then, have Gemini analyze and summarize them
@@ -490,13 +505,13 @@ The user asked: "{query}"
 {search_context}
 Based on the available information (and search results if provided), please provide a comprehensive answer to the user's query.
 If search results were provided, include information from multiple sources when possible, and cite the sources when appropriate.
-If search failed or returned no results, answer based on your general knowledge.
+If search failed, returned no results, or was not used, answer based on your general knowledge.
 Your answer should be well-structured, informative, and helpful.
 """
     if image_data:
         prompt += f"\n\nAlso, here is an image to consider: <image data='{image_data}'/>"
 
-# Use standard text generation
+    # Use standard text generation
     response = get_gemini_response_text(prompt, gemini_api_key)
 
     if response.startswith("Error"):
@@ -504,7 +519,7 @@ Your answer should be well-structured, informative, and helpful.
 
     return jsonify({
         'success': True,
-        'search_results': search_results_for_json, # Return list (empty if search failed)
+        'search_results': search_results_for_json, # Return list (empty if search failed or not used)
         'ai_response': response
     })
 
