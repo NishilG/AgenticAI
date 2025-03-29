@@ -9,6 +9,9 @@ import ast
 import re
 import asyncio
 import base64
+import datetime
+from datetime import datetime
+import glob
 # Removed pandas, io, uuid, Path imports
 
 # Attempt to import browser_use components, handle potential ImportError
@@ -314,9 +317,108 @@ def parse_response(response_text):
 
 # --- Flask Routes ---
 
+# --- Screenshot Handling ---
+# Screenshot configuration
+screenshot_dir = "static/screenshots"
+latest_screenshot = None
+screenshot_interval = 2  # seconds between screenshots
+
+# Create screenshots directory if it doesn't exist
+os.makedirs(screenshot_dir, exist_ok=True)
+
+async def cleanup_screenshots():
+    """Delete all screenshots except the latest one"""
+    global latest_screenshot
+    if latest_screenshot is None:
+        return
+    
+    files = glob.glob(os.path.join(screenshot_dir, "screenshot_*.jpg"))
+    files_to_delete = [f for f in files if f != latest_screenshot[0]]
+    
+    for file in files_to_delete:
+        try:
+            os.remove(file)
+        except OSError as e:
+            print(f"Error deleting screenshot {file}: {str(e)}")
+
+@app.route('/screenshots', methods=['GET'])
+def list_screenshots():
+    """Returns a list of screenshot filenames."""
+    files = glob.glob(os.path.join(screenshot_dir, "screenshot_*.jpg"))
+    # Create a list of filenames relative to the static directory
+    filenames = [os.path.basename(file) for file in files]
+    return jsonify(filenames)
+
+async def cleanup_screenshots():
+    """Delete all screenshots except the latest one"""
+    global latest_screenshot
+    if latest_screenshot is None:
+        return
+    
+    files = glob.glob(os.path.join(screenshot_dir, "screenshot_*.jpg"))
+    files_to_delete = [f for f in files if f != latest_screenshot[0]]
+    
+    for file in files_to_delete:
+        try:
+            os.remove(file)
+        except Exception as e:
+            print(f"Error deleting screenshot {file}: {str(e)}")
+
+async def periodic_screenshots(browser_context, stop_event):
+    """Take screenshots at regular intervals"""
+    while not stop_event.is_set():
+        await capture_screenshot(browser_context)
+        await asyncio.sleep(screenshot_interval)
+
+async def capture_screenshot(browser_context):
+    """Capture and encode a screenshot"""
+    if not browser_context or not hasattr(browser_context, 'browser'):
+        return None
+        
+    playwright_browser = browser_context.browser.playwright_browser
+    
+    if playwright_browser and playwright_browser.contexts:
+        if len(playwright_browser.contexts) > 0:
+            playwright_context = playwright_browser.contexts[0]
+        else:
+            return None
+    else:
+        return None
+
+    if playwright_context:
+        pages = playwright_context.pages
+
+    if pages:
+        active_page = pages[0]
+        for page in pages:
+            if page.url != "about:blank":
+                active_page = page
+    else:
+        return None
+
+    try:
+        screenshot = await active_page.screenshot(
+            type='jpeg',
+            quality=75,
+            scale="css"
+        )
+        encoded = base64.b64encode(screenshot).decode('utf-8')
+        
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"{screenshot_dir}/screenshot_{timestamp}.jpg"
+        with open(filename, "wb") as f:
+            f.write(screenshot)
+            
+        global latest_screenshot
+        latest_screenshot = (filename, encoded)
+        return encoded
+    except Exception as e:
+        print(f"Screenshot error: {str(e)}")
+        return None
+
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', latest_screenshot=latest_screenshot)
 
 # Serve static plot files
 @app.route('/static/plots/<filename>')
@@ -527,57 +629,94 @@ Your answer should be well-structured, informative, and helpful.
 @app.route('/browser_action', methods=['POST'])
 async def browser_action_route():
     if not LANGCHAIN_AVAILABLE or not BrowserAgent or not ChatGoogleGenerativeAI:
-         return jsonify({'success': False, 'error': 'BrowserUse tool is not configured or dependencies are missing.'}), 501 # Not Implemented
-
+        return jsonify({'success': False, 'error': 'BrowserUse tool is not configured or dependencies are missing.'}), 501 # Not Implemented
+    
     data = request.json
     user_task = data.get('task')
-    gemini_api_key = data.get('gemini_api_key') # Assuming API key might be needed for the LLM
-
+    gemini_api_key = data.get('gemini_api_key')
+    
     if not user_task or not gemini_api_key:
         return jsonify({'success': False, 'error': 'Missing task or API key for BrowserUse'}), 400
-
+    
     try:
-        # Configure the LLM (ensure API key is handled appropriately)
-        # It's better practice to load the API key from environment variables if possible
-        # os.environ["GOOGLE_API_KEY"] = gemini_api_key # Less secure, use only if necessary
-        llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=gemini_api_key) # Pass key directly
-
+        # Import the necessary classes
+        from browser_use import BrowserConfig, Browser
+        from browser_use.browser.context import BrowserContextConfig, BrowserContext
+        
+        # Configure browser to run in headless mode
+        browser_config = BrowserConfig(
+            headless=True,  # Run in headless mode
+            disable_security=True  # Keep default security setting
+        )
+        
+        # Configure browser context with additional settings
+        context_config = BrowserContextConfig(
+            wait_for_network_idle_page_load_time=3.0,  # Increased wait time for better reliability
+            browser_window_size={'width': 1280, 'height': 1100},
+            highlight_elements=False,  # No need for highlights in headless mode
+            viewport_expansion=500  # Default viewport expansion
+        )
+        
+        # Initialize the browser and context
+        browser = Browser(config=browser_config)
+        browser_context = BrowserContext(browser=browser, config=context_config)
+        
+        # Configure the LLM
+        llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=gemini_api_key)
+        
+        # Start periodic screenshots
+        stop_event = asyncio.Event()
+        screenshot_task = asyncio.create_task(periodic_screenshots(browser_context, stop_event))
+        
+        # Initialize the browser agent with the browser context
         agent = BrowserAgent(
             task=user_task,
             llm=llm,
-            # browser=browser # Potentially configure browser instance if needed
+            browser_context=browser_context
         )
-        browser_result_obj = await agent.run()
-        browser_result_str = str(browser_result_obj) # Convert the raw result object to string
-
+        
+        # Take initial screenshot
+        await capture_screenshot(browser_context)
+        
+        # Run agent
+        try:
+            browser_result_obj = await agent.run()
+        finally:
+            # Stop periodic screenshots
+            stop_event.set()
+            await screenshot_task
+            
+            # Take final screenshot
+            await capture_screenshot(browser_context)
+            
+            # Clean up screenshots
+            await cleanup_screenshots()
+        browser_result_str = str(browser_result_obj)
+        
         # Prepare prompt for Gemini summarization
         summarization_prompt = f"""The user asked the browser agent to perform the following task:
 "{user_task}"
-
 The browser agent executed the task and produced the following detailed output:
 --- BROWSER AGENT OUTPUT START ---
 {browser_result_str}
 --- BROWSER AGENT OUTPUT END ---
-
 Based on the user's request and the browser agent's output, please provide a concise and user-friendly summary of what was done and the key information found. Focus on the final outcome and relevant data extracted. Avoid technical jargon from the agent's internal steps unless it's essential for understanding the result.
 """
-
         # Call Gemini to summarize
         final_summary = get_gemini_response_text(summarization_prompt, gemini_api_key)
-
+        
         # Check for errors from Gemini
         if final_summary.startswith("Error"):
             print(f"Error summarizing browser result: {final_summary}")
             # Return the raw string result as a fallback if summarization fails
             return jsonify({'success': True, 'result': f"Browser action completed, but summarization failed. Raw output:\n{browser_result_str}"})
-
+            
         return jsonify({'success': True, 'result': final_summary})
-
+        
     except Exception as e:
         print(f"Error during browser action: {e}")
         # Include the original user task in the error message for context
         return jsonify({'success': False, 'error': f'Error executing browser task "{user_task}": {str(e)}'}), 500
-
 # Removed DataAnalysis Tool Route (lines 578-667)
 
 
