@@ -25,6 +25,7 @@ python -m venv data_analysis_venv
 # Backend server
 source backend_venv/bin/activate
 pip install -r requirements_backend.txt
+playwright install
 deactivate
 
 # Data analysis server  
