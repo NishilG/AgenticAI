@@ -3426,3 +3426,826 @@ def analyze_data(dfs: list[pd.DataFrame]) ->dict:
 2025-03-28 01:11:41 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/backend.py', reloading
 2025-03-28 01:11:41 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/backend.py', reloading
 2025-03-28 01:11:41 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/backend.py', reloading
+2025-03-28 17:13:07 [INFO] Question: Create a bar graph with  follower count andnames from the excel sheet
+2025-03-28 17:13:07 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-28 17:13:07 [INFO] Prompt ID: 1e5adc6a-1bf3-4b1a-8cd0-49a8f13b8dcb
+2025-03-28 17:13:07 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,4616293168,596ofyes2yvz@protonmai...,761.0,49.0,5406624334,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,7671912885,_r058k@outlook.com...,5.0,91.0,4757518572,,,NO,YES,https://www.facebook.c...
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,1061051410,ndqpzg4bxsl@icloud.com...,2.0,,1724297804,,,NO,YES,
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,4201641326,q_mteqm@aol.com...,2566.0,234.0,2153760172,"Abuja, Nigeria",Abuja,NO,YES,
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,2954528204,0wl3t090@zoho.com...,2286.0,33.0,9316673922,,,NO,NO,https://www.espaces-at...
+</dataframe>
+
+<conversation>
+User 1: Create a bar graph with  follower count andnames from the excel sheet
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-28 17:13:13 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0]
+    
+    # Prepare: ensure the necessary columns are present and drop rows with missing follower count or name
+    df_clean = df[['Full Name', 'Followers count']].dropna()
+    
+    # Process: convert follower count to numeric if not already
+    df_clean['Followers count'] = pd.to_numeric(df_clean['Followers count'], errors='coerce')
+    df_clean = df_clean.dropna(subset=['Followers count'])
+    
+    # Limit to top 10 followers for better visualization if large
+    df_top = df_clean.sort_values(by='Followers count', ascending=False).head(10)
+    
+    # Analyze: create the bar plot
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_top['Full Name'], df_top['Followers count'], color='skyblue')
+    plt.xlabel('Follower Count')
+    plt.ylabel('Profile Name')
+    plt.title('Top 10 Instagram Profiles by Follower Count')
+    plt.gca().invert_yaxis()  # Highest follower on top
+    plt.tight_layout()
+    
+    # Save the plot
+    plt.savefig('temp_chart.png')
+    plt.close()
+    
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-03-28 17:13:13 [INFO] Saving charts to static/plots/1e5adc6a-1bf3-4b1a-8cd0-49a8f13b8dcb.png
+2025-03-28 17:13:13 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in static/plots/1e5adc6a-1bf3-4b1a-8cd0-49a8f13b8dcb.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "static/plots/1e5adc6a-1bf3-4b1a-8cd0-49a8f13b8dcb.png" }
+    """
+    df = dfs[0]
+    df_clean = df[['Full Name', 'Followers count']].dropna()
+    df_clean['Followers count'] = pd.to_numeric(df_clean['Followers count'], errors='coerce')
+    df_clean = df_clean.dropna(subset=['Followers count'])
+    df_top = df_clean.sort_values(by='Followers count', ascending=False).head(10)
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_top['Full Name'], df_top['Followers count'], color='skyblue')
+    plt.xlabel('Follower Count')
+    plt.ylabel('Profile Name')
+    plt.title('Top 10 Instagram Profiles by Follower Count')
+    plt.gca().invert_yaxis()
+    plt.tight_layout()
+    plt.savefig('static/plots/1e5adc6a-1bf3-4b1a-8cd0-49a8f13b8dcb.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'static/plots/1e5adc6a-1bf3-4b1a-8cd0-49a8f13b8dcb.png'}
+        ```
+2025-03-28 17:13:14 [INFO] Answer: {'type': 'plot', 'value': 'static/plots/1e5adc6a-1bf3-4b1a-8cd0-49a8f13b8dcb.png'}
+2025-03-28 17:13:14 [INFO] Executed in: 6.536760091781616s
+2025-03-28 17:13:16 [INFO] 127.0.0.1 - - [28/Mar/2025 17:13:16] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-03-28 17:13:16 [INFO] 127.0.0.1 - - [28/Mar/2025 17:13:16] "GET /None/streamlit/b1b54304332643e7aa0fe5dc78c9da8a.png HTTP/1.1" 200 -
+2025-03-29 11:18:45 [INFO] Question: Create a distribution graph of the age from this excel sheet
+2025-03-29 11:18:45 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-29 11:18:45 [INFO] Prompt ID: baf9316c-da06-4c88-abb3-f8d7ce93c4ba
+2025-03-29 11:18:45 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 400 rows and 26 columns.
+This is the metadata of the dataframe dfs[0]:
+id,age,bp,sg,al,su,rbc,pc,pcc,ba,bgr,bu,sc,sod,pot,hemo,pcv,wc,rc,htn,dm,cad,appet,pe,ane,classification
+0,48.0,80.0,1.02,1.0,0.0,,normal,notpresent,notpresent,121.0,36.0,1.2,,,15.4,44,7800,5.2,yes,yes,no,good,no,no,ckd
+1,7.0,50.0,1.02,4.0,0.0,,normal,notpresent,notpresent,,18.0,0.8,,,11.3,38,6000,,no,no,no,good,no,no,ckd
+3,48.0,70.0,1.005,4.0,0.0,normal,abnormal,present,notpresent,117.0,56.0,3.8,111.0,2.5,11.2,32,6700,3.9,yes,no,no,poor,yes,yes,ckd
+2,62.0,80.0,1.01,2.0,3.0,normal,normal,notpresent,notpresent,423.0,53.0,1.8,,,9.6,31,7500,,no,yes,no,poor,no,yes,ckd
+4,51.0,80.0,1.01,2.0,0.0,normal,normal,notpresent,notpresent,106.0,26.0,1.4,,,11.6,35,7300,4.6,no,no,no,good,no,no,ckd
+</dataframe>
+
+<conversation>
+User 1: Create a distribution graph of the age from this excel sheet
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-29 11:18:48 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+
+    try:
+        df = dfs[0]
+        
+        # Handle missing values in 'age' column by dropping rows with NaN
+        df = df.dropna(subset=['age'])
+        df['age'] = df['age'].astype(int)
+
+        plt.figure(figsize=(10, 6))
+        plt.hist(df['age'], bins=10, edgecolor='black')  # Adjust bins as needed
+        plt.title('Distribution of Age')
+        plt.xlabel('Age')
+        plt.ylabel('Frequency')
+        plt.grid(True)
+        plt.savefig("temp_chart.png")
+        plt.close()
+
+        return {
+            "type": "plot",
+            "value": "temp_chart.png"
+        }
+    except Exception as e:
+        return {
+            "type": "string",
+            "value": str(e)
+        }
+```
+
+2025-03-29 11:18:48 [INFO] Saving charts to /media/nishil/Drive/Share/Git Email_automation/static/plots/baf9316c-da06-4c88-abb3-f8d7ce93c4ba.png
+2025-03-29 11:18:48 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in /media/nishil/Drive/Share/Git Email_automation/static/plots/baf9316c-da06-4c88-abb3-f8d7ce93c4ba.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "/media/nishil/Drive/Share/Git Email_automation/static/plots/baf9316c-da06-4c88-abb3-f8d7ce93c4ba.png" }
+    """
+    try:
+        df = dfs[0]
+        df = df.dropna(subset=['age'])
+        df['age'] = df['age'].astype(int)
+        plt.figure(figsize=(10, 6))
+        plt.hist(df['age'], bins=10, edgecolor='black')
+        plt.title('Distribution of Age')
+        plt.xlabel('Age')
+        plt.ylabel('Frequency')
+        plt.grid(True)
+        plt.savefig('/media/nishil/Drive/Share/Git Email_automation/static/plots/baf9316c-da06-4c88-abb3-f8d7ce93c4ba.png')
+        plt.close()
+        return {'type': 'plot', 'value': '/media/nishil/Drive/Share/Git Email_automation/static/plots/baf9316c-da06-4c88-abb3-f8d7ce93c4ba.png'}
+    except Exception as e:
+        return {'type': 'string', 'value': str(e)}
+        ```
+2025-03-29 11:18:49 [INFO] Answer: {'type': 'plot', 'value': '/media/nishil/Drive/Share/Git Email_automation/static/plots/baf9316c-da06-4c88-abb3-f8d7ce93c4ba.png'}
+2025-03-29 11:18:49 [INFO] Executed in: 4.671309232711792s
+2025-03-29 11:18:51 [INFO] 127.0.0.1 - - [29/Mar/2025 11:18:51] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-03-29 11:18:51 [INFO] 127.0.0.1 - - [29/Mar/2025 11:18:51] "[33mGET /static/plots/d95a30cc27e44c6d8173aef3e867ac92.png HTTP/1.1[0m" 404 -
+2025-03-29 11:19:14 [INFO] 127.0.0.1 - - [29/Mar/2025 11:19:14] "[33mGET /static/plots/d95a30cc27e44c6d8173aef3e867ac92.png HTTP/1.1[0m" 404 -
+2025-03-29 11:20:51 [INFO] 127.0.0.1 - - [29/Mar/2025 11:20:51] "GET /static/plots/1e5adc6a-1bf3-4b1a-8cd0-49a8f13b8dcb.png HTTP/1.1" 200 -
+2025-03-29 11:25:40 [INFO] Question: Create a distribution graph of the age from this excel sheet
+2025-03-29 11:25:40 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-29 11:25:40 [INFO] Prompt ID: b621d0a2-f8b9-49b6-a6a8-f527e41683a2
+2025-03-29 11:25:40 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 400 rows and 26 columns.
+This is the metadata of the dataframe dfs[0]:
+id,age,bp,sg,al,su,rbc,pc,pcc,ba,bgr,bu,sc,sod,pot,hemo,pcv,wc,rc,htn,dm,cad,appet,pe,ane,classification
+4,51.0,80.0,1.01,2.0,0.0,normal,normal,notpresent,notpresent,106.0,26.0,1.4,,,11.6,35,7300,4.6,no,no,no,good,no,no,ckd
+2,62.0,80.0,1.01,2.0,3.0,normal,normal,notpresent,notpresent,423.0,53.0,1.8,,,9.6,31,7500,,no,yes,no,poor,no,yes,ckd
+1,7.0,50.0,1.02,4.0,0.0,,normal,notpresent,notpresent,,18.0,0.8,,,11.3,38,6000,,no,no,no,good,no,no,ckd
+0,48.0,80.0,1.02,1.0,0.0,,normal,notpresent,notpresent,121.0,36.0,1.2,,,15.4,44,7800,5.2,yes,yes,no,good,no,no,ckd
+3,48.0,70.0,1.005,4.0,0.0,normal,abnormal,present,notpresent,117.0,56.0,3.8,111.0,2.5,11.2,32,6700,3.9,yes,no,no,poor,yes,yes,ckd
+</dataframe>
+
+<conversation>
+User 1: Create a distribution graph of the age from this excel sheet
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-29 11:25:45 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0]
+
+    # Handle missing values in 'age' column by dropping rows with NaN
+    df = df.dropna(subset=['age'])
+    df['age'] = df['age'].astype(float)
+
+    # Create the distribution plot
+    plt.figure(figsize=(8, 6))
+    plt.hist(df['age'], bins=10, edgecolor='black')  # You can adjust the number of bins
+    plt.title('Distribution of Age')
+    plt.xlabel('Age')
+    plt.ylabel('Frequency')
+
+    # Save the plot to a file
+    plot_path = "temp_chart.png"
+    plt.savefig(plot_path)
+    plt.close()  # Close the plot to free memory
+
+    return {"type": "plot", "value": plot_path}
+```
+
+2025-03-29 11:25:45 [INFO] Saving charts to /media/nishil/Drive/Share/Git Email_automation/static/plots/b621d0a2-f8b9-49b6-a6a8-f527e41683a2.png
+2025-03-29 11:25:45 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in /media/nishil/Drive/Share/Git Email_automation/static/plots/b621d0a2-f8b9-49b6-a6a8-f527e41683a2.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "/media/nishil/Drive/Share/Git Email_automation/static/plots/b621d0a2-f8b9-49b6-a6a8-f527e41683a2.png" }
+    """
+    df = dfs[0]
+    df = df.dropna(subset=['age'])
+    df['age'] = df['age'].astype(float)
+    plt.figure(figsize=(8, 6))
+    plt.hist(df['age'], bins=10, edgecolor='black')
+    plt.title('Distribution of Age')
+    plt.xlabel('Age')
+    plt.ylabel('Frequency')
+    plot_path = '/media/nishil/Drive/Share/Git Email_automation/static/plots/b621d0a2-f8b9-49b6-a6a8-f527e41683a2.png'
+    plt.savefig(plot_path)
+    plt.close()
+    return {'type': 'plot', 'value': plot_path}
+        ```
+2025-03-29 11:25:46 [INFO] Answer: {'type': 'plot', 'value': '/media/nishil/Drive/Share/Git Email_automation/static/plots/b621d0a2-f8b9-49b6-a6a8-f527e41683a2.png'}
+2025-03-29 11:25:46 [INFO] Executed in: 5.850085496902466s
+2025-03-29 11:25:48 [INFO] 127.0.0.1 - - [29/Mar/2025 11:25:48] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-03-29 11:25:48 [INFO] 127.0.0.1 - - [29/Mar/2025 11:25:48] "[33mGET /static/plots/f20eae8e48bb4f9d9915a71ad530de7b.png HTTP/1.1[0m" 404 -
+2025-03-29 11:31:10 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/parser/response_parser.py', reloading
+2025-03-29 11:31:10 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/parser/response_parser.py', reloading
+2025-03-29 11:33:04 [INFO] Question: Create a distribution graph of the age from this excel sheet
+2025-03-29 11:33:04 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-29 11:33:04 [INFO] Prompt ID: a978aea4-032f-43fb-b12f-e71480770793
+2025-03-29 11:33:05 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 400 rows and 26 columns.
+This is the metadata of the dataframe dfs[0]:
+id,age,bp,sg,al,su,rbc,pc,pcc,ba,bgr,bu,sc,sod,pot,hemo,pcv,wc,rc,htn,dm,cad,appet,pe,ane,classification
+3,48.0,70.0,1.005,4.0,0.0,normal,abnormal,present,notpresent,117.0,56.0,3.8,111.0,2.5,11.2,32,6700,3.9,yes,no,no,poor,yes,yes,ckd
+1,7.0,50.0,1.02,4.0,0.0,,normal,notpresent,notpresent,,18.0,0.8,,,11.3,38,6000,,no,no,no,good,no,no,ckd
+2,62.0,80.0,1.01,2.0,3.0,normal,normal,notpresent,notpresent,423.0,53.0,1.8,,,9.6,31,7500,,no,yes,no,poor,no,yes,ckd
+4,51.0,80.0,1.01,2.0,0.0,normal,normal,notpresent,notpresent,106.0,26.0,1.4,,,11.6,35,7300,4.6,no,no,no,good,no,no,ckd
+0,48.0,80.0,1.02,1.0,0.0,,normal,notpresent,notpresent,121.0,36.0,1.2,,,15.4,44,7800,5.2,yes,yes,no,good,no,no,ckd
+</dataframe>
+
+<conversation>
+User 1: Create a distribution graph of the age from this excel sheet
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-29 11:33:08 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0]
+
+    # Data Cleaning: Handle missing values in 'age' column
+    df['age'] = pd.to_numeric(df['age'], errors='coerce')  # Convert to numeric, coerce errors to NaN
+    df['age'] = df['age'].fillna(df['age'].mean())  # Impute with the mean
+
+    # Create the distribution plot
+    plt.figure(figsize=(8, 6))  # Adjust figure size for better visualization
+    plt.hist(df['age'], bins=10, edgecolor='black')  # Create histogram with specified bins and edgecolor
+    plt.xlabel('Age')  # Label x-axis
+    plt.ylabel('Frequency')  # Label y-axis
+    plt.title('Distribution of Age')  # Add title
+    plt.grid(True)  # Add grid for better readability
+
+    # Save the plot to a file
+    plot_path = "temp_chart.png"
+    plt.savefig(plot_path)
+    plt.close()
+
+
+    return { "type": "plot", "value": plot_path }
+```
+
+2025-03-29 11:33:08 [INFO] Saving charts to /media/nishil/Drive/Share/Git Email_automation/static/plots/a978aea4-032f-43fb-b12f-e71480770793.png
+2025-03-29 11:33:08 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in /media/nishil/Drive/Share/Git Email_automation/static/plots/a978aea4-032f-43fb-b12f-e71480770793.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "/media/nishil/Drive/Share/Git Email_automation/static/plots/a978aea4-032f-43fb-b12f-e71480770793.png" }
+    """
+    df = dfs[0]
+    df['age'] = pd.to_numeric(df['age'], errors='coerce')
+    df['age'] = df['age'].fillna(df['age'].mean())
+    plt.figure(figsize=(8, 6))
+    plt.hist(df['age'], bins=10, edgecolor='black')
+    plt.xlabel('Age')
+    plt.ylabel('Frequency')
+    plt.title('Distribution of Age')
+    plt.grid(True)
+    plot_path = '/media/nishil/Drive/Share/Git Email_automation/static/plots/a978aea4-032f-43fb-b12f-e71480770793.png'
+    plt.savefig(plot_path)
+    plt.close()
+    return {'type': 'plot', 'value': plot_path}
+        ```
+2025-03-29 11:33:10 [INFO] Answer: {'type': 'plot', 'value': '/media/nishil/Drive/Share/Git Email_automation/static/plots/a978aea4-032f-43fb-b12f-e71480770793.png'}
+2025-03-29 11:33:10 [INFO] Executed in: 5.932513236999512s
+2025-03-29 11:33:12 [INFO] 127.0.0.1 - - [29/Mar/2025 11:33:12] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-03-29 11:33:12 [INFO] 127.0.0.1 - - [29/Mar/2025 11:33:12] "[33mGET /static/plots/e7a0b796-4039-4652-be51-5c7c6c1a1df6.png HTTP/1.1[0m" 404 -
+2025-03-29 11:33:21 [INFO] Question: Create a distribution graph of the age from this excel sheet
+2025-03-29 11:33:21 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-29 11:33:21 [INFO] Prompt ID: 514b4ac4-7163-46b7-a04e-a27ae9bfc3d3
+2025-03-29 11:33:21 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 400 rows and 26 columns.
+This is the metadata of the dataframe dfs[0]:
+id,age,bp,sg,al,su,rbc,pc,pcc,ba,bgr,bu,sc,sod,pot,hemo,pcv,wc,rc,htn,dm,cad,appet,pe,ane,classification
+0,48.0,80.0,1.02,1.0,0.0,,normal,notpresent,notpresent,121.0,36.0,1.2,,,15.4,44,7800,5.2,yes,yes,no,good,no,no,ckd
+2,62.0,80.0,1.01,2.0,3.0,normal,normal,notpresent,notpresent,423.0,53.0,1.8,,,9.6,31,7500,,no,yes,no,poor,no,yes,ckd
+3,48.0,70.0,1.005,4.0,0.0,normal,abnormal,present,notpresent,117.0,56.0,3.8,111.0,2.5,11.2,32,6700,3.9,yes,no,no,poor,yes,yes,ckd
+4,51.0,80.0,1.01,2.0,0.0,normal,normal,notpresent,notpresent,106.0,26.0,1.4,,,11.6,35,7300,4.6,no,no,no,good,no,no,ckd
+1,7.0,50.0,1.02,4.0,0.0,,normal,notpresent,notpresent,,18.0,0.8,,,11.3,38,6000,,no,no,no,good,no,no,ckd
+</dataframe>
+
+<conversation>
+User 1: Create a distribution graph of the age from this excel sheet
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-29 11:33:25 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0]
+
+    # Data cleaning: Handle missing age values (replace with median)
+    df['age'] = pd.to_numeric(df['age'], errors='coerce')
+    df['age'].fillna(df['age'].median(), inplace=True)
+
+    # Create the distribution plot
+    plt.figure(figsize=(8, 6))
+    plt.hist(df['age'], bins=10, edgecolor='black')
+    plt.title('Distribution of Age')
+    plt.xlabel('Age')
+    plt.ylabel('Frequency')
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-03-29 11:33:25 [INFO] Saving charts to /media/nishil/Drive/Share/Git Email_automation/static/plots/514b4ac4-7163-46b7-a04e-a27ae9bfc3d3.png
+2025-03-29 11:33:25 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in /media/nishil/Drive/Share/Git Email_automation/static/plots/514b4ac4-7163-46b7-a04e-a27ae9bfc3d3.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "/media/nishil/Drive/Share/Git Email_automation/static/plots/514b4ac4-7163-46b7-a04e-a27ae9bfc3d3.png" }
+    """
+    df = dfs[0]
+    df['age'] = pd.to_numeric(df['age'], errors='coerce')
+    df['age'].fillna(df['age'].median(), inplace=True)
+    plt.figure(figsize=(8, 6))
+    plt.hist(df['age'], bins=10, edgecolor='black')
+    plt.title('Distribution of Age')
+    plt.xlabel('Age')
+    plt.ylabel('Frequency')
+    plt.savefig('/media/nishil/Drive/Share/Git Email_automation/static/plots/514b4ac4-7163-46b7-a04e-a27ae9bfc3d3.png')
+    plt.close()
+    return {'type': 'plot', 'value': '/media/nishil/Drive/Share/Git Email_automation/static/plots/514b4ac4-7163-46b7-a04e-a27ae9bfc3d3.png'}
+        ```
+2025-03-29 11:33:26 [INFO] Answer: {'type': 'plot', 'value': '/media/nishil/Drive/Share/Git Email_automation/static/plots/514b4ac4-7163-46b7-a04e-a27ae9bfc3d3.png'}
+2025-03-29 11:33:26 [INFO] Executed in: 4.788315773010254s
+2025-03-29 11:33:28 [INFO] 127.0.0.1 - - [29/Mar/2025 11:33:28] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-03-29 11:33:28 [INFO] 127.0.0.1 - - [29/Mar/2025 11:33:28] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-03-29 11:38:17 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/parser/response_parser.py', reloading
+2025-03-29 11:38:17 [INFO]  * Detected change in '/media/nishil/Drive/Share/Git Email_automation/parser/response_parser.py', reloading
+2025-03-29 11:40:25 [INFO] Question: Create a distribution graph of the age from this excel sheet
+2025-03-29 11:40:25 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-03-29 11:40:25 [INFO] Prompt ID: 5d1bd977-8fca-4d4a-87a8-a510cd06368b
+2025-03-29 11:40:25 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 400 rows and 26 columns.
+This is the metadata of the dataframe dfs[0]:
+id,age,bp,sg,al,su,rbc,pc,pcc,ba,bgr,bu,sc,sod,pot,hemo,pcv,wc,rc,htn,dm,cad,appet,pe,ane,classification
+4,51.0,80.0,1.01,2.0,0.0,normal,normal,notpresent,notpresent,106.0,26.0,1.4,,,11.6,35,7300,4.6,no,no,no,good,no,no,ckd
+1,7.0,50.0,1.02,4.0,0.0,,normal,notpresent,notpresent,,18.0,0.8,,,11.3,38,6000,,no,no,no,good,no,no,ckd
+0,48.0,80.0,1.02,1.0,0.0,,normal,notpresent,notpresent,121.0,36.0,1.2,,,15.4,44,7800,5.2,yes,yes,no,good,no,no,ckd
+2,62.0,80.0,1.01,2.0,3.0,normal,normal,notpresent,notpresent,423.0,53.0,1.8,,,9.6,31,7500,,no,yes,no,poor,no,yes,ckd
+3,48.0,70.0,1.005,4.0,0.0,normal,abnormal,present,notpresent,117.0,56.0,3.8,111.0,2.5,11.2,32,6700,3.9,yes,no,no,poor,yes,yes,ckd
+</dataframe>
+
+<conversation>
+User 1: Create a distribution graph of the age from this excel sheet
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-03-29 11:40:28 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0]
+
+    # Handle missing values in 'age' column by dropping rows with NaN
+    df = df.dropna(subset=['age'])
+
+    # Create the distribution graph of age
+    plt.figure(figsize=(8, 6))
+    plt.hist(df['age'], bins=10, edgecolor='black')
+    plt.title('Distribution of Age')
+    plt.xlabel('Age')
+    plt.ylabel('Frequency')
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-03-29 11:40:28 [INFO] Saving charts to /media/nishil/Drive/Share/Git Email_automation/static/plots/5d1bd977-8fca-4d4a-87a8-a510cd06368b.png
+2025-03-29 11:40:28 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in /media/nishil/Drive/Share/Git Email_automation/static/plots/5d1bd977-8fca-4d4a-87a8-a510cd06368b.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "/media/nishil/Drive/Share/Git Email_automation/static/plots/5d1bd977-8fca-4d4a-87a8-a510cd06368b.png" }
+    """
+    df = dfs[0]
+    df = df.dropna(subset=['age'])
+    plt.figure(figsize=(8, 6))
+    plt.hist(df['age'], bins=10, edgecolor='black')
+    plt.title('Distribution of Age')
+    plt.xlabel('Age')
+    plt.ylabel('Frequency')
+    plt.savefig('/media/nishil/Drive/Share/Git Email_automation/static/plots/5d1bd977-8fca-4d4a-87a8-a510cd06368b.png')
+    plt.close()
+    return {'type': 'plot', 'value': '/media/nishil/Drive/Share/Git Email_automation/static/plots/5d1bd977-8fca-4d4a-87a8-a510cd06368b.png'}
+        ```
+2025-03-29 11:40:29 [INFO] Answer: {'type': 'plot', 'value': '/media/nishil/Drive/Share/Git Email_automation/static/plots/5d1bd977-8fca-4d4a-87a8-a510cd06368b.png'}
+2025-03-29 11:40:29 [INFO] Executed in: 4.5116047859191895s
+2025-03-29 11:40:31 [INFO] 127.0.0.1 - - [29/Mar/2025 11:40:31] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-03-29 11:40:32 [INFO] 127.0.0.1 - - [29/Mar/2025 11:40:32] "GET /static/plots/a371ff55-256e-4fd6-a728-e559c590ba26.png HTTP/1.1" 200 -

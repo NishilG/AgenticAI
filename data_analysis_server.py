@@ -14,7 +14,7 @@ from pandasai.smart_dataframe import SmartDataframe
 from parser.response_parser import CustomResponseParser
 from pandasai.callbacks import StdoutCallback
 from time import sleep
-app = Flask(__name__, static_folder='None')
+app = Flask(__name__, static_folder='static')
 CORS(app)  # Enable CORS for all routes
 
 PANDASAI_AVAILABLE = True
@@ -60,7 +60,7 @@ def data_analysis_action():
             if df is None or df.empty:
                 return jsonify({'success': False, 'error': 'Could not read or file is empty.'}), 400
 
-            llm = LangchainLLM(ChatOpenAI(openai_api_key=openai_api_key,openai_api_base='https://openrouter.ai/api/v1',model_name="openai/chatgpt-4o-latest"))
+            llm = LangchainLLM(ChatOpenAI(openai_api_key=openai_api_key,openai_api_base='https://openrouter.ai/api/v1',model_name="google/gemini-2.0-flash-001"))
             config = Config(
                 llm=llm,
                 callback=StdoutCallback(),
@@ -68,7 +68,8 @@ def data_analysis_action():
                 verbose=True,
                 enable_cache=False,
                 save_charts=True,
-                save_charts_path="static/plots"
+                # Use absolute path for saving charts
+                save_charts_path=os.path.abspath("static/plots")
             )
             agent = Agent(df, config=config)
             # Validate query first
@@ -108,7 +109,7 @@ def data_analysis_action():
             elif isinstance(response, dict) and response.get("type") == "plot" and response.get("value"):
         # Plot response handling
                 plot_path = response["value"]
-                plot_url = "/None/streamlit/" + os.path.basename(plot_path)
+                plot_url = "/static/plots/" + os.path.basename(plot_path)
                 print(f"Plot URL: {plot_url}")
                 return jsonify({
                     'success': True,
