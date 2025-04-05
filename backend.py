@@ -164,6 +164,12 @@ Create an appropriate email based on the user's request.
 Format your response as plain text without any additional commentary.
 Focus on creating a professional, well-structured email with appropriate tone.
 """
+    # Format chat history for the prompt
+    chat_context = ""
+    if chat_history:
+        chat_context += "\n\nHere is the recent chat history:\n"
+        for msg in chat_history:
+            chat_context += f"- {msg['role']}: {msg['content']}\n"
 
     # Format search data for the prompt
     search_context = ""
@@ -177,7 +183,7 @@ Focus on creating a professional, well-structured email with appropriate tone.
 
 
     # Generate email body
-    body_prompt = gemini_prompt + search_context + "\n\nUser request: " + input_text
+    body_prompt = gemini_prompt + chat_context + search_context + "\n\nUser request: " + input_text
     # Use standard text generation for body and subject
     body = get_gemini_response_text(body_prompt, gemini_api_key)
 
@@ -349,20 +355,7 @@ def list_screenshots():
     filenames = [os.path.basename(file) for file in files]
     return jsonify(filenames)
 
-async def cleanup_screenshots():
-    """Delete all screenshots except the latest one"""
-    global latest_screenshot
-    if latest_screenshot is None:
-        return
-    
-    files = glob.glob(os.path.join(screenshot_dir, "screenshot_*.jpg"))
-    files_to_delete = [f for f in files if f != latest_screenshot[0]]
-    
-    for file in files_to_delete:
-        try:
-            os.remove(file)
-        except Exception as e:
-            print(f"Error deleting screenshot {file}: {str(e)}")
+# Removed duplicate cleanup_screenshots function
 
 async def periodic_screenshots(browser_context, stop_event):
     """Take screenshots at regular intervals"""
@@ -431,6 +424,7 @@ def determine_tool_route():
     data = request.json
     user_message = data.get('message')
     gemini_api_key = data.get('gemini_api_key')
+    chat_history = data.get('chat_history', [])  # Get chat history, default to empty list
 
     if not user_message or not gemini_api_key:
         return jsonify({'success': False, 'error': 'Missing message or API key'}), 400
@@ -450,9 +444,15 @@ Format your response EXACTLY like this:
 {"reason": "Brief explanation for choosing the tool.", "tool": "Email|BrowserUse|DataAnalysis|None"}
 
 User message: """
+    # Format chat history for the prompt
+    chat_context = ""
+    if chat_history:
+        chat_context += "\n\nHere is the recent chat history:\n"
+        for msg in chat_history:
+            chat_context += f"- {msg['role']}: {msg['content']}\n"
 
     # Use the specialized get_gemini_response expecting JSON-like output
-    raw_response = get_gemini_response(tool_prompt + user_message, gemini_api_key)
+    raw_response = get_gemini_response(tool_prompt + chat_context + "\n" + user_message, gemini_api_key)
 
     if raw_response.startswith("Error"):
          return jsonify({'success': False, 'error': raw_response}), 500
@@ -497,6 +497,7 @@ def generate_email():
     google_api_key = data.get('google_api_key')
     search_engine_id = data.get('search_engine_id')
     include_search = data.get('include_search', False)
+    chat_history = data.get('chat_history', [])  # Get chat history, default to empty list
 
     if not user_prompt or not gemini_api_key:
         return jsonify({'success': False, 'error': 'Missing prompt or API key'}), 400
@@ -553,6 +554,12 @@ def ai_search_route():
     search_engine_id = request.form.get('search_engine_id')
     use_search = request.form.get('useSearch', 'false').lower() == 'true' # Get search toggle state
     image_file = request.files.get('image')
+    chat_history = request.form.get('chat_history', '[]')
+    try:
+        chat_history = json.loads(chat_history)
+    except json.JSONDecodeError:
+        print("Invalid chat history format, defaulting to empty list")
+        chat_history = []
 
     # Check required fields, note google_api_key and search_engine_id are only needed if use_search is true
     if not query or not gemini_api_key:
@@ -602,7 +609,14 @@ def ai_search_route():
 
 
     # Then, have Gemini analyze and summarize them
+    chat_context_str = ""
+    if chat_history:
+        chat_context_str += "\n\nHere is the recent chat history:\n"
+        for msg in chat_history:
+            chat_context_str += f"- {msg['role']}: {msg['content']}\n"
+
     prompt = f"""You are a helpful AI assistant that provides comprehensive answers.
+{chat_context_str}
 The user asked: "{query}"
 {search_context}
 Based on the available information (and search results if provided), please provide a comprehensive answer to the user's query.
@@ -634,6 +648,7 @@ async def browser_action_route():
     data = request.json
     user_task = data.get('task')
     gemini_api_key = data.get('gemini_api_key')
+    chat_history = data.get('chat_history', [])  # Get chat history, default to empty list
     
     if not user_task or not gemini_api_key:
         return jsonify({'success': False, 'error': 'Missing task or API key for BrowserUse'}), 400
@@ -691,10 +706,30 @@ async def browser_action_route():
             
             # Clean up screenshots
             await cleanup_screenshots()
+
+            # Explicitly close browser resources
+            if browser_context:
+                try:
+                    await browser_context.close()
+                except Exception as e:
+                    print(f"Error closing browser context: {e}")
+            if browser:
+                 try:
+                    await browser.close()
+                 except Exception as e:
+                    print(f"Error closing browser: {e}")
+
         browser_result_str = str(browser_result_obj)
         
         # Prepare prompt for Gemini summarization
-        summarization_prompt = f"""The user asked the browser agent to perform the following task:
+        chat_context = ""
+        if chat_history:
+            chat_context += "\n\nHere is the recent chat history:\n"
+            for msg in chat_history:
+                chat_context += f"- {msg['role']}: {msg['content']}\n"
+        summarization_prompt = f"""You are a helpful AI assistant.
+{chat_context}
+The user asked the browser agent to perform the following task:
 "{user_task}"
 The browser agent executed the task and produced the following detailed output:
 --- BROWSER AGENT OUTPUT START ---
@@ -703,8 +738,8 @@ The browser agent executed the task and produced the following detailed output:
 Based on the user's request and the browser agent's output, please provide a concise and user-friendly summary of what was done and the key information found. Focus on the final outcome and relevant data extracted. Avoid technical jargon from the agent's internal steps unless it's essential for understanding the result.
 """
         # Call Gemini to summarize
-        final_summary = get_gemini_response_text(summarization_prompt, gemini_api_key)
-        
+        final_summary = browser_result_obj.final_result()
+        print(final_summary)
         # Check for errors from Gemini
         if final_summary.startswith("Error"):
             print(f"Error summarizing browser result: {final_summary}")

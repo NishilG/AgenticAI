@@ -6,1047 +6,7 @@
     <title>AI Assistant</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <style>
-        :root {
-            /* Light Theme */
-            --primary-light: #2563eb;
-            --secondary-light: #4b5563;
-            --background-light: #ffffff;
-            --surface-light: #f9fafb;
-            --text-primary-light: #111827;
-            --text-secondary-light: #6b7280;
-            --border-light: #e5e7eb;
-            --user-bubble-light: #2563eb;
-            --bot-bubble-light: #f3f4f6;
-            --accent-light: #3b82f6;
-            --success-light: #10b981;
-            --warning-light: #f59e0b;
-            --error-light: #ef4444;
-            
-            /* Dark Theme */
-            --primary-dark: #3b82f6;
-            --secondary-dark: #9ca3af;
-            --background-dark: #111827;
-            --surface-dark: #1f2937;
-            --text-primary-dark: #f9fafb;
-            --text-secondary-dark: #d1d5db;
-            --border-dark: #374151;
-            --user-bubble-dark: #2563eb;
-            --bot-bubble-dark: #1f2937;
-            --accent-dark: #60a5fa;
-            --success-dark: #34d399;
-            --warning-dark: #fbbf24;
-            --error-dark: #f87171;
-            
-            /* Animation */
-            --transition-speed: 0.2s;
-        }
-
-        [data-theme="light"] {
-            --primary: var(--primary-light);
-            --secondary: var(--secondary-light);
-            --background: var(--background-light);
-            --surface: var(--surface-light);
-            --text-primary: var(--text-primary-light);
-            --text-secondary: var(--text-secondary-light);
-            --border: var(--border-light);
-            --user-bubble: var(--user-bubble-light);
-            --bot-bubble: var(--bot-bubble-light);
-            --accent: var(--accent-light);
-            --success: var(--success-light);
-            --warning: var(--warning-light);
-            --error: var(--error-light);
-        }
-
-        [data-theme="dark"] {
-            --primary: var(--primary-dark);
-            --secondary: var(--secondary-dark);
-            --background: var(--background-dark);
-            --surface: var(--surface-dark);
-            --text-primary: var(--text-primary-dark);
-            --text-secondary: var(--text-secondary-dark);
-            --border: var(--border-dark);
-            --user-bubble: var(--user-bubble-dark);
-            --bot-bubble: var(--bot-bubble-dark);
-            --accent: var(--accent-dark);
-            --success: var(--success-dark);
-            --warning: var(--warning-dark);
-            --error: var(--error-dark);
-        }
-
-        /* Base Styles */
-        body {
-            background-color: var(--background);
-            color: var(--text-primary);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            transition: background-color var(--transition-speed), color var(--transition-speed);
-            line-height: 1.5;
-        }
-
-        /* Layout */
-        .app-container {
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 260px;
-            background-color: var(--surface);
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s ease;
-            z-index: 100;
-            position: relative;
-        }
-
-        .sidebar-header {
-            padding: 16px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .sidebar-title {
-            font-size: 1rem;
-            font-weight: 600;
-            margin: 0;
-            color: var(--text-primary);
-        }
-
-        .new-chat-btn {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            padding: 8px 12px;
-            font-size: 0.875rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: background-color var(--transition-speed);
-        }
-
-        .new-chat-btn:hover {
-            background-color: var(--accent);
-        }
-
-        .chat-history {
-            flex: 1;
-            overflow-y: auto;
-            padding: 8px;
-        }
-
-        .chat-item {
-            padding: 10px 12px;
-            border-radius: 6px;
-            margin-bottom: 4px;
-            cursor: pointer;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            transition: background-color var(--transition-speed);
-        }
-
-        .chat-item:hover {
-            background-color: rgba(0, 0, 0, 0.05);
-        }
-
-        [data-theme="dark"] .chat-item:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .chat-item.active {
-            background-color: var(--bot-bubble);
-            color: var(--text-primary);
-        }
-
-        .sidebar-footer {
-            padding: 16px;
-            border-top: 1px solid var(--border);
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-        }
-
-        .user-name {
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
-
-        .chat-header {
-            padding: 15px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .chat-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin: 0;
-        }
-
-        .chat-actions {
-            display: flex;
-            gap: 12px;
-        }
-
-        .action-btn {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            cursor: pointer;
-            padding: 6px;
-            border-radius: 6px;
-            transition: background-color var(--transition-speed), color var(--transition-speed);
-            font-size: 1.1rem;
-        }
-
-        .action-btn:hover {
-            background-color: rgba(0, 0, 0, 0.05);
-            color: var(--primary);
-        }
-
-        [data-theme="dark"] .action-btn:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .chat-container {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            scroll-behavior: smooth;
-        }
-
-        .message {
-            max-width: 800px;
-            margin: 0 auto 20px;
-            display: flex;
-            gap: 16px;
-        }
-
-        .message-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background-color: var(--bot-bubble);
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            font-weight: 600;
-        }
-
-        .user-message .message-avatar {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .message-content {
-            flex: 1;
-        }
-
-        .message-role {
-            font-weight: 600;
-            margin-bottom: 6px;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        .message-text {
-            line-height: 1.6;
-        }
-
-        .user-message .message-text {
-            color: white;
-        }
-
-        .message-bubble {
-            padding: 12px 16px;
-            border-radius: 12px;
-            background-color: var(--bot-bubble);
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-        }
-
-        .user-message .message-bubble {
-            background-color: var(--user-bubble);
-            border-bottom-right-radius: 4px;
-        }
-
-        .bot-message .message-bubble {
-            border-bottom-left-radius: 4px;
-        }
-
-        /* Input Area */
-        .input-container {
-            padding: 16px;
-            border-top: 1px solid var(--border);
-            background-color: var(--surface);
-        }
-
-        .input-box {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .input-group {
-            display: flex;
-            border-radius: 24px;
-            background-color: var(--background);
-            border: 1px solid var(--border);
-            transition: box-shadow var(--transition-speed);
-            align-items: center;
-            padding-left: 12px;
-        }
-
-        .input-group:focus-within {
-            box-shadow: 0 0 0 2px var(--accent);
-        }
-
-        .message-input {
-            flex: 1;
-            border: none;
-            background: none;
-            padding: 12px 16px;
-            color: var(--text-primary);
-            font-size: 1rem;
-            outline: none;
-            resize: none;
-            max-height: 200px;
-            min-height: 24px;
-            line-height: 1.5;
-        }
-
-        .send-btn {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            padding: 0 16px;
-            cursor: pointer;
-            transition: color var(--transition-speed);
-            font-size: 1.1rem;
-        }
-
-        .send-btn:hover {
-            color: var(--primary);
-        }
-
-        .send-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .input-actions {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-top: 12px;
-        }
-
-        .file-input-label {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            cursor: pointer;
-            padding: 6px 12px;
-            border-radius: 6px;
-            transition: background-color var(--transition-speed);
-        }
-
-        .file-input-label:hover {
-            background-color: rgba(0, 0, 0, 0.05);
-        }
-
-        [data-theme="dark"] .file-input-label:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .file-input {
-            display: none;
-        }
-
-        /* Attachment button inside input */
-        .attach-btn {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            padding: 8px;
-            transition: color var(--transition-speed);
-            font-size: 1.1rem;
-        }
-
-        .attach-btn:hover {
-            color: var(--primary);
-        }
-
-        /* Loading Indicator */
-        .loading-indicator {
-            display: flex;
-            justify-content: center;
-            padding: 16px;
-        }
-
-        .spinner {
-            width: 24px;
-            height: 24px;
-            border: 3px solid rgba(0, 0, 0, 0.1);
-            border-left-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        [data-theme="dark"] .spinner {
-            border-color: rgba(255, 255, 255, 0.1);
-            border-left-color: var(--primary);
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Settings Panel */
-        .settings-panel {
-            position: fixed;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            width: 360px;
-            background-color: var(--surface);
-            border-left: 1px solid var(--border);
-            z-index: 200;
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .settings-panel.open {
-            transform: translateX(0);
-        }
-
-        .settings-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .settings-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin: 0;
-        }
-
-        .close-settings {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            cursor: pointer;
-            font-size: 1.25rem;
-        }
-
-        .settings-section {
-            margin-bottom: 24px;
-        }
-
-        .section-title {
-            font-size: 0.875rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-secondary);
-            margin-bottom: 12px;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 6px;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 8px 12px;
-            border-radius: 6px;
-            border: 1px solid var(--border);
-            background-color: var(--background);
-            color: var(--text-primary);
-            font-size: 0.875rem;
-            transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
-        }
-
-        .theme-toggle {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .toggle-label {
-            font-size: 0.875rem;
-        }
-
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 44px;
-            height: 24px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: var(--secondary);
-            transition: .4s;
-            border-radius: 24px;
-        }
-
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 20px;
-            width: 23px;
-            left: 2px;
-            bottom: 2px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .toggle-slider {
-            background-color: var(--primary);
-        }
-
-        input:checked + .toggle-slider:before {
-            transform: translateX(20px);
-        }
-
-        /* Markdown-like formatting */
-        .message-text strong {
-            font-weight: 600;
-        }
-
-        .message-text em {
-            font-style: italic;
-        }
-
-        .message-text code {
-            font-family: monospace;
-            background-color: rgba(0, 0, 0, 0.1);
-            padding: 2px 4px;
-            border-radius: 4px;
-            font-size: 0.9em;
-        }
-
-        [data-theme="dark"] .message-text code {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .message-text pre {
-            background-color: rgba(0, 0, 0, 0.05);
-            padding: 12px;
-            border-radius: 6px;
-            overflow-x: auto;
-            margin: 8px 0;
-        }
-
-        [data-theme="dark"] .message-text pre {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .message-text a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-
-        .message-text a:hover {
-            text-decoration: underline;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .sidebar {
-                position: absolute;
-                transform: translateX(-100%);
-            }
-            
-            .sidebar.open {
-                transform: translateX(0);
-            }
-            
-            .settings-panel {
-                width: 100%;
-            }
-            
-            .message {
-                max-width: 100%;
-            }
-        }
-
-        /* Animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .message {
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        /* Status message */
-        .status-message {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 12px 24px;
-            border-radius: 6px;
-            background-color: var(--surface);
-            color: var(--text-primary);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            border: 1px solid var(--border);
-        }
-
-        .status-message.visible {
-            opacity: 1;
-        }
-
-        .status-message.success {
-            background-color: var(--success);
-            color: white;
-        }
-
-        .status-message.error {
-            background-color: var(--error);
-            color: white;
-        }
-
-        .status-message.warning {
-            background-color: var(--warning);
-            color: white;
-        }
-
-        /* Data panel */
-        .data-panel {
-            position: fixed;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            width: 400px;
-            background-color: var(--surface);
-            border-left: 1px solid var(--border);
-            z-index: 150;
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .data-panel.open {
-            transform: translateX(0);
-        }
-
-        .data-panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .data-panel-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin: 0;
-        }
-
-        .close-data-panel {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            cursor: pointer;
-            font-size: 1.25rem;
-        }
-
-        /* Table styling */
-        .table-container {
-            overflow-x: auto;
-            margin-bottom: 20px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.875rem;
-        }
-
-        th, td {
-            padding: 8px 12px;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-        }
-
-        th {
-            font-weight: 600;
-            background-color: rgba(0, 0, 0, 0.02);
-        }
-
-        [data-theme="dark"] th {
-            background-color: rgba(255, 255, 255, 0.02);
-        }
-
-        tr:hover {
-            background-color: rgba(0, 0, 0, 0.02);
-        }
-
-        [data-theme="dark"] tr:hover {
-            background-color: rgba(255, 255, 255, 0.02);
-        }
-
-        /* Plot image */
-        .plot-image {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 16px;
-        }
-
-        /* Sidebar toggle */
-        .sidebar-toggle {
-            position: fixed;
-            top: 16px;
-            left: 16px;
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            cursor: pointer;
-            z-index: 101;
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .sidebar-toggle {
-                display: block;
-            }
-        }
-
-        /* Pro search toggle */
-        .pro-search-toggle {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.875rem;
-            margin-bottom: 16px;
-        }
-
-        .toggle {
-            position: relative;
-            display: inline-block;
-            width: 36px;
-            height: 20px;
-        }
-
-        .toggle input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: var(--border);
-            transition: .4s;
-            border-radius: 20px;
-        }
-
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 16px;
-            width: 16px;
-            left: 2px;
-            bottom: 2px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .toggle-slider {
-            background-color: var(--primary);
-        }
-
-        input:checked + .toggle-slider:before {
-            transform: translateX(16px);
-        }
-
-        /* Email form styling */
-        .email-form {
-            position: fixed;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            width: 400px;
-            background-color: var(--surface);
-            border-left: 1px solid var(--border);
-            z-index: 150;
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .email-form.open {
-            transform: translateX(0);
-        }
-
-        .email-form-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .email-form-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin: 0;
-        }
-
-        .close-email-form {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            cursor: pointer;
-            font-size: 1.25rem;
-        }
-
-        /* Search results styling */
-        .search-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .search-result-item {
-            background-color: var(--bot-bubble);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 10px 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: background-color 0.2s ease-in-out;
-            overflow: hidden;
-            text-decoration: none;
-            min-height: 50px;
-        }
-
-        .search-result-item:hover {
-            background-color: rgba(0, 0, 0, 0.05);
-        }
-
-        [data-theme="dark"] .search-result-item:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .search-result-item img.favicon {
-            width: 18px;
-            height: 18px;
-            flex-shrink: 0;
-            border-radius: 4px;
-        }
-
-        .search-result-item .title {
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text-primary);
-            white-space: normal;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            flex-grow: 1;
-            line-height: 1.3;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
-
-        /* More sources indicator */
-        .more-sources-item {
-            background-color: var(--bot-bubble);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 10px 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: default;
-        }
-
-        .more-sources-icons {
-            display: flex;
-            align-items: center;
-            margin-right: 8px;
-            position: relative;
-            height: 18px;
-        }
-
-        .more-sources-icons img.favicon {
-            width: 18px;
-            height: 18px;
-            border-radius: 4px;
-            border: 1px solid var(--border);
-            background-color: var(--background);
-            position: absolute;
-            top: 0;
-        }
-
-        .more-sources-icons img.favicon:nth-child(1) {
-            left: 0px;
-            z-index: 3;
-        }
-
-        .more-sources-icons img.favicon:nth-child(2) {
-            left: 10px;
-            z-index: 2;
-        }
-
-        .more-sources-icons img.favicon:nth-child(3) {
-            left: 20px;
-            z-index: 1;
-        }
-
-        .more-sources-item span {
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            margin-left: calc(10px * var(--icon-count, 0) + 10px);
-        }
-
-        /* Browser Screenshot Panel */
-        .browser-panel {
-            position: fixed;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            width: 400px;
-            background-color: var(--surface);
-            border-left: 1px solid var(--border);
-            z-index: 150;
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .browser-panel.open {
-            transform: translateX(0);
-        }
-
-        .browser-panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .browser-panel-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin: 0;
-        }
-
-        .close-browser-panel {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            cursor: pointer;
-            font-size: 1.25rem;
-        }
-
-        .screenshot-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: auto;
-        }
-
-        .screenshot-image {
-            max-width: 100%;
-            max-height: 80vh;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body data-theme="dark">
     <div class="app-container">
@@ -1062,8 +22,12 @@
                 <button class="new-chat-btn" id="newChatBtn">
                     <i class="bi bi-plus-lg"></i> New
                 </button>
+                <!-- New Sidebar Toggle Button (Desktop) -->
+                <button class="sidebar-toggle-desktop" id="desktopSidebarToggle" title="Toggle Sidebar">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
             </div>
-            
+
             <div class="chat-history" id="chatHistory">
                 <div class="chat-item active">chat1</div>
                 <!-- <div class="chat-item">Data Analysis Help</div>
@@ -1071,7 +35,7 @@
                 <div class="chat-item">Research Assistance</div>
                 <div class="chat-item">Code Review</div> -->
             </div>
-            
+
             <div class="sidebar-footer">
                 <div class="user-profile">
                     <div class="user-avatar">U</div>
@@ -1079,7 +43,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Main Content -->
         <div class="main-content">
             <div class="chat-header">
@@ -1096,28 +60,46 @@
                     </button>
                 </div>
             </div>
-            
-            <div class="chat-container" id="chatContainer">
-                <div class="message bot-message">
-                    <div class="message-avatar">AI</div>
-                    <div class="message-content">
-                        <div class="message-role">AI Assistant</div>
-                        <div class="message-bubble">
-                            <div class="message-text">
-                                Hello! I'm your AI assistant. How can I help you today? You can:
-                                <ul>
-                                    <li>Ask me questions</li>
-                                    <li>Upload files for analysis</li>
-                                    <li>Request email drafts</li>
-                                    <li>Get research assistance</li>
-                                </ul>
-                                What would you like to do?
+
+            <!-- NEW: Wrapper for chat and browser panel -->
+            <div class="chat-area" id="chatArea">
+                <!-- Chat messages container -->
+                <div class="chat-container" id="chatContainer">
+                    <div class="message bot-message">
+                        <div class="message-avatar">AI</div>
+                        <div class="message-content">
+                            <div class="message-role">AI Assistant</div>
+                            <div class="message-bubble">
+                                <div class="message-text">
+                                    Hello! I'm your AI assistant. How can I help you today? You can:
+                                    <ul>
+                                        <li>Ask me questions</li>
+                                        <li>Upload files for analysis</li>
+                                        <li>Request email drafts</li>
+                                        <li>Get research assistance</li>
+                                    </ul>
+                                    What would you like to do?
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
+
+                <!-- MOVED: Browser Screenshot Panel -->
+                <div class="browser-panel" id="browserPanel">
+                    <div class="browser-panel-header">
+                        <h2 class="browser-panel-title">Browser Screenshot</h2>
+                        <button class="close-browser-panel" id="closeBrowserPanelBtn">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+
+                    <div class="screenshot-container" id="screenshotContainer">
+                        <img id="screenshotImage" src="" alt="Browser Screenshot" class="screenshot-image">
+                    </div>
+                </div>
+            </div> <!-- END: chat-area -->
+
             <div class="input-container">
                 <div class="input-box">
                     <div class="pro-search-toggle">
@@ -1127,7 +109,7 @@
                         </label>
                         <span>Pro Search</span>
                     </div>
-                    
+
                     <div class="input-group">
                         <button class="attach-btn" id="attachBtn" title="Attach file">
                             <i class="bi bi-paperclip"></i>
@@ -1141,7 +123,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Settings Panel -->
         <div class="settings-panel" id="settingsPanel">
             <div class="settings-header">
@@ -1150,7 +132,7 @@
                     <i class="bi bi-x-lg"></i>
                 </button>
             </div>
-            
+
             <div class="settings-section">
                 <h3 class="section-title">General</h3>
                 <div class="form-group theme-toggle">
@@ -1161,7 +143,7 @@
                     </label>
                 </div>
             </div>
-            
+
             <div class="settings-section">
                 <h3 class="section-title">API Keys</h3>
                 <div class="form-group">
@@ -1177,7 +159,7 @@
                     <input type="text" class="form-control" id="searchEngineId" placeholder="Enter your search engine ID">
                 </div>
             </div>
-            
+
             <div class="settings-section">
                 <h3 class="section-title">Email Settings</h3>
                 <div class="form-group">
@@ -1190,12 +172,12 @@
                     <small class="text-muted">Use App Password for Gmail.</small>
                 </div>
             </div>
-            
+
             <button class="new-chat-btn" id="saveSettingsBtn" style="width: 100%;">
                 <i class="bi bi-check-lg"></i> Save Settings
             </button>
         </div>
-        
+
         <!-- Data Panel -->
         <div class="data-panel" id="dataPanel">
             <div class="data-panel-header">
@@ -1204,12 +186,12 @@
                     <i class="bi bi-x-lg"></i>
                 </button>
             </div>
-            
+
             <div id="dataPanelContent">
                 <p>Upload a data file to begin analysis. Supported formats: CSV, Excel.</p>
             </div>
         </div>
-        
+
         <!-- Email Form -->
         <div class="email-form" id="emailForm">
             <div class="email-form-header">
@@ -1218,22 +200,22 @@
                     <i class="bi bi-x-lg"></i>
                 </button>
             </div>
-            
+
             <div class="form-group">
                 <label class="form-label" for="receiverEmail">To</label>
                 <input type="email" class="form-control" id="receiverEmail" placeholder="recipient@example.com">
             </div>
-            
+
             <div class="form-group">
                 <label class="form-label" for="emailSubject">Subject</label>
                 <input type="text" class="form-control" id="emailSubject" placeholder="Email subject">
             </div>
-            
+
             <div class="form-group">
                 <label class="form-label" for="emailBody">Body</label>
                 <textarea class="form-control" id="emailBody" rows="6" placeholder="Write your email here..."></textarea>
             </div>
-            
+
             <div class="form-group" style="display: flex; gap: 10px;">
                 <button class="new-chat-btn" id="sendEmailBtn" style="flex: 1;">
                     <i class="bi bi-send"></i> Send
@@ -1243,795 +225,46 @@
                 </button>
             </div>
         </div>
-        
-        <!-- Browser Screenshot Panel -->
-        <div class="browser-panel" id="browserPanel">
-            <div class="browser-panel-header">
-                <h2 class="browser-panel-title">Browser Screenshot</h2>
-                <button class="close-browser-panel" id="closeBrowserPanelBtn">
-                    <i class="bi bi-x-lg"></i>
-                </button>
-            </div>
-            
-            <div class="screenshot-container" id="screenshotContainer">
-                <img id="screenshotImage" src="" alt="Browser Screenshot" class="screenshot-image">
-            </div>
-        </div>
-        
+
         <!-- Status Message -->
         <div class="status-message" id="statusMessage">
             <i class="bi bi-check-circle"></i>
             <span>Settings saved successfully</span>
         </div>
+
+        <!-- Sources Modal -->
+        <div class="modal-overlay" id="sourcesModalOverlay">
+            <div class="modal-content" id="sourcesModalContent">
+                <div class="modal-header">
+                    <h3 class="modal-title">All Sources</h3>
+                    <button class="modal-close-btn" id="closeSourcesModalBtn">&times;</button>
+                </div>
+                <div class="modal-body" id="sourcesModalBody">
+                    <!-- Source items will be populated here -->
+                </div>
+            </div>
+        </div>
+        <!-- Single Source Modal -->
+        <div class="single-source-modal-overlay" id="singleSourceModalOverlay">
+            <div class="single-source-modal-content">
+                <div class="single-source-modal-header">
+                    <h3 class="single-source-modal-title" id="singleSourceModalTitle">
+                        <img src="" alt="" class="single-source-modal-favicon" id="singleSourceModalFavicon">
+                        <span>Source Details</span>
+                    </h3>
+                    <button class="single-source-modal-close-btn" id="closeSingleSourceModalBtn">&times;</button>
+                </div>
+                <div class="single-source-modal-body">
+                    <h4 id="singleSourceModalContentTitle"></h4>
+                    <a href="#" target="_blank" rel="noopener noreferrer" id="singleSourceModalLink"></a>
+                    <p id="singleSourceModalSnippet"></p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // --- DOM Elements ---
-            const body = document.body;
-            const themeSwitch = document.getElementById('themeSwitch');
-            const sidebar = document.getElementById('sidebar');
-            const sidebarToggle = document.getElementById('sidebarToggle');
-            const settingsPanel = document.getElementById('settingsPanel');
-            const settingsBtn = document.getElementById('settingsBtn');
-            const closeSettingsBtn = document.getElementById('closeSettingsBtn');
-            const saveSettingsBtn = document.getElementById('saveSettingsBtn');
-            const dataPanel = document.getElementById('dataPanel');
-            const dataPanelBtn = document.getElementById('dataPanelBtn');
-            const closeDataPanelBtn = document.getElementById('closeDataPanelBtn');
-            const messageInput = document.getElementById('messageInput');
-            const sendBtn = document.getElementById('sendBtn');
-            const fileInput = document.getElementById('fileInput');
-            const attachBtn = document.getElementById('attachBtn');
-            const chatContainer = document.getElementById('chatContainer');
-            const statusMessage = document.getElementById('statusMessage');
-            const newChatBtn = document.getElementById('newChatBtn');
-            const chatItems = document.querySelectorAll('.chat-item');
-            const proSearchToggle = document.getElementById('proSearchToggle');
-            const emailForm = document.getElementById('emailForm');
-            const closeEmailFormBtn = document.getElementById('closeEmailFormBtn');
-            const sendEmailBtn = document.getElementById('sendEmailBtn');
-            const cancelEmailBtn = document.getElementById('cancelEmailBtn');
-            const browserPanel = document.getElementById('browserPanel');
-            const browserPanelBtn = document.getElementById('browserPanelBtn');
-            const closeBrowserPanelBtn = document.getElementById('closeBrowserPanelBtn');
-            const screenshotImage = document.getElementById('screenshotImage');
-            const dataPanelContent = document.getElementById('dataPanelContent');
-
-            const MAX_SOURCES_DISPLAY_IN_CHAT = 3;
-            const MAX_MORE_ICONS = 3;
-
-            // --- Theme Handling ---
-            function applyTheme(theme) {
-                body.setAttribute('data-theme', theme);
-                localStorage.setItem('theme', theme);
-                themeSwitch.checked = (theme === 'dark');
-            }
-
-            themeSwitch.addEventListener('change', function() {
-                applyTheme(this.checked ? 'dark' : 'light');
-            });
-
-            // Load saved theme
-            const savedTheme = localStorage.getItem('theme') || 'dark';
-            applyTheme(savedTheme);
-
-            // --- Panel Management ---
-            function closeAllPanels() {
-                settingsPanel.classList.remove('open');
-                dataPanel.classList.remove('open');
-                emailForm.classList.remove('open');
-                browserPanel.classList.remove('open');
-            }
-
-            // Settings Panel
-            settingsBtn.addEventListener('click', () => {
-                closeAllPanels();
-                settingsPanel.classList.add('open');
-            });
-
-            closeSettingsBtn.addEventListener('click', () => {
-                settingsPanel.classList.remove('open');
-            });
-
-            // Data Panel
-            dataPanelBtn.addEventListener('click', () => {
-                closeAllPanels();
-                dataPanel.classList.add('open');
-            });
-
-            closeDataPanelBtn.addEventListener('click', () => {
-                dataPanel.classList.remove('open');
-            });
-
-            // Email Form
-            closeEmailFormBtn.addEventListener('click', () => {
-                emailForm.classList.remove('open');
-            });
-
-            cancelEmailBtn.addEventListener('click', () => {
-                emailForm.classList.remove('open');
-            });
-
-            // Browser Panel
-            browserPanelBtn.addEventListener('click', () => {
-                closeAllPanels();
-                browserPanel.classList.add('open');
-                updateScreenshot();
-            });
-
-            closeBrowserPanelBtn.addEventListener('click', () => {
-                browserPanel.classList.remove('open');
-            });
-
-            // Update browser screenshot
-            function updateScreenshot() {
-                fetch('/screenshots')
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data && data.length > 0) {
-                            const randomIndex = Math.floor(Math.random() * data.length);
-                            const randomImage = data[randomIndex];
-                            screenshotImage.src = '/static/screenshots/' + randomImage + '?t=' + new Date().getTime();
-                        }
-                    })
-                    .catch(error => console.error('Error fetching screenshots:', error));
-            }
-
-            // Set interval for updating screenshot
-            setInterval(updateScreenshot, 2000);
-
-            // --- Settings Management ---
-            saveSettingsBtn.addEventListener('click', () => {
-                localStorage.setItem('geminiApiKey', document.getElementById('geminiApiKey').value);
-                localStorage.setItem('googleApiKey', document.getElementById('googleApiKey').value);
-                localStorage.setItem('searchEngineId', document.getElementById('searchEngineId').value);
-                localStorage.setItem('senderEmail', document.getElementById('senderEmail').value);
-                localStorage.setItem('senderPassword', document.getElementById('senderPassword').value);
-                localStorage.setItem('proSearchEnabled', proSearchToggle.checked);
-                
-                showStatus('Settings saved successfully!', 'success');
-                setTimeout(() => {
-                    settingsPanel.classList.remove('open');
-                }, 1000);
-            });
-
-            function loadSettings() {
-                document.getElementById('geminiApiKey').value = localStorage.getItem('geminiApiKey') || '';
-                document.getElementById('googleApiKey').value = localStorage.getItem('googleApiKey') || '';
-                document.getElementById('searchEngineId').value = localStorage.getItem('searchEngineId') || '';
-                document.getElementById('senderEmail').value = localStorage.getItem('senderEmail') || '';
-                document.getElementById('senderPassword').value = localStorage.getItem('senderPassword') || '';
-                proSearchToggle.checked = localStorage.getItem('proSearchEnabled') === 'true';
-            }
-
-            loadSettings();
-
-            // Pro Search Toggle
-            proSearchToggle.addEventListener('change', function() {
-                localStorage.setItem('proSearchEnabled', this.checked);
-            });
-
-            // --- Chat History Management ---
-            chatItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    chatItems.forEach(i => i.classList.remove('active'));
-                    item.classList.add('active');
-                    document.querySelector('.chat-title').textContent = item.textContent;
-                });
-            });
-
-            newChatBtn.addEventListener('click', () => {
-                chatItems.forEach(i => i.classList.remove('active'));
-                document.querySelector('.chat-title').textContent = 'New Chat';
-                chatContainer.innerHTML = `
-                    <div class="message bot-message">
-                        <div class="message-avatar">AI</div>
-                        <div class="message-content">
-                            <div class="message-role">AI Assistant</div>
-                            <div class="message-bubble">
-                                <div class="message-text">
-                                    Hello! I'm your AI assistant. What would you like to discuss today?
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-
-            // --- Message Handling ---
-            messageInput.addEventListener('input', function() {
-                this.style.height = 'auto';
-                this.style.height = (this.scrollHeight) + 'px';
-            });
-
-            messageInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    sendMessage();
-                }
-            });
-
-            sendBtn.addEventListener('click', sendMessage);
-
-            // File attachment handling
-            attachBtn.addEventListener('click', () => {
-                fileInput.click();
-            });
-
-            fileInput.addEventListener('change', function() {
-                if (this.files.length > 0) {
-                    showStatus(`File "${this.files[0].name}" ready for upload`, 'success');
-                }
-            });
-
-            function sendMessage() {
-                const message = messageInput.value.trim();
-                if (!message && fileInput.files.length === 0) return;
-
-                // Add user message immediately
-                addMessage(message, 'user');
-                messageInput.value = '';
-                messageInput.style.height = 'auto';
-
-                // Show loading indicator
-                const loadingIndicator = document.createElement('div');
-                loadingIndicator.className = 'message bot-message';
-                loadingIndicator.innerHTML = `
-                    <div class="message-avatar">AI</div>
-                    <div class="message-content">
-                        <div class="message-role">AI Assistant</div>
-                        <div class="message-bubble">
-                            <div class="loading-indicator">
-                                <div class="spinner"></div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                chatContainer.appendChild(loadingIndicator);
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-
-                // Process the message
-                processUserMessage(message)
-                    .then(response => {
-                        loadingIndicator.remove();
-                        if (response) {
-                            addMessage(response.content, 'bot', response.sources);
-                            if (response.showDataPanel && dataPanelContent) {
-                                dataPanelContent.innerHTML = response.dataContent || '<p>No data to display.</p>';
-                                dataPanel.classList.add('open');
-                            }
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error processing message:", error);
-                        loadingIndicator.remove();
-                        addMessage("Sorry, an error occurred while processing your request.", 'bot');
-                        showStatus(`Error: ${error.message}`, 'error');
-                    });
-            }
-
-            async function processUserMessage(message) {
-                const geminiApiKey = document.getElementById('geminiApiKey').value;
-                if (!geminiApiKey) {
-                    return { content: "Please set Gemini API key in settings." };
-                }
-
-                const toolResponse = await determineTool(message, geminiApiKey);
-                if (!toolResponse.success) {
-                    return { content: "Error determining tool: " + toolResponse.error };
-                }
-
-                const tool = toolResponse.tool;
-                console.log(`Tool determined: ${tool}`);
-
-                switch (tool) {
-                    case 'Email':
-                        return await handleEmailIntent(message, geminiApiKey);
-                    case 'BrowserUse':
-                        return await handleBrowserIntent(message, geminiApiKey);
-                    case 'DataAnalysis':
-                        return await handleDataAnalysisIntent(message, geminiApiKey);
-                    case 'None':
-                    default:
-                        return await handleChatIntent(message, geminiApiKey);
-                }
-            }
-
-            async function determineTool(message, geminiApiKey) {
-                try {
-                    const response = await fetch('/determine_tool', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ message: message, gemini_api_key: geminiApiKey })
-                    });
-
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
-                    }
-
-                    const data = await response.json();
-                    const validTools = ["Email", "BrowserUse", "DataAnalysis", "None"];
-                    if (!validTools.includes(data.tool)) {
-                        console.warn(`Invalid tool '${data.tool}' received from backend. Defaulting to 'None'.`);
-                        data.tool = 'None';
-                        data.reason += " (Invalid tool received, defaulted to None)";
-                    }
-                    return { success: true, tool: data.tool, reason: data.reason };
-
-                } catch (error) {
-                    console.error("Error determining tool:", error);
-                    return { success: false, error: error.message };
-                }
-            }
-
-            async function handleBrowserIntent(message, geminiApiKey) {
-                try {
-                    const response = await fetch('/browser_action', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ task: message, gemini_api_key: geminiApiKey })
-                    });
-
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
-                    }
-
-                    const data = await response.json();
-                    if (data.success) {
-                        // Update screenshot immediately
-                        updateScreenshot();
-                        // Show browser panel
-                        browserPanel.classList.add('open');
-                        return { content: "I've performed the browser action. Check the Browser panel for the result." };
-                    } else {
-                        throw new Error(data.error || "Unknown browser tool error");
-                    }
-                } catch (error) {
-                    console.error("Error in handleBrowserIntent:", error);
-                    return { content: `Browser tool failed: ${error.message}` };
-                }
-            }
-
-            async function handleDataAnalysisIntent(message, geminiApiKey) {
-                const file = fileInput.files[0];
-                
-                if (!file) {
-                    return { content: "Please upload a CSV or Excel file first to use the Data Analysis tool." };
-                }
-
-                const formData = new FormData();
-                formData.append('file', file);
-                formData.append('message', message);
-
-                try {
-                    const response = await fetch('http://localhost:5001/data_analysis_action', {
-                        method: 'POST',
-                        body: formData,
-                        mode: 'cors'
-                    });
-
-                    if (!response.ok) {
-                        let errorData;
-                        try {
-                            errorData = await response.json();
-                        } catch (e) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
-                    }
-
-                    let data;
-                    try {
-                        const responseText = await response.text();
-                        data = JSON.parse(responseText);
-                    } catch (e) {
-                        console.error("Failed to parse JSON response:", e);
-                        throw new Error("Invalid response format from server");
-                    }
-
-                    if (typeof data !== 'object' || data === null) {
-                        throw new Error("Invalid response data format");
-                    }
-
-                    if (data.success) {
-                        if (data.type === 'text') {
-                            return { content: data.content };
-                        } else if (data.type === 'dataframe') {
-                            const tableHtml = createTableFromData(data.content, data.filename);
-                            return { 
-                                content: `Analysis results for ${data.filename} are ready in the Data panel.`,
-                                showDataPanel: true,
-                                dataContent: tableHtml
-                            };
-                        } else if (data.type === 'plot') {
-                            let plotUrl = "http://localhost:5001"+data.content;
-                            const imgHtml = `<img src="${plotUrl}" alt="Generated Plot" class="plot-image">`;
-                            return { 
-                                content: `Analysis plot for ${file.name} is ready in the Data panel.`,
-                                showDataPanel: true,
-                                dataContent: `<div class="plot-container">${imgHtml}</div>`
-                            };
-                        } else {
-                            return { content: "Received unexpected analysis result type." };
-                        }
-                    } else {
-                        throw new Error(data.error || "Unknown data analysis error");
-                    }
-                } catch (error) {
-                    console.error("Error in handleDataAnalysisIntent:", error);
-                    return { content: `Data analysis failed: ${error.message}` };
-                }
-            }
-
-            function createTableFromData(data, filename = "Data") {
-                if (!data || data.length === 0) {
-                    return "<p>No data to display.</p>";
-                }
-                
-                const headers = Object.keys(data[0]);
-                let table = `
-                    <div class="dataframe-container">
-                        <p>Showing analysis results from ${filename}:</p>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>`;
-                
-                headers.forEach(header => {
-                    table += `<th onclick="sortTable(this)">${escapeHtml(header)}
-                                <span class="sort-icon"><i class="bi bi-arrow-down-up"></i></span>
-                            </th>`;
-                });
-                
-                table += `</tr></thead><tbody>`;
-                
-                data.forEach(row => {
-                    table += `<tr>`;
-                    headers.forEach(header => {
-                        let value = row[header];
-                        if (typeof value === 'number') {
-                            if (Number.isInteger(value)) {
-                                value = value.toLocaleString();
-                            } else {
-                                value = value.toFixed(2);
-                            }
-                        }
-                        if (value === null || value === undefined || (typeof value === 'number' && isNaN(value))) {
-                            value = '-';
-                        }
-                        table += `<td>${escapeHtml(value)}</td>`;
-                    });
-                    table += `</tr>`;
-                });
-                
-                table += `</tbody></table>
-                        </div>
-                        <div class="table-footer">
-                            <small>Showing ${Math.min(data.length, 50)} of ${data.length} rows</small>
-                        </div>
-                    </div>`;
-                
-                return table;
-            }
-
-            async function handleEmailIntent(message, geminiApiKey) {
-                let receiver = extractEmail(message);
-                if (receiver) document.getElementById('receiverEmail').value = receiver;
-                
-                const googleApiKey = document.getElementById('googleApiKey').value;
-                const searchEngineId = document.getElementById('searchEngineId').value;
-                const searchEnabled = proSearchToggle.checked;
-                
-                const emailContent = await getAIResponse({
-                    query: message,
-                    gemini_api_key: geminiApiKey,
-                    google_api_key: googleApiKey,
-                    search_engine_id: searchEngineId,
-                    useSearch: searchEnabled,
-                    isEmail: true
-                });
-
-                if (emailContent && emailContent.success) {
-                    document.getElementById('emailSubject').value = emailContent.subject || '';
-                    document.getElementById('emailBody').value = emailContent.body || '';
-                    emailForm.classList.add('open');
-                    return { content: "I've prepared an email draft for you. Please review it in the email form before sending." };
-                } else {
-                    return { content: `Couldn't generate email content. ${emailContent?.error || ''}` };
-                }
-            }
-
-            async function handleChatIntent(message, geminiApiKey) {
-                const googleApiKey = document.getElementById('googleApiKey').value;
-                const searchEngineId = document.getElementById('searchEngineId').value;
-                let useSearch = proSearchToggle.checked;
-                if (useSearch && (!googleApiKey || !searchEngineId)) { 
-                    useSearch = false; 
-                }
-                
-                const file = fileInput.files[0];
-                let formData = new FormData();
-                formData.append('query', message);
-                if (file) {
-                    formData.append('image', file);
-                }
-                formData.append('gemini_api_key', geminiApiKey);
-                formData.append('google_api_key', googleApiKey);
-                formData.append('search_engine_id', searchEngineId);
-                formData.append('useSearch', useSearch);
-
-                const aiResponseData = await getAIResponse(formData);
-
-                if (aiResponseData && typeof aiResponseData.ai_response !== 'undefined') {
-                    return { 
-                        content: aiResponseData.ai_response, 
-                        sources: aiResponseData.search_results || [] 
-                    };
-                } else {
-                    return { content: "Sorry, couldn't get a response." };
-                }
-            }
-
-            async function sendEmail() {
-                const senderEmail = document.getElementById('senderEmail').value;
-                const senderPassword = document.getElementById('senderPassword').value;
-                const receiverEmail = document.getElementById('receiverEmail').value;
-                const subject = document.getElementById('emailSubject').value;
-                const body = document.getElementById('emailBody').value;
-                
-                if (!senderEmail || !senderPassword || !receiverEmail || !subject || !body) { 
-                    showStatus('Please fill all email fields.', 'warning'); 
-                    return; 
-                }
-                
-                showStatus('Sending email...', 'success');
-                
-                try {
-                    const response = await fetch('/send_email', { 
-                        method: 'POST', 
-                        headers: {'Content-Type': 'application/json'}, 
-                        body: JSON.stringify({ 
-                            sender_email: senderEmail, 
-                            sender_password: senderPassword, 
-                            receiver_email: receiverEmail, 
-                            subject: subject, 
-                            body: body 
-                        }) 
-                    });
-                    
-                    const data = await response.json();
-                    if (response.ok && data.success) { 
-                        addMessage(`Email sent to ${receiverEmail}!`, 'bot'); 
-                        showStatus(data.message || 'Email sent!', 'success'); 
-                        document.getElementById('receiverEmail').value = ''; 
-                        document.getElementById('emailSubject').value = ''; 
-                        document.getElementById('emailBody').value = ''; 
-                        emailForm.classList.remove('open');
-                    } else {
-                        throw new Error(data.message || `HTTP error ${response.status}`);
-                    }
-                } catch (error) {
-                    console.error("Error sending email:", error);
-                    addMessage(`Failed to send email: ${error.message}`, 'bot');
-                    showStatus(`Email Error: ${error.message}`, 'error');
-                }
-            }
-
-            function addMessage(content, sender, sources = [], allowHtml = false) {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `message ${sender}-message`;
-                
-                const avatar = sender === 'user' ? 'U' : 'AI';
-                const role = sender === 'user' ? 'You' : 'AI Assistant';
-                
-                let messageContent = content;
-                if (!allowHtml) {
-                    messageContent = content
-                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                        .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                        .replace(/`(.*?)`/g, '<code>$1</code>')
-                        .replace(/\n/g, '<br>');
-                }
-                
-                messageDiv.innerHTML = `
-                    <div class="message-avatar">${avatar}</div>
-                    <div class="message-content">
-                        <div class="message-role">${role}</div>
-                        <div class="message-bubble">
-                            <div class="message-text">${messageContent}</div>
-                        </div>
-                    </div>
-                `;
-                
-                // Add sources if available
-                if (sources && sources.length > 0) {
-                    const sourcesDiv = document.createElement('div');
-                    sourcesDiv.className = 'search-container';
-                    sourcesDiv.style.marginTop = '8px';
-                    displaySearchResults(sources, sourcesDiv, false);
-                    messageDiv.appendChild(sourcesDiv);
-                }
-                
-                chatContainer.appendChild(messageDiv);
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            }
-
-            async function getAIResponse(formData) {
-                try {
-                    let url = '/ai_search';
-                    let options = { method: 'POST' };
-                    
-                    if (formData instanceof FormData) {
-                        options.body = formData;
-                    } else {
-                        url = '/ai_search_email';
-                        options.headers = { 'Content-Type': 'application/json' };
-                        options.body = JSON.stringify(formData);
-                    }
-                    
-                    const response = await fetch(url, options);
-                    
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        throw new Error(errorData.error || `API Error: ${response.statusText}`);
-                    }
-                    
-                    return await response.json();
-                } catch (error) {
-                    console.error(`Error calling API:`, error);
-                    return { success: false, error: error.message };
-                }
-            }
-
-            function displaySearchResults(results, containerElement, fullView = false) {
-                containerElement.innerHTML = '';
-                if (!results || results.length === 0) {
-                    return;
-                }
-
-                const numToDisplay = fullView ? results.length : Math.min(results.length, MAX_SOURCES_DISPLAY_IN_CHAT);
-                const showMoreSourcesIndicator = !fullView && results.length > MAX_SOURCES_DISPLAY_IN_CHAT;
-
-                for (let i = 0; i < numToDisplay; i++) {
-                    const result = results[i];
-                    const itemLink = document.createElement('a');
-                    itemLink.className = 'search-result-item';
-                    itemLink.href = result.link;
-                    itemLink.target = '_blank';
-                    itemLink.rel = 'noopener noreferrer';
-                    itemLink.title = result.title + "\n" + result.snippet;
-
-                    const favicon = document.createElement('img');
-                    favicon.className = 'favicon';
-                    try { favicon.src = `https://www.google.com/s2/favicons?domain=${new URL(result.link).hostname}&sz=16`; }
-                    catch { favicon.src = 'https://www.google.com/favicon.ico'; }
-
-                    const titleSpan = document.createElement('span');
-                    titleSpan.className = 'title';
-                    titleSpan.textContent = result.title;
-
-                    itemLink.appendChild(favicon);
-                    itemLink.appendChild(titleSpan);
-                    containerElement.appendChild(itemLink);
-                }
-
-                if (showMoreSourcesIndicator) {
-                    const remainingCount = results.length - MAX_SOURCES_DISPLAY_IN_CHAT;
-                    const moreItem = document.createElement('div');
-                    moreItem.className = 'more-sources-item';
-                    moreItem.title = `${remainingCount} more sources available`;
-
-                    const iconsDiv = document.createElement('div');
-                    iconsDiv.className = 'more-sources-icons';
-                    const iconCount = Math.min(remainingCount, MAX_MORE_ICONS);
-                    iconsDiv.style.width = `${iconCount * 10 + 8}px`;
-
-                    for (let i = 0; i < iconCount; i++) {
-                        const result = results[MAX_SOURCES_DISPLAY_IN_CHAT + i];
-                        const favicon = document.createElement('img');
-                        favicon.className = 'favicon';
-                        try { favicon.src = `https://www.google.com/s2/favicons?domain=${new URL(result.link).hostname}&sz=16`; }
-                        catch { favicon.src = 'https://www.google.com/favicon.ico'; }
-                        favicon.alt = '';
-                        favicon.style.left = `${i * 10}px`;
-                        iconsDiv.appendChild(favicon);
-                    }
-
-                    const moreSpan = document.createElement('span');
-                    moreSpan.textContent = `+${remainingCount} sources`;
-                    moreSpan.style.marginLeft = `${iconCount * 10 + 10}px`;
-
-                    moreItem.appendChild(iconsDiv);
-                    moreItem.appendChild(moreSpan);
-                    containerElement.appendChild(moreItem);
-                }
-            }
-
-            function extractEmail(text) {
-                const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
-                return text.match(emailRegex)?.[0] || null;
-            }
-
-            function escapeHtml(unsafe) {
-                if (unsafe === null || typeof unsafe === 'undefined') return '';
-                return String(unsafe)
-                     .replace(/&/g, "&amp;")
-                     .replace(/</g, "&lt;")
-                     .replace(/>/g, "&gt;")
-                     .replace(/"/g, "&quot;")
-                     .replace(/'/g, "&#039;");
-            }
-
-            function showStatus(message, type = 'success') {
-                statusMessage.className = 'status-message visible ' + type;
-                statusMessage.innerHTML = `
-                    <i class="bi ${type === 'success' ? 'bi-check-circle' : 
-                                      type === 'error' ? 'bi-exclamation-circle' : 
-                                      'bi-info-circle'}"></i>
-                    <span>${message}</span>
-                `;
-                
-                setTimeout(() => {
-                    statusMessage.classList.remove('visible');
-                }, 3000);
-            }
-
-            // --- Responsive Adjustments ---
-            function handleResize() {
-                if (window.innerWidth > 768) {
-                    sidebar.classList.remove('open');
-                }
-            }
-
-            window.addEventListener('resize', handleResize);
-
-            // --- File Input Handling ---
-            fileInput.addEventListener('change', function() {
-                if (this.files.length > 0) {
-                    showStatus(`File "${this.files[0].name}" ready for upload`, 'success');
-                }
-            });
-
-            // Global function for table sorting
-            window.sortTable = function(header) {
-                const table = header.closest('table');
-                const tbody = table.querySelector('tbody');
-                const rows = Array.from(tbody.querySelectorAll('tr'));
-                const headerIndex = Array.from(header.parentNode.children).indexOf(header);
-                const isAscending = !header.classList.contains('asc');
-                
-                table.querySelectorAll('th').forEach(th => {
-                    th.classList.remove('asc', 'desc');
-                    const icon = th.querySelector('.sort-icon i');
-                    if (icon) icon.className = 'bi bi-arrow-down-up';
-                });
-                
-                header.classList.add(isAscending ? 'asc' : 'desc');
-                const icon = header.querySelector('.sort-icon i');
-                if (icon) icon.className = isAscending ? 'bi bi-arrow-down' : 'bi bi-arrow-up';
-                
-                rows.sort((a, b) => {
-                    const aValue = a.children[headerIndex].textContent;
-                    const bValue = b.children[headerIndex].textContent;
-                    
-                    const aNum = parseFloat(aValue.replace(/,/g, ''));
-                    const bNum = parseFloat(bValue.replace(/,/g, ''));
-                    if (!isNaN(aNum) && !isNaN(bNum)) {
-                        return isAscending ? aNum - bNum : bNum - aNum;
-                    }
-                    
-                    return isAscending
-                        ? aValue.localeCompare(bValue)
-                        : bValue.localeCompare(aValue);
-                });
-                
-                rows.forEach(row => tbody.appendChild(row));
-            };
-        });
+    <script src="/static/script.js">
     </script>
 </body>
 </html>

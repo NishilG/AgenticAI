@@ -16,12 +16,12 @@ from pandasai.callbacks import StdoutCallback
 from time import sleep
 app = Flask(__name__, static_folder='static')
 CORS(app)  # Enable CORS for all routes
-
+import json
 PANDASAI_AVAILABLE = True
 
 # Create directories if they don't exist
 os.makedirs('uploads', exist_ok=True)
-os.makedirs(os.path.join('None', 'streamlit'), exist_ok=True)
+os.makedirs('static/plots', exist_ok=True)  # Only need plots directory for saving charts
 
 @app.route('/data_analysis_action', methods=['POST'])
 def data_analysis_action():
@@ -33,12 +33,20 @@ def data_analysis_action():
 
     file = request.files['file']
     query = request.form['message']
-    openai_api_key = "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"
-
+    openai_api_key = "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"
+    
     if not openai_api_key:
-        openai_api_key = "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"
-        if not openai_api_key:
-            return jsonify({'success': False, 'error': 'Missing OpenAI API key'}), 400
+        return jsonify({'success': False, 'error': 'Missing OpenAI API key. Please set OPENAI_API_KEY environment variable.'}), 400
+
+    if 'chat_history' in request.form:
+        chat_history_str = request.form['chat_history']
+        try:
+            chat_history = json.loads(chat_history_str)
+        except json.JSONDecodeError:
+            print("Invalid chat history format, defaulting to empty list")
+            chat_history = []
+    else:
+        chat_history = []
 
     if file.filename == '':
         return jsonify({'success': False, 'error': 'No selected file'}), 400
@@ -60,7 +68,7 @@ def data_analysis_action():
             if df is None or df.empty:
                 return jsonify({'success': False, 'error': 'Could not read or file is empty.'}), 400
 
-            llm = LangchainLLM(ChatOpenAI(openai_api_key=openai_api_key,openai_api_base='https://openrouter.ai/api/v1',model_name="google/gemini-2.0-flash-001"))
+            llm = LangchainLLM(ChatOpenAI(openai_api_key=openai_api_key,openai_api_base="https://openrouter.ai/api/v1", model_name="openai/chatgpt-4o-latest"))
             config = Config(
                 llm=llm,
                 callback=StdoutCallback(),
@@ -69,18 +77,43 @@ def data_analysis_action():
                 enable_cache=False,
                 save_charts=True,
                 # Use absolute path for saving charts
-                save_charts_path=os.path.abspath("static/plots")
+                save_charts_path=os.path.join(os.getcwd(), "static", "plots").replace("\\", "/")
             )
             agent = Agent(df, config=config)
             # Validate query first
             if not query or not isinstance(query, str):
                 return jsonify({'success': False, 'error': 'Invalid query - must be a non-empty string'}), 400
 
-            response = agent.chat(query)
-            sleep(2)
-            print(f"PandasAI response for query '{query}':", response)
-            
+            # Incorporate chat history into the query
+            if chat_history:
+                history_str = "\n\nChat History:\n"
+                for msg in chat_history:
+                    history_str += f"- {msg['role']}: {msg['content']}\n"
+                query_with_history = history_str + query # Use a different variable to keep original query for logging if needed
+            else:
+                query_with_history = query
+
+            response = None
+            try:
+                print(f"Attempting PandasAI chat with query: {query_with_history[:200]}...") # Log start, truncate long queries
+                response = agent.chat(query_with_history)
+                sleep(2) # Keep sleep for now, might be related to async operations finishing?
+                print(f"PandasAI raw response type: {type(response)}")
+                print(f"PandasAI raw response content: {str(response)[:500]}") # Log response snippet
+
+            except Exception as chat_error:
+                # Log the specific error during the chat call
+                print(f"!!! Error during agent.chat: {type(chat_error).__name__}: {chat_error}")
+                # Check if it looks like a network error (common libraries raise subclasses of OSError or specific exceptions)
+                # This is a heuristic check
+                if "fetch" in str(chat_error).lower() or "connection" in str(chat_error).lower() or "network" in str(chat_error).lower():
+                     return jsonify({'success': False, 'error': f'Failed to fetch response from analysis API: {str(chat_error)}'}), 502 # Bad Gateway might be appropriate
+                else:
+                     return jsonify({'success': False, 'error': f'Error during data analysis execution: {str(chat_error)}'}), 500
+
+
             if response is None:
+                print("PandasAI returned None response.")
                 return jsonify({
                     'success': False,
                     'error': 'Analysis returned no result - try rephrasing your query'
@@ -109,18 +142,12 @@ def data_analysis_action():
             elif isinstance(response, dict) and response.get("type") == "plot" and response.get("value"):
         # Plot response handling
                 plot_path = response["value"]
-                plot_url = "/static/plots/" + os.path.basename(plot_path)
+                plot_url = f"/static/plots/{os.path.basename(plot_path)}".replace("\\", "/")
                 print(f"Plot URL: {plot_url}")
                 return jsonify({
                     'success': True,
                     'type': 'plot',
                     'content': plot_url
-                })
-
-            elif response is None:
-                return jsonify({
-                    'success': False,
-                    'error': 'No response generated from analysis'
                 })
 
             elif isinstance(response, str):

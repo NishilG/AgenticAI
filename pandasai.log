@@ -4249,3 +4249,3441 @@ def analyze_data(dfs: list[pd.DataFrame]) ->dict:
 2025-03-29 11:40:29 [INFO] Executed in: 4.5116047859191895s
 2025-03-29 11:40:31 [INFO] 127.0.0.1 - - [29/Mar/2025 11:40:31] "POST /data_analysis_action HTTP/1.1" 200 -
 2025-03-29 11:40:32 [INFO] 127.0.0.1 - - [29/Mar/2025 11:40:32] "GET /static/plots/a371ff55-256e-4fd6-a728-e559c590ba26.png HTTP/1.1" 200 -
+2025-04-04 15:45:17 [INFO] Question: what is in this xlsx file
+2025-04-04 15:45:18 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\http\\server.py', reloading
+2025-04-04 15:45:18 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\socketserver.py', reloading
+2025-04-04 15:45:18 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\threading.py', reloading
+2025-04-04 15:45:18 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-04 15:45:18 [INFO] Prompt ID: 9d564108-a641-40f4-9a7f-f4ce7eb4c380
+2025-04-04 15:45:18 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Duke Properties,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,3074060086,dukecute3624@gmail.com...,2566.0,234.0,5735900733,"Abuja, Nigeria",Abuja,NO,YES,
+IMMOBILIENMAKLER BIELEFELD,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,6316508960,info@kriemelmann-immob...,761.0,49.0,8057171971,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann-immobilien.de/
+SK Homes,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,4178115987,buildwithskhomes@gmail...,2.0,,5529465277,,,NO,YES,
+Espaces Atypiques Bordeaux - Arcachon - Cap Ferret,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,6913439883,bordeaux@espaces-atypi...,2286.0,33.0,1521337848,,,NO,NO,https://www.espaces-atypiques.com/bordeaux/
+DREAM WALLS REALTORS - RESALE,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,2322723875,dreamwallsrealtors@gma...,5.0,91.0,4827331941,,,NO,YES,https://www.facebook.com/share/19rhugvycC/
+</dataframe>
+
+<conversation>
+User 1: what is in this xlsx file
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-04-04 15:47:30 [INFO] Question: Make a graph of follower count and names
+2025-04-04 15:47:31 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-04 15:47:31 [INFO] Prompt ID: 08977b1c-d3c3-4e73-80ad-e4c2abae56f4
+2025-04-04 15:47:31 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Duke Properties,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,7416470853,dukecute3624@gmail.com...,2566.0,234.0,2013866712,"Abuja, Nigeria",Abuja,NO,YES,
+IMMOBILIENMAKLER BIELEFELD,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,2631702727,info@kriemelmann-immob...,761.0,49.0,3756163705,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann-immobilien.de/
+Espaces Atypiques Bordeaux - Arcachon - Cap Ferret,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,7648737042,bordeaux@espaces-atypi...,2286.0,33.0,4202032935,,,NO,NO,https://www.espaces-atypiques.com/bordeaux/
+SK Homes,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,7047803549,buildwithskhomes@gmail...,2.0,,6406694178,,,NO,YES,
+DREAM WALLS REALTORS - RESALE,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,5955840958,dreamwallsrealtors@gma...,5.0,91.0,5049538831,,,NO,YES,https://www.facebook.com/share/19rhugvycC/
+</dataframe>
+
+<conversation>
+User 1: Make a graph of follower count and names
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-04-04 15:47:32 [INFO] error_code=401 error_message='No auth credentials found' error_param=None error_type=None message='OpenAI API error received' stream_error=False
+2025-04-04 15:47:34 [INFO] 127.0.0.1 - - [04/Apr/2025 15:47:34] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-04 15:48:56 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\data_analysis_server.py', reloading
+2025-04-04 15:48:56 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\data_analysis_server.py', reloading
+2025-04-04 15:50:29 [INFO] Question: Make a graph of follower count and names
+2025-04-04 15:50:29 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-04 15:50:29 [INFO] Prompt ID: a3a6d337-055e-4043-9e18-3e5913378e65
+2025-04-04 15:50:29 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\logging\\__init__.py', reloading
+2025-04-04 15:50:29 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\encodings\\cp1252.py', reloading
+2025-04-04 15:51:15 [INFO] Question: Make a graph of follower count and names
+2025-04-04 15:51:15 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-04 15:51:15 [INFO] Prompt ID: ba0e7bc1-89f6-4bfd-9e89-c63d88de5f38
+2025-04-04 15:51:17 [WARNING] Retrying langchain.chat_models.openai.ChatOpenAI.completion_with_retry.<locals>._completion_with_retry in 4.0 seconds as it raised APIError: HTTP code 404 from API ().
+2025-04-04 15:51:23 [WARNING] Retrying langchain.chat_models.openai.ChatOpenAI.completion_with_retry.<locals>._completion_with_retry in 4.0 seconds as it raised APIError: HTTP code 404 from API ().
+2025-04-04 15:51:28 [WARNING] Retrying langchain.chat_models.openai.ChatOpenAI.completion_with_retry.<locals>._completion_with_retry in 4.0 seconds as it raised APIError: HTTP code 404 from API ().
+2025-04-04 15:51:32 [WARNING] Retrying langchain.chat_models.openai.ChatOpenAI.completion_with_retry.<locals>._completion_with_retry in 8.0 seconds as it raised APIError: HTTP code 404 from API ().
+2025-04-04 15:51:41 [WARNING] Retrying langchain.chat_models.openai.ChatOpenAI.completion_with_retry.<locals>._completion_with_retry in 10.0 seconds as it raised APIError: HTTP code 404 from API ().
+2025-04-04 15:51:56 [INFO] 127.0.0.1 - - [04/Apr/2025 15:51:56] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-04 15:56:04 [INFO] Question: what is the excel file about
+2025-04-04 15:56:04 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-04 15:56:04 [INFO] Prompt ID: f35ac479-2d7b-43c9-8bb1-63c47b635dc3
+2025-04-04 15:56:08 [INFO] error_code=invalid_api_key error_message='Incorrect API key provided: sk-or-v1*************************************************************e2fd. You can find your API key at https://platform.openai.com/account/api-keys.' error_param=None error_type=invalid_request_error message='OpenAI API error received' stream_error=False
+2025-04-04 15:56:10 [INFO] 127.0.0.1 - - [04/Apr/2025 15:56:10] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-04 15:56:53 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\data_analysis_server.py', reloading
+2025-04-04 15:56:53 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\data_analysis_server.py', reloading
+2025-04-04 15:57:27 [INFO] Question: what is the excel file about
+2025-04-04 15:57:27 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-04 15:57:27 [INFO] Prompt ID: c9976232-e8a6-42ed-b293-dd4d1a39bcc5
+2025-04-04 15:57:27 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,5157918301,o3v-swa@zoho.com,761.0,49.0,8717284188,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,2767971037,df3mcrxk0_8@gmail.com,5.0,91.0,6632692755,,,NO,YES,https://www.facebook.c...
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,4262214722,imw_660wz9@icloud.com,2286.0,33.0,8546863941,,,NO,NO,https://www.espaces-at...
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,5736875349,byh_ibae4ut0@icloud.com,2566.0,234.0,5351224384,"Abuja, Nigeria",Abuja,NO,YES,
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,7181561240,f-c87mz0q2x@aol.com,2.0,,6785806720,,,NO,YES,
+</dataframe>
+
+<conversation>
+User 1: what is the excel file about
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-04-04 15:57:28 [INFO] error_code=invalid_api_key error_message='Incorrect API key provided: sk-or-v1*************************************************************e2fd. You can find your API key at https://platform.openai.com/account/api-keys.' error_param=None error_type=invalid_request_error message='OpenAI API error received' stream_error=False
+2025-04-04 15:57:30 [INFO] 127.0.0.1 - - [04/Apr/2025 15:57:30] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-04 16:00:28 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\data_analysis_server.py', reloading
+2025-04-04 16:00:28 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\data_analysis_server.py', reloading
+2025-04-04 16:01:44 [INFO] Question: what is in this file
+2025-04-04 16:01:44 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-04 16:01:44 [INFO] Prompt ID: b94b6958-7bb7-4335-b34f-55f67ea4b928
+2025-04-04 16:01:48 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+
+    return {
+        "type": "dataframe",
+        "value": dfs[0]
+    }
+
+# User 1: what is in this file
+result = analyze_data([dfs[0]])
+print(result)
+```
+
+2025-04-04 16:01:48 [INFO] Saving charts to C:\Users\Naveen1\AgenticAI\static\plots\b94b6958-7bb7-4335-b34f-55f67ea4b928.png
+2025-04-04 16:01:48 [WARNING] Failed to execute code with a correction framework [retry number: 1]
+2025-04-04 16:01:48 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\smart_datalake\__init__.py", line 337, in chat
+    result = self._code_manager.execute_code(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\helpers\code_manager.py", line 217, in execute_code
+    code_to_run = self._clean_code(code)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\helpers\code_manager.py", line 395, in _clean_code
+    tree = ast.parse(code)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\ast.py", line 50, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 21
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:\Users\Naveen1\AgenticAI\static\plots\b94b6958-7bb7-4335-b34f-55f67ea4b928.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:\Users\Naveen1\AgenticAI\static\plots\b94b6958-7bb7-4335-b34f-55f67ea4b928.png" }
+    """
+       ^
+SyntaxError: (unicode error) 'unicodeescape' codec can't decode bytes in position 277-278: truncated \UXXXXXXXX escape
+. Retrying
+2025-04-04 16:01:48 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\ast.py', reloading
+2025-04-04 16:02:50 [INFO] Question: what is in this file
+2025-04-04 16:02:51 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-04 16:02:51 [INFO] Prompt ID: c4acc9df-f478-421e-b5d6-a55de9afa60e
+2025-04-04 16:02:51 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Duke Properties,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,1788953506,dukecute3624@gmail.com...,2566.0,234.0,0851197663,"Abuja, Nigeria",Abuja,NO,YES,
+Espaces Atypiques Bordeaux - Arcachon - Cap Ferret,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,7004410473,bordeaux@espaces-atypi...,2286.0,33.0,9960304720,,,NO,NO,https://www.espaces-atypiques.com/bordeaux/
+SK Homes,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,5693649205,buildwithskhomes@gmail...,2.0,,8411397129,,,NO,YES,
+DREAM WALLS REALTORS - RESALE,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,0704638096,dreamwallsrealtors@gma...,5.0,91.0,1425839983,,,NO,YES,https://www.facebook.com/share/19rhugvycC/
+IMMOBILIENMAKLER BIELEFELD,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,8301552669,info@kriemelmann-immob...,761.0,49.0,9618801133,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann-immobilien.de/
+</dataframe>
+
+<conversation>
+User 1: what is in this file
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-04-04 16:02:56 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    
+    return { "type": "dataframe", "value": dfs[0] }
+```
+
+2025-04-04 16:02:56 [INFO] Saving charts to C:\Users\Naveen1\AgenticAI\static\plots\c4acc9df-f478-421e-b5d6-a55de9afa60e.png
+2025-04-04 16:02:56 [WARNING] Failed to execute code with a correction framework [retry number: 1]
+2025-04-04 16:02:56 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\smart_datalake\__init__.py", line 337, in chat
+    result = self._code_manager.execute_code(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\helpers\code_manager.py", line 217, in execute_code
+    code_to_run = self._clean_code(code)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\helpers\code_manager.py", line 395, in _clean_code
+    tree = ast.parse(code)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\ast.py", line 50, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 21
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:\Users\Naveen1\AgenticAI\static\plots\c4acc9df-f478-421e-b5d6-a55de9afa60e.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:\Users\Naveen1\AgenticAI\static\plots\c4acc9df-f478-421e-b5d6-a55de9afa60e.png" }
+    """
+       ^
+SyntaxError: (unicode error) 'unicodeescape' codec can't decode bytes in position 277-278: truncated \UXXXXXXXX escape
+. Retrying
+2025-04-04 16:02:56 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames with the following metadata:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Duke Properties,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,1788953506,dukecute3624@gmail.com...,2566.0,234.0,0851197663,"Abuja, Nigeria",Abuja,NO,YES,
+Espaces Atypiques Bordeaux - Arcachon - Cap Ferret,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,7004410473,bordeaux@espaces-atypi...,2286.0,33.0,9960304720,,,NO,NO,https://www.espaces-atypiques.com/bordeaux/
+SK Homes,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,5693649205,buildwithskhomes@gmail...,2.0,,8411397129,,,NO,YES,
+DREAM WALLS REALTORS - RESALE,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,0704638096,dreamwallsrealtors@gma...,5.0,91.0,1425839983,,,NO,YES,https://www.facebook.com/share/19rhugvycC/
+IMMOBILIENMAKLER BIELEFELD,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,8301552669,info@kriemelmann-immob...,761.0,49.0,9618801133,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann-immobilien.de/
+</dataframe>
+
+The user asked the following question:
+User 1: what is in this file
+
+You generated this python code:
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    
+    return { "type": "dataframe", "value": dfs[0] }
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\smart_datalake\__init__.py", line 337, in chat
+    result = self._code_manager.execute_code(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\helpers\code_manager.py", line 217, in execute_code
+    code_to_run = self._clean_code(code)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\helpers\code_manager.py", line 395, in _clean_code
+    tree = ast.parse(code)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\ast.py", line 50, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 21
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:\Users\Naveen1\AgenticAI\static\plots\c4acc9df-f478-421e-b5d6-a55de9afa60e.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:\Users\Naveen1\AgenticAI\static\plots\c4acc9df-f478-421e-b5d6-a55de9afa60e.png" }
+    """
+       ^
+SyntaxError: (unicode error) 'unicodeescape' codec can't decode bytes in position 277-278: truncated \UXXXXXXXX escape
+
+
+Correct the python code and return a new python code that fixes the above mentioned error. Do not generate the same code again.
+
+2025-04-04 16:03:00 [INFO] Saving charts to C:\Users\Naveen1\AgenticAI\static\plots\c4acc9df-f478-421e-b5d6-a55de9afa60e.png
+2025-04-04 16:03:00 [WARNING] Failed to execute code with a correction framework [retry number: 2]
+2025-04-04 16:03:00 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\smart_datalake\__init__.py", line 337, in chat
+    result = self._code_manager.execute_code(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\helpers\code_manager.py", line 217, in execute_code
+    code_to_run = self._clean_code(code)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\helpers\code_manager.py", line 395, in _clean_code
+    tree = ast.parse(code)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\ast.py", line 50, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 21
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:\Users\Naveen1\AgenticAI\static\plots\c4acc9df-f478-421e-b5d6-a55de9afa60e.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:\Users\Naveen1\AgenticAI\static\plots\c4acc9df-f478-421e-b5d6-a55de9afa60e.png" }
+    """
+       ^
+SyntaxError: (unicode error) 'unicodeescape' codec can't decode bytes in position 277-278: truncated \UXXXXXXXX escape
+. Retrying
+2025-04-04 16:03:00 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames with the following metadata:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Duke Properties,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,1788953506,dukecute3624@gmail.com...,2566.0,234.0,0851197663,"Abuja, Nigeria",Abuja,NO,YES,
+Espaces Atypiques Bordeaux - Arcachon - Cap Ferret,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,7004410473,bordeaux@espaces-atypi...,2286.0,33.0,9960304720,,,NO,NO,https://www.espaces-atypiques.com/bordeaux/
+SK Homes,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,5693649205,buildwithskhomes@gmail...,2.0,,8411397129,,,NO,YES,
+DREAM WALLS REALTORS - RESALE,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,0704638096,dreamwallsrealtors@gma...,5.0,91.0,1425839983,,,NO,YES,https://www.facebook.com/share/19rhugvycC/
+IMMOBILIENMAKLER BIELEFELD,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,8301552669,info@kriemelmann-immob...,761.0,49.0,9618801133,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann-immobilien.de/
+</dataframe>
+
+The user asked the following question:
+User 1: what is in this file
+
+You generated this python code:
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    
+    return { "type": "dataframe", "value": dfs[0] }
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\smart_datalake\__init__.py", line 337, in chat
+    result = self._code_manager.execute_code(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\helpers\code_manager.py", line 217, in execute_code
+    code_to_run = self._clean_code(code)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\helpers\code_manager.py", line 395, in _clean_code
+    tree = ast.parse(code)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\ast.py", line 50, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 21
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:\Users\Naveen1\AgenticAI\static\plots\c4acc9df-f478-421e-b5d6-a55de9afa60e.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:\Users\Naveen1\AgenticAI\static\plots\c4acc9df-f478-421e-b5d6-a55de9afa60e.png" }
+    """
+       ^
+SyntaxError: (unicode error) 'unicodeescape' codec can't decode bytes in position 277-278: truncated \UXXXXXXXX escape
+
+
+Correct the python code and return a new python code that fixes the above mentioned error. Do not generate the same code again.
+
+2025-04-04 16:03:04 [INFO] Saving charts to C:\Users\Naveen1\AgenticAI\static\plots\c4acc9df-f478-421e-b5d6-a55de9afa60e.png
+2025-04-04 16:03:06 [INFO] 127.0.0.1 - - [04/Apr/2025 16:03:06] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-04 16:05:05 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\data_analysis_server.py', reloading
+2025-04-04 16:05:05 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\data_analysis_server.py', reloading
+2025-04-04 16:05:24 [INFO] Question: what is in this file
+2025-04-04 16:05:25 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-04 16:05:25 [INFO] Prompt ID: 1242f14f-e727-45be-8000-dd6f643dd65b
+2025-04-04 16:05:29 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    
+    # Extract the first dataframe
+    df = dfs[0]
+
+    # Return basic information about the dataframe
+    num_rows, num_cols = df.shape
+    return {
+        "type": "string",
+        "value": f"The dataframe has {num_rows} rows and {num_cols} columns."
+    }
+```
+
+2025-04-04 16:05:29 [INFO] Saving charts to C:\Users\Naveen1\AgenticAI\static\plots\1242f14f-e727-45be-8000-dd6f643dd65b.png
+2025-04-04 16:05:29 [WARNING] Failed to execute code with a correction framework [retry number: 1]
+2025-04-04 16:05:29 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\smart_datalake\__init__.py", line 337, in chat
+    result = self._code_manager.execute_code(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\helpers\code_manager.py", line 217, in execute_code
+    code_to_run = self._clean_code(code)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\helpers\code_manager.py", line 395, in _clean_code
+    tree = ast.parse(code)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\ast.py", line 50, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 21
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:\Users\Naveen1\AgenticAI\static\plots\1242f14f-e727-45be-8000-dd6f643dd65b.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:\Users\Naveen1\AgenticAI\static\plots\1242f14f-e727-45be-8000-dd6f643dd65b.png" }
+    """
+       ^
+SyntaxError: (unicode error) 'unicodeescape' codec can't decode bytes in position 277-278: truncated \UXXXXXXXX escape
+. Retrying
+2025-04-04 16:05:37 [INFO] Saving charts to C:\Users\Naveen1\AgenticAI\static\plots\1242f14f-e727-45be-8000-dd6f643dd65b.png
+2025-04-04 16:05:37 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:\\Users\\Naveen1\\AgenticAI\\static\\plots\\1242f14f-e727-45be-8000-dd6f643dd65b.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:\\Users\\Naveen1\\AgenticAI\\static\\plots\\1242f14f-e727-45be-8000-dd6f643dd65b.png" }
+    """
+    df = dfs[0]
+    num_rows, num_cols = df.shape
+    return {'type': 'string', 'value': f'The dataframe has {num_rows} rows and {num_cols} columns.'}
+        ```
+2025-04-04 16:05:37 [INFO] Answer: {'type': 'string', 'value': 'The dataframe has 25 rows and 17 columns.'}
+2025-04-04 16:05:37 [INFO] Executed in: 13.182749271392822s
+2025-04-04 16:05:39 [INFO] 127.0.0.1 - - [04/Apr/2025 16:05:39] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-04 16:06:05 [INFO] Question: Make a bar graph with name and follower count from the excel file
+2025-04-04 16:06:05 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-04 16:06:06 [INFO] Prompt ID: f47d4d6a-87a5-4154-b71d-b62502431049
+2025-04-04 16:06:11 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0]
+
+    # Prepare: Ensure 'Full Name' and 'Followers count' columns are present and clean
+    df = df[['Full Name', 'Followers count']].copy()
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+
+    # Process: Sort values for better visualization (optional)
+    df_sorted = df.sort_values(by='Followers count', ascending=False)
+
+    # Analyze: Plotting bar chart
+    plt.figure(figsize=(10, 6))
+    plt.bar(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Name')
+    plt.ylabel('Follower Count')
+    plt.title('Follower Count by Name')
+    plt.xticks(rotation=90)
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return {
+        "type": "plot",
+        "value": "temp_chart.png"
+    }
+```
+
+2025-04-04 16:06:11 [INFO] Saving charts to C:\Users\Naveen1\AgenticAI\static\plots\f47d4d6a-87a5-4154-b71d-b62502431049.png
+2025-04-04 16:06:11 [WARNING] Failed to execute code with a correction framework [retry number: 1]
+2025-04-04 16:06:11 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\smart_datalake\__init__.py", line 337, in chat
+    result = self._code_manager.execute_code(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\helpers\code_manager.py", line 217, in execute_code
+    code_to_run = self._clean_code(code)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\helpers\code_manager.py", line 395, in _clean_code
+    tree = ast.parse(code)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\ast.py", line 50, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 22
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:\Users\Naveen1\AgenticAI\static\plots\f47d4d6a-87a5-4154-b71d-b62502431049.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:\Users\Naveen1\AgenticAI\static\plots\f47d4d6a-87a5-4154-b71d-b62502431049.png" }
+    """
+       ^
+SyntaxError: (unicode error) 'unicodeescape' codec can't decode bytes in position 277-278: truncated \UXXXXXXXX escape
+. Retrying
+2025-04-04 16:06:16 [INFO] Saving charts to C:\Users\Naveen1\AgenticAI\static\plots\f47d4d6a-87a5-4154-b71d-b62502431049.png
+2025-04-04 16:06:16 [WARNING] Failed to execute code with a correction framework [retry number: 2]
+2025-04-04 16:06:16 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\smart_datalake\__init__.py", line 337, in chat
+    result = self._code_manager.execute_code(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\helpers\code_manager.py", line 217, in execute_code
+    code_to_run = self._clean_code(code)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\helpers\code_manager.py", line 395, in _clean_code
+    tree = ast.parse(code)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\ast.py", line 50, in parse
+    return compile(source, filename, mode, flags,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<unknown>", line 22
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:\Users\Naveen1\AgenticAI\static\plots\f47d4d6a-87a5-4154-b71d-b62502431049.png" }
+    """
+       ^
+SyntaxError: (unicode error) 'unicodeescape' codec can't decode bytes in position 756-757: truncated \UXXXXXXXX escape
+. Retrying
+2025-04-04 16:06:23 [INFO] 127.0.0.1 - - [04/Apr/2025 16:06:23] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-04 16:07:09 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\Home.py', reloading
+2025-04-04 16:07:09 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\data_analysis.py', reloading
+2025-04-04 16:07:09 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\llm\\ais_erniebot.py', reloading
+2025-04-04 16:07:09 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\middleware\\base.py', reloading
+2025-04-04 16:07:09 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\parser\\response_parser.py', reloading
+2025-04-04 16:07:09 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\send_email.py', reloading
+2025-04-04 16:07:09 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\test.py', reloading
+2025-04-04 16:07:09 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\util.py', reloading
+2025-04-04 16:08:21 [INFO] Question: Make a bar graph with name and follower count from the excel file
+2025-04-04 16:08:23 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-04 16:08:23 [INFO] Prompt ID: cd072df7-bf31-4ded-bc96-4eae569974d5
+2025-04-04 16:08:32 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0]
+
+    # Step 1: Prepare
+    df_clean = df[['Full Name', 'Followers count']].copy()
+    df_clean = df_clean.dropna(subset=['Full Name', 'Followers count'])
+
+    # Ensure follower count is numeric
+    df_clean['Followers count'] = pd.to_numeric(df_clean['Followers count'], errors='coerce')
+    df_clean = df_clean.dropna(subset=['Followers count'])
+
+    # Step 2: Process
+    df_sorted = df_clean.sort_values('Followers count', ascending=False).head(10)  # Get top 10 for better visibility
+
+    # Step 3: Analyze (Plot)
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.title('Top Accounts by Followers Count')
+    plt.gca().invert_yaxis()  # Highest at top
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-04-04 16:08:32 [INFO] Saving charts to C:/Users/Naveen1/AgenticAI/static/plots\cd072df7-bf31-4ded-bc96-4eae569974d5.png
+2025-04-04 16:08:32 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:/Users/Naveen1/AgenticAI/static/plots\\cd072df7-bf31-4ded-bc96-4eae569974d5.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:/Users/Naveen1/AgenticAI/static/plots\\cd072df7-bf31-4ded-bc96-4eae569974d5.png" }
+    """
+    df = dfs[0]
+    df_clean = df[['Full Name', 'Followers count']].copy()
+    df_clean = df_clean.dropna(subset=['Full Name', 'Followers count'])
+    df_clean['Followers count'] = pd.to_numeric(df_clean['Followers count'], errors='coerce')
+    df_clean = df_clean.dropna(subset=['Followers count'])
+    df_sorted = df_clean.sort_values('Followers count', ascending=False).head(10)
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.title('Top Accounts by Followers Count')
+    plt.gca().invert_yaxis()
+    plt.tight_layout()
+    plt.savefig('C:/Users/Naveen1/AgenticAI/static/plots\\cd072df7-bf31-4ded-bc96-4eae569974d5.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'C:/Users/Naveen1/AgenticAI/static/plots\\cd072df7-bf31-4ded-bc96-4eae569974d5.png'}
+        ```
+2025-04-04 16:08:37 [WARNING] Matplotlib is building the font cache; this may take a moment.
+2025-04-04 16:08:41 [INFO] generated new fontManager
+2025-04-04 16:08:42 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/Naveen1/AgenticAI/static/plots\\cd072df7-bf31-4ded-bc96-4eae569974d5.png'}
+2025-04-04 16:08:42 [INFO] Executed in: 20.94320583343506s
+2025-04-04 16:08:44 [INFO] 127.0.0.1 - - [04/Apr/2025 16:08:44] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-04 16:08:45 [INFO] 127.0.0.1 - - [04/Apr/2025 16:08:45] "GET /static/plots/eb9c6c8b-b458-4c67-84bf-bb543e080736.png HTTP/1.1" 200 -
+2025-04-04 21:53:03 [INFO] Question: make a graph of names and follower count from the excel file
+2025-04-04 21:53:04 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\pandasai\\helpers\\logger.py', reloading
+2025-04-04 21:53:04 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\pandasai\\smart_datalake\\__init__.py', reloading
+2025-04-04 21:53:04 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\pandasai\\agent\\__init__.py', reloading
+2025-04-04 21:53:04 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\flask\\app.py', reloading
+2025-04-04 21:53:04 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\werkzeug\\debug\\__init__.py', reloading
+2025-04-04 21:53:04 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\werkzeug\\serving.py', reloading
+2025-04-04 21:53:04 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\http\\server.py', reloading
+2025-04-04 21:53:04 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\socketserver.py', reloading
+2025-04-04 21:53:04 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-04 21:53:04 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\threading.py', reloading
+2025-04-04 21:53:04 [INFO] Prompt ID: 641eadb9-f6f1-40e5-8988-4a501836d507
+2025-04-04 21:53:04 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\pandasai\\helpers\\output_types\\__init__.py', reloading
+2025-04-04 21:53:14 [INFO] Question: make a graph of names and follower count from the excel file
+2025-04-04 21:53:14 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-04 21:53:14 [INFO] Prompt ID: 23fe1c67-757b-4218-8f93-f84830c832b4
+2025-04-04 21:53:14 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\logging\\__init__.py', reloading
+2025-04-04 21:53:14 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\encodings\\cp1252.py', reloading
+2025-04-04 21:54:16 [INFO] Question: make a graph of names and follower count from the excel file
+2025-04-04 21:54:16 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-04 21:54:16 [INFO] Prompt ID: d73e9a0a-ae06-459e-be1b-c2d5704eb4d9
+2025-04-04 21:54:21 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0]
+
+    # Prepare: Extract relevant columns and clean data
+    df_clean = df[['Full Name', 'Followers count']].copy()
+    df_clean = df_clean.dropna(subset=['Full Name', 'Followers count'])
+
+    # Sort by follower count for better visualization
+    df_clean = df_clean.sort_values(by='Followers count', ascending=False)
+
+    # Plot: Create a bar chart
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_clean['Full Name'], df_clean['Followers count'], color='skyblue')
+    plt.xlabel('Follower Count')
+    plt.ylabel('Full Name')
+    plt.title('Instagram Accounts by Follower Count')
+    plt.gca().invert_yaxis()  # Highest on top
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-04-04 21:54:21 [INFO] Saving charts to C:/Users/Naveen1/AgenticAI/static/plots\d73e9a0a-ae06-459e-be1b-c2d5704eb4d9.png
+2025-04-04 21:54:21 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\pandasai\\helpers\\save_chart.py', reloading
+2025-04-04 21:54:21 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\pandasai\\helpers\\code_manager.py', reloading
+2025-04-04 21:54:21 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:/Users/Naveen1/AgenticAI/static/plots\\d73e9a0a-ae06-459e-be1b-c2d5704eb4d9.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:/Users/Naveen1/AgenticAI/static/plots\\d73e9a0a-ae06-459e-be1b-c2d5704eb4d9.png" }
+    """
+    df = dfs[0]
+    df_clean = df[['Full Name', 'Followers count']].copy()
+    df_clean = df_clean.dropna(subset=['Full Name', 'Followers count'])
+    df_clean = df_clean.sort_values(by='Followers count', ascending=False)
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_clean['Full Name'], df_clean['Followers count'], color='skyblue')
+    plt.xlabel('Follower Count')
+    plt.ylabel('Full Name')
+    plt.title('Instagram Accounts by Follower Count')
+    plt.gca().invert_yaxis()
+    plt.tight_layout()
+    plt.savefig('C:/Users/Naveen1/AgenticAI/static/plots\\d73e9a0a-ae06-459e-be1b-c2d5704eb4d9.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'C:/Users/Naveen1/AgenticAI/static/plots\\d73e9a0a-ae06-459e-be1b-c2d5704eb4d9.png'}
+        ```
+2025-04-04 21:55:17 [INFO] Question: make a graph of names and follower count from the excel file
+2025-04-04 21:55:18 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-04 21:55:18 [INFO] Prompt ID: a4d37a0c-2ec1-446a-9428-630914c3541a
+2025-04-04 21:55:28 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0]
+
+    # Prepare: Ensure required columns are present and clean
+    df = df[['Full Name', 'Followers count']].copy()
+    df = df.dropna(subset=['Full Name', 'Followers count'])
+
+    # Convert Followers count to numeric if not already
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+
+    # Sort by follower count descending
+    df_sorted = df.sort_values(by='Followers count', ascending=False)
+
+    # Plot
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.title('Follower Count by Name')
+    plt.gca().invert_yaxis()  # Highest on top
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-04-04 21:55:28 [INFO] Saving charts to C:/Users/Naveen1/AgenticAI/static/plots\a4d37a0c-2ec1-446a-9428-630914c3541a.png
+2025-04-04 21:55:28 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:/Users/Naveen1/AgenticAI/static/plots4d37a0c-2ec1-446a-9428-630914c3541a.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:/Users/Naveen1/AgenticAI/static/plots4d37a0c-2ec1-446a-9428-630914c3541a.png" }
+    """
+    df = dfs[0]
+    df = df[['Full Name', 'Followers count']].copy()
+    df = df.dropna(subset=['Full Name', 'Followers count'])
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+    df_sorted = df.sort_values(by='Followers count', ascending=False)
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.title('Follower Count by Name')
+    plt.gca().invert_yaxis()
+    plt.tight_layout()
+    plt.savefig('C:/Users/Naveen1/AgenticAI/static/plots\x074d37a0c-2ec1-446a-9428-630914c3541a.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'C:/Users/Naveen1/AgenticAI/static/plots\x074d37a0c-2ec1-446a-9428-630914c3541a.png'}
+        ```
+2025-04-04 21:55:29 [WARNING] Error of executing code
+2025-04-04 21:55:29 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\matplotlib\\pyplot.py', reloading
+2025-04-04 21:55:29 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\matplotlib\\figure.py', reloading
+2025-04-04 21:55:29 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\matplotlib\\backend_bases.py', reloading
+2025-04-04 21:55:29 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\matplotlib\\backends\\backend_agg.py', reloading
+2025-04-04 21:55:29 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\matplotlib\\image.py', reloading
+2025-04-04 21:55:29 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\PIL\\Image.py', reloading
+2025-04-04 21:55:29 [WARNING] Failed to execute code with a correction framework [retry number: 1]
+2025-04-04 21:55:29 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\smart_datalake\__init__.py", line 337, in chat
+    result = self._code_manager.execute_code(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\pandasai\helpers\code_manager.py", line 244, in execute_code
+    return analyze_data(self._get_originals(dfs))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 31, in analyze_data
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\matplotlib\pyplot.py", line 1119, in savefig
+    res = fig.savefig(*args, **kwargs)  # type: ignore[func-returns-value]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\matplotlib\figure.py", line 3390, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\matplotlib\backend_bases.py", line 2187, in print_figure
+    result = print_method(
+             ^^^^^^^^^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\matplotlib\backend_bases.py", line 2043, in <lambda>
+    print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+                                                                 ^^^^^
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\matplotlib\backends\backend_agg.py", line 497, in print_png
+    self._print_pil(filename_or_obj, "png", pil_kwargs, metadata)
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\matplotlib\backends\backend_agg.py", line 446, in _print_pil
+    mpl.image.imsave(
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\matplotlib\image.py", line 1656, in imsave
+    image.save(fname, **pil_kwargs)
+  File "C:\Users\Naveen1\anaconda3\envs\venv_data\Lib\site-packages\PIL\Image.py", line 2435, in save
+    fp = builtins.open(filename, "w+b")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 22] Invalid argument: 'C:/Users/Naveen1/AgenticAI/static/plots\x074d37a0c-2ec1-446a-9428-630914c3541a.png'
+. Retrying
+2025-04-04 21:55:49 [INFO] Question: make a graph of names and follower count from the excel file
+2025-04-04 21:55:49 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-04 21:55:49 [INFO] Prompt ID: c99e3d7b-89af-4960-a483-9700c7dca70d
+2025-04-04 21:55:49 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,6964950673,jfajelobs1@yahoo.com,761.0,49.0,2323192843,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,1297537535,eiru_fcrrp@icloud.com,2566.0,234.0,3056919487,"Abuja, Nigeria",Abuja,NO,YES,
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,9590440067,0pa2tr9@protonmail.com,5.0,91.0,6314254608,,,NO,YES,https://www.facebook.c...
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,7157640141,s8dg71n5ux@gmail.com,2.0,,6586825353,,,NO,YES,
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,8592328077,26rv54id_89@outlook.com,2286.0,33.0,1702464850,,,NO,NO,https://www.espaces-at...
+</dataframe>
+
+<conversation>
+User 1: make a graph of names and follower count from the excel file
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-04-04 21:55:57 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    # Step 1: Prepare
+    df = dfs[0].copy()
+    
+    # Drop rows where either Full Name or Followers count is missing
+    df = df[['Full Name', 'Followers count']].dropna(subset=['Full Name', 'Followers count'])
+    
+    # Step 2: Process
+    # Convert Followers count to numeric just in case
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    
+    # Drop rows with NaN follower counts
+    df = df.dropna(subset=['Followers count'])
+
+    # Step 3: Analyze
+    # Sort by followers count descending and take top 10 for better visualization
+    df_top = df.sort_values(by='Followers count', ascending=False).head(10)
+
+    # Plot
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_top['Full Name'], df_top['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.title('Top Accounts by Follower Count')
+    plt.gca().invert_yaxis()  # Highest at top
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-04-04 21:55:57 [INFO] Saving charts to C:/Users/Naveen1/AgenticAI/static/plots\c99e3d7b-89af-4960-a483-9700c7dca70d.png
+2025-04-04 21:55:57 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:/Users/Naveen1/AgenticAI/static/plots\\c99e3d7b-89af-4960-a483-9700c7dca70d.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:/Users/Naveen1/AgenticAI/static/plots\\c99e3d7b-89af-4960-a483-9700c7dca70d.png" }
+    """
+    df = dfs[0].copy()
+    df = df[['Full Name', 'Followers count']].dropna(subset=['Full Name', 'Followers count'])
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+    df_top = df.sort_values(by='Followers count', ascending=False).head(10)
+    plt.figure(figsize=(10, 6))
+    plt.barh(df_top['Full Name'], df_top['Followers count'], color='skyblue')
+    plt.xlabel('Followers Count')
+    plt.title('Top Accounts by Follower Count')
+    plt.gca().invert_yaxis()
+    plt.tight_layout()
+    plt.savefig('C:/Users/Naveen1/AgenticAI/static/plots\\c99e3d7b-89af-4960-a483-9700c7dca70d.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'C:/Users/Naveen1/AgenticAI/static/plots\\c99e3d7b-89af-4960-a483-9700c7dca70d.png'}
+        ```
+2025-04-04 21:55:57 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/Naveen1/AgenticAI/static/plots\\c99e3d7b-89af-4960-a483-9700c7dca70d.png'}
+2025-04-04 21:55:57 [INFO] Executed in: 8.4945068359375s
+2025-04-04 21:55:59 [INFO] 127.0.0.1 - - [04/Apr/2025 21:55:59] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-04 21:56:00 [INFO] 127.0.0.1 - - [04/Apr/2025 21:56:00] "GET /static/plots/d526e530-fa84-490e-bd1d-fecdbfa181f4.png HTTP/1.1" 200 -
+2025-04-04 21:57:05 [INFO] Question: make a circle graph of names and follower count from the excel file
+2025-04-04 21:57:05 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-04 21:57:05 [INFO] Prompt ID: d645ecc9-8d95-4727-8287-15143ed5f905
+2025-04-04 21:57:14 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    # Step 1: Prepare
+    df = dfs[0].copy()
+    
+    # Ensure the necessary columns are present and drop rows with missing follower count or name
+    df = df[['Full Name', 'Followers count']].dropna()
+    
+    # Convert follower count to numeric (in case it's not)
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    
+    # Drop any rows where follower count is still NaN after conversion
+    df = df.dropna(subset=['Followers count'])
+
+    # Step 2: Process
+    # Sort by follower count descending and take top N if needed (e.g., top 10 for better visualization)
+    df_sorted = df.sort_values(by='Followers count', ascending=False).head(10)
+
+    # Step 3: Analyze (plot a pie chart)
+    plt.figure(figsize=(8, 8))
+    plt.pie(df_sorted['Followers count'], labels=df_sorted['Full Name'], autopct='%1.1f%%', startangle=140)
+    plt.title('Top Instagram Accounts by Followers Count')
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-04-04 21:57:14 [INFO] Saving charts to C:/Users/Naveen1/AgenticAI/static/plots\d645ecc9-8d95-4727-8287-15143ed5f905.png
+2025-04-04 21:57:14 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:/Users/Naveen1/AgenticAI/static/plots\\d645ecc9-8d95-4727-8287-15143ed5f905.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:/Users/Naveen1/AgenticAI/static/plots\\d645ecc9-8d95-4727-8287-15143ed5f905.png" }
+    """
+    df = dfs[0].copy()
+    df = df[['Full Name', 'Followers count']].dropna()
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+    df_sorted = df.sort_values(by='Followers count', ascending=False).head(10)
+    plt.figure(figsize=(8, 8))
+    plt.pie(df_sorted['Followers count'], labels=df_sorted['Full Name'], autopct='%1.1f%%', startangle=140)
+    plt.title('Top Instagram Accounts by Followers Count')
+    plt.tight_layout()
+    plt.savefig('C:/Users/Naveen1/AgenticAI/static/plots\\d645ecc9-8d95-4727-8287-15143ed5f905.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'C:/Users/Naveen1/AgenticAI/static/plots\\d645ecc9-8d95-4727-8287-15143ed5f905.png'}
+        ```
+2025-04-04 21:57:14 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/Naveen1/AgenticAI/static/plots\\d645ecc9-8d95-4727-8287-15143ed5f905.png'}
+2025-04-04 21:57:14 [INFO] Executed in: 9.082168817520142s
+2025-04-04 21:57:16 [INFO] 127.0.0.1 - - [04/Apr/2025 21:57:16] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-04 21:57:17 [INFO] 127.0.0.1 - - [04/Apr/2025 21:57:17] "GET /static/plots/637b12b5-53e2-4e9e-a181-ea7005dd4442.png HTTP/1.1" 200 -
+2025-04-04 22:00:26 [INFO] Question: create a table with only names and follower count
+2025-04-04 22:00:26 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-04 22:00:26 [INFO] Prompt ID: 03ebda44-d94f-4066-844c-786be8c256c4
+2025-04-04 22:00:26 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Duke Properties,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,9792188333,dukecute3624@gmail.com...,2566.0,234.0,2463348106,"Abuja, Nigeria",Abuja,NO,YES,
+Espaces Atypiques Bordeaux - Arcachon - Cap Ferret,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,1770810894,bordeaux@espaces-atypi...,2286.0,33.0,7985913452,,,NO,NO,https://www.espaces-atypiques.com/bordeaux/
+IMMOBILIENMAKLER BIELEFELD,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,0975608282,info@kriemelmann-immob...,761.0,49.0,3154248921,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann-immobilien.de/
+DREAM WALLS REALTORS - RESALE,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,9059950303,dreamwallsrealtors@gma...,5.0,91.0,7823849624,,,NO,YES,https://www.facebook.com/share/19rhugvycC/
+SK Homes,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,8374261054,buildwithskhomes@gmail...,2.0,,4453237417,,,NO,YES,
+</dataframe>
+
+<conversation>
+User 1: create a table with only names and follower count
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-04-04 22:00:30 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+
+    # Extract the first dataframe
+    df = dfs[0]
+
+    # Select only the "Full Name" and "Followers count" columns
+    result_df = df[["Full Name", "Followers count"]]
+
+    return {
+        "type": "dataframe",
+        "value": result_df
+    }
+```
+
+2025-04-04 22:00:30 [INFO] Saving charts to C:/Users/Naveen1/AgenticAI/static/plots\03ebda44-d94f-4066-844c-786be8c256c4.png
+2025-04-04 22:00:30 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:/Users/Naveen1/AgenticAI/static/plotsebda44-d94f-4066-844c-786be8c256c4.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:/Users/Naveen1/AgenticAI/static/plotsebda44-d94f-4066-844c-786be8c256c4.png" }
+    """
+    df = dfs[0]
+    result_df = df[['Full Name', 'Followers count']]
+    return {'type': 'dataframe', 'value': result_df}
+        ```
+2025-04-04 22:00:30 [INFO] Executed in: 3.922365188598633s
+2025-04-04 22:00:32 [INFO] 127.0.0.1 - - [04/Apr/2025 22:00:32] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-04 22:02:38 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\backend.py', reloading
+2025-04-05 11:06:17 [INFO] Question: 
+
+Chat History:
+- assistant: 
+                                Hello! I'm your AI assistant. How can I help you today? You can:
+                                
+                                    Ask me questions
+                                    Upload files for analysis
+                                    Request email drafts
+                                    Get research assistance
+                                
+                                What would you like to do?
+                            
+- user: what is in this excel file
+- assistant: Data analysis failed: Failed to fetch
+what is in this excel file
+2025-04-05 11:06:18 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\pandasai\\helpers\\logger.py', reloading
+2025-04-05 11:13:43 [INFO] Question: 
+
+Chat History:
+- assistant: 
+                                Hello! I'm your AI assistant. How can I help you today? You can:
+                                
+                                    Ask me questions
+                                    Upload files for analysis
+                                    Request email drafts
+                                    Get research assistance
+                                
+                                What would you like to do?
+                            
+- user: what is in this excel file
+- assistant: Data analysis failed: Failed to fetch
+- user: what is in this excel file
+- assistant: Data analysis failed: Failed to fetch
+what is in this excel file
+2025-04-05 11:13:45 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\pandasai\\agent\\__init__.py', reloading
+2025-04-05 11:13:45 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\werkzeug\\debug\\__init__.py', reloading
+2025-04-05 11:13:45 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\werkzeug\\serving.py', reloading
+2025-04-05 11:13:45 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\http\\server.py', reloading
+2025-04-05 11:13:45 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-05 11:13:45 [INFO] Prompt ID: 301b28f5-cf3f-4db8-a711-a8e0a243e6bf
+2025-04-05 11:13:45 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\pandasai\\helpers\\output_types\\__init__.py', reloading
+2025-04-05 11:13:45 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Duke Properties,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,7558846731,dukecute3624@gmail.com...,2566.0,234.0,4426928362,"Abuja, Nigeria",Abuja,NO,YES,
+Espaces Atypiques Bordeaux - Arcachon - Cap Ferret,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,3398644420,bordeaux@espaces-atypi...,2286.0,33.0,9991239216,,,NO,NO,https://www.espaces-atypiques.com/bordeaux/
+SK Homes,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,9187347056,buildwithskhomes@gmail...,2.0,,4209473713,,,NO,YES,
+IMMOBILIENMAKLER BIELEFELD,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,1570843460,info@kriemelmann-immob...,761.0,49.0,6355566465,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann-immobilien.de/
+DREAM WALLS REALTORS - RESALE,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,5398008039,dreamwallsrealtors@gma...,5.0,91.0,4563301406,,,NO,YES,https://www.facebook.com/share/19rhugvycC/
+</dataframe>
+
+<conversation>
+User 1: 
+
+Chat History:
+- assistant: 
+                                Hello! I'm your AI assistant. How can I help you today? You can:
+                                
+                                    Ask me questions
+                                    Upload files for analysis
+                                    Request email drafts
+                                    Get research assistance
+                                
+                                What would you like to do?
+                            
+- user: what is in this excel file
+- assistant: Data analysis failed: Failed to fetch
+- user: what is in this excel file
+- assistant: Data analysis failed: Failed to fetch
+what is in this excel file
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-04-05 11:15:33 [INFO] Question: 
+
+Chat History:
+- assistant: 
+                                Hello! I'm your AI assistant. How can I help you today? You can:
+                                
+                                    Ask me questions
+                                    Upload files for analysis
+                                    Request email drafts
+                                    Get research assistance
+                                
+                                What would you like to do?
+                            
+- user: what is in this excel file
+- assistant: Data analysis failed: Failed to fetch
+- user: what is in this excel file
+- assistant: Data analysis failed: Failed to fetch
+- user: what is in this excel file
+- assistant: Data analysis failed: Failed to fetch
+- user: what is deepseek
+- assistant: DeepSeek is an AI development company based in Hangzhou, China, founded in May 2023 by Liang Wenfeng (techtarget.com, Reuters). Liang Wenfeng is a graduate of Zhejiang University and also a co-founder of the quantitative hedge fund High-Flyer (Reuters, techtarget.com).DeepSeek specializes in researching fundamental models and technologies for general artificial intelligence, focusing on tackling cutting-edge AI challenges (deepseek.com). The company has developed its own training framework, intelligent computing clusters, and access to large-scale computing power (deepseek.com).Some sources claim that DeepSeek is disrupting the AI sector (Reuters).
+what is in this excel file
+2025-04-05 11:15:34 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-05 11:15:34 [INFO] Prompt ID: f9f817fb-7191-462a-9805-7e32d733b140
+2025-04-05 11:15:34 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,8222077815,state8n@aol.com,761.0,49.0,0142593049,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,2377157251,r5wru5-mew3@yahoo.com,2566.0,234.0,2600645777,"Abuja, Nigeria",Abuja,NO,YES,
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,8656278510,sdfew5@gmail.com,5.0,91.0,4607928421,,,NO,YES,https://www.facebook.c...
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,3569342071,4sl3md@yahoo.com,2286.0,33.0,7479469548,,,NO,NO,https://www.espaces-at...
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,8203421552,qlid9ebtnel@icloud.com,2.0,,9508139267,,,NO,YES,
+</dataframe>
+
+<conversation>
+User 1: 
+
+Chat History:
+- assistant: 
+                                Hello! I'm your AI assistant. How can I help you today? You can:
+                                
+                                    Ask me questions
+                                    Upload files for analysis
+                                    Request email drafts
+                                    Get research assistance
+                                
+                                What would you like to do?
+                            
+- user: what is in this excel file
+- assistant: Data analysis failed: Failed to fetch
+- user: what is in this excel file
+- assistant: Data analysis failed: Failed to fetch
+- user: what is in this excel file
+- assistant: Data analysis failed: Failed to fetch
+- user: what is deepseek
+- assistant: DeepSeek is an AI development company based in Hangzhou, China, founded in May 2023 by Liang Wenfeng (techtarget.com, Reuters). Liang Wenfeng is a graduate of Zhejiang University and also a co-founder of the quantitative hedge fund High-Flyer (Reuters, techtarget.com).DeepSeek specializes in researching fundamental models and technologies for general artificial intelligence, focusing on tackling cutting-edge AI challenges (deepseek.com). The company has developed its own training framework, intelligent computing clusters, and access to large-scale computing power (deepseek.com).Some sources claim that DeepSeek is disrupting the AI sector (Reuters).
+what is in this excel file
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-04-05 11:15:46 [INFO] Code generated:
+```
+# Import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    This function inspects the contents and structure of the first DataFrame in the list.
+    Returns a summary of the columns and a preview of the data.
+    """
+
+    df = dfs[0]
+
+    # Generate a concise summary of the dataframe
+    summary = {
+        "Number of rows": df.shape[0],
+        "Number of columns": df.shape[1],
+        "Column names": list(df.columns),
+        "Sample data": df.head(5).to_dict(orient="records")
+    }
+
+    # Build the summary string
+    summary_str = (
+        f"The Excel file contains {summary['Number of rows']} rows and "
+        f"{summary['Number of columns']} columns.\n\n"
+        f"Column names include:\n{', '.join(summary['Column names'])}\n\n"
+        f"Here is a preview of the first 5 rows:\n{summary['Sample data']}"
+    )
+
+    return {
+        "type": "string",
+        "value": summary_str
+    }
+```
+
+2025-04-05 11:15:46 [INFO] Saving charts to C:/Users/Naveen1/AgenticAI/static/plots\f9f817fb-7191-462a-9805-7e32d733b140.png
+2025-04-05 11:15:46 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\pandasai\\helpers\\save_chart.py', reloading
+2025-04-05 11:15:46 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\pandasai\\helpers\\code_manager.py', reloading
+2025-04-05 11:15:46 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    This function inspects the contents and structure of the first DataFrame in the list.
+    Returns a summary of the columns and a preview of the data.
+    """
+    df = dfs[0]
+    summary = {'Number of rows': df.shape[0], 'Number of columns': df.shape[1], 'Column names': list(df.columns), 'Sample data': df.head(5).to_dict(orient='records')}
+    summary_str = f"""The Excel file contains {summary['Number of rows']} rows and {summary['Number of columns']} columns.
+
+Column names include:
+{', '.join(summary['Column names'])}
+
+Here is a preview of the first 5 rows:
+{summary['Sample data']}"""
+    return {'type': 'string', 'value': summary_str}
+        ```
+2025-04-05 11:15:46 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\logging\\__init__.py', reloading
+2025-04-05 11:15:46 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\encodings\\cp1252.py', reloading
+2025-04-05 11:15:46 [INFO] Executed in: 12.824911117553711s
+2025-04-05 11:17:39 [INFO] Question: 
+
+Chat History:
+- assistant: 
+                                Hello! I'm your AI assistant. How can I help you today? You can:
+                                
+                                    Ask me questions
+                                    Upload files for analysis
+                                    Request email drafts
+                                    Get research assistance
+                                
+                                What would you like to do?
+                            
+- user: what is in this excel file
+- assistant: Data analysis failed: Failed to fetch
+- user: what is in this excel file
+- assistant: Data analysis failed: Failed to fetch
+- user: what is in this excel file
+- assistant: Data analysis failed: Failed to fetch
+- user: what is deepseek
+- assistant: DeepSeek is an AI development company based in Hangzhou, China, founded in May 2023 by Liang Wenfeng (techtarget.com, Reuters). Liang Wenfeng is a graduate of Zhejiang University and also a co-founder of the quantitative hedge fund High-Flyer (Reuters, techtarget.com).DeepSeek specializes in researching fundamental models and technologies for general artificial intelligence, focusing on tackling cutting-edge AI challenges (deepseek.com). The company has developed its own training framework, intelligent computing clusters, and access to large-scale computing power (deepseek.com).Some sources claim that DeepSeek is disrupting the AI sector (Reuters).
+- user: what is in this excel file
+- assistant: Data analysis failed: Failed to fetch
+what is in this excel file
+2025-04-05 11:17:40 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-05 11:17:40 [INFO] Prompt ID: 89c51e5d-c37b-4982-b8c1-a5bb2a04242b
+2025-04-05 11:17:45 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    # Get the first dataframe
+    df = dfs[0]
+
+    # Return a preview of the file contents
+    preview = df.head()
+
+    return {
+        "type": "dataframe",
+        "value": preview
+    }
+```
+
+2025-04-05 11:17:45 [INFO] Saving charts to C:/Users/Naveen1/AgenticAI/static/plots\89c51e5d-c37b-4982-b8c1-a5bb2a04242b.png
+2025-04-05 11:17:45 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:/Users/Naveen1/AgenticAI/static/plots\\89c51e5d-c37b-4982-b8c1-a5bb2a04242b.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:/Users/Naveen1/AgenticAI/static/plots\\89c51e5d-c37b-4982-b8c1-a5bb2a04242b.png" }
+    """
+    df = dfs[0]
+    preview = df.head()
+    return {'type': 'dataframe', 'value': preview}
+        ```
+2025-04-05 11:17:46 [INFO] Answer: {'type': 'dataframe', 'value':                                            Full Name  ...                                 External url
+0  Espaces Atypiques Bordeaux - Arcachon - Cap Fe...  ...  https://www.espaces-atypiques.com/bordeaux/
+1                                    Duke Properties  ...                                          NaN
+2                         IMMOBILIENMAKLER BIELEFELD  ...        http://www.kriemelmann-immobilien.de/
+3                      DREAM WALLS REALTORS - RESALE  ...   https://www.facebook.com/share/19rhugvycC/
+4                                           SK Homes  ...                                          NaN
+
+[5 rows x 17 columns]}
+2025-04-05 11:17:46 [INFO] Executed in: 6.46270227432251s
+2025-04-05 11:17:48 [INFO] 127.0.0.1 - - [05/Apr/2025 11:17:48] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-05 11:19:31 [INFO] Question: 
+
+Chat History:
+- assistant: 
+                                Hello! I'm your AI assistant. How can I help you today? You can:
+                                
+                                    Ask me questions
+                                    Upload files for analysis
+                                    Request email drafts
+                                    Get research assistance
+                                
+                                What would you like to do?
+                            
+what is in this file
+2025-04-05 11:19:31 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-05 11:19:31 [INFO] Prompt ID: f28bfffd-8d96-4b79-b04c-3133acf7e853
+2025-04-05 11:19:31 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,0473492795,-tzv714jnqr@protonmail...,761.0,49.0,2994203307,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,8919711863,bb46s_su@icloud.com...,5.0,91.0,6504930159,,,NO,YES,https://www.facebook.c...
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,0846921470,suvn4_nxe8@hotmail.com...,2.0,,9174924599,,,NO,YES,
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,5310530087,5_9y8h20xin9@hotmail.c...,2286.0,33.0,8112787742,,,NO,NO,https://www.espaces-at...
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,9734923298,0zd5ae@gmail.com...,2566.0,234.0,5171542388,"Abuja, Nigeria",Abuja,NO,YES,
+</dataframe>
+
+<conversation>
+User 1: 
+
+Chat History:
+- assistant: 
+                                Hello! I'm your AI assistant. How can I help you today? You can:
+                                
+                                    Ask me questions
+                                    Upload files for analysis
+                                    Request email drafts
+                                    Get research assistance
+                                
+                                What would you like to do?
+                            
+what is in this file
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-04-05 11:19:37 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0]  # Assuming dfs[0] is the relevant DataFrame
+
+    # Basic overview of what is in the file
+    num_rows, num_cols = df.shape
+    col_names = df.columns.tolist()
+
+    summary = f"The file contains {num_rows} rows and {num_cols} columns. The columns are: {', '.join(col_names)}"
+
+    return { "type": "string", "value": summary }
+```
+
+2025-04-05 11:19:37 [INFO] Saving charts to C:/Users/Naveen1/AgenticAI/static/plots\f28bfffd-8d96-4b79-b04c-3133acf7e853.png
+2025-04-05 11:19:37 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:/Users/Naveen1/AgenticAI/static/plots28bfffd-8d96-4b79-b04c-3133acf7e853.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:/Users/Naveen1/AgenticAI/static/plots28bfffd-8d96-4b79-b04c-3133acf7e853.png" }
+    """
+    df = dfs[0]
+    num_rows, num_cols = df.shape
+    col_names = df.columns.tolist()
+    summary = f"The file contains {num_rows} rows and {num_cols} columns. The columns are: {', '.join(col_names)}"
+    return {'type': 'string', 'value': summary}
+        ```
+2025-04-05 11:19:37 [INFO] Answer: {'type': 'string', 'value': 'The file contains 25 rows and 17 columns. The columns are: Full Name, Profile link, Avatar pic, Followed by viewer, Is verified, Followers count, Following count, Biography, Public email, Posts count, Phone country code, Phone number, City, Address, Is private, Is business, External url'}
+2025-04-05 11:19:37 [INFO] Executed in: 6.216223478317261s
+2025-04-05 11:19:39 [INFO] 127.0.0.1 - - [05/Apr/2025 11:19:39] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-05 11:20:03 [INFO] Question: 
+
+Chat History:
+- assistant: 
+                                Hello! I'm your AI assistant. How can I help you today? You can:
+                                
+                                    Ask me questions
+                                    Upload files for analysis
+                                    Request email drafts
+                                    Get research assistance
+                                
+                                What would you like to do?
+                            
+- user: what is in this file
+- assistant: The file contains 25 rows and 17 columns. The columns are: Full Name, Profile link, Avatar pic, Followed by viewer, Is verified, Followers count, Following count, Biography, Public email, Posts count, Phone country code, Phone number, City, Address, Is private, Is business, External url
+Create a table with only Full name and follower count
+2025-04-05 11:20:03 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-05 11:20:03 [INFO] Prompt ID: dcabd8cc-5172-45ad-80aa-3a0f8bf39133
+2025-04-05 11:20:09 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    # Step 1: Load the dataframe
+    df = dfs[0]
+
+    # Step 2: Select only the required columns
+    result_df = df[['Full Name', 'Followers count']]
+
+    # Step 3: Return the resulting DataFrame
+    return {
+        "type": "dataframe",
+        "value": result_df
+    }
+```
+
+2025-04-05 11:20:09 [INFO] Saving charts to C:/Users/Naveen1/AgenticAI/static/plots\dcabd8cc-5172-45ad-80aa-3a0f8bf39133.png
+2025-04-05 11:20:09 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:/Users/Naveen1/AgenticAI/static/plots\\dcabd8cc-5172-45ad-80aa-3a0f8bf39133.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:/Users/Naveen1/AgenticAI/static/plots\\dcabd8cc-5172-45ad-80aa-3a0f8bf39133.png" }
+    """
+    df = dfs[0]
+    result_df = df[['Full Name', 'Followers count']]
+    return {'type': 'dataframe', 'value': result_df}
+        ```
+2025-04-05 11:20:09 [INFO] Executed in: 5.853098630905151s
+2025-04-05 11:20:11 [INFO] 127.0.0.1 - - [05/Apr/2025 11:20:11] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-05 11:23:35 [INFO] Question: 
+
+Chat History:
+- assistant: 
+                                Hello! I'm your AI assistant. How can I help you today? You can:
+                                
+                                    Ask me questions
+                                    Upload files for analysis
+                                    Request email drafts
+                                    Get research assistance
+                                
+                                What would you like to do?
+                            
+- user: what is in this file
+- assistant: The file contains 25 rows and 17 columns. The columns are: Full Name, Profile link, Avatar pic, Followed by viewer, Is verified, Followers count, Following count, Biography, Public email, Posts count, Phone country code, Phone number, City, Address, Is private, Is business, External url
+- user: Create a table with only Full name and follower count
+- assistant: Analysis results for TEST.xlsx are ready in the Data panel.
+Create a table with only Full name and follower count
+2025-04-05 11:23:35 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-05 11:23:35 [INFO] Prompt ID: f9298a4a-5900-418e-8513-67060b16eb99
+2025-04-05 11:23:41 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    # Extract the first dataframe
+    df = dfs[0]
+
+    # Select only the 'Full Name' and 'Followers count' columns
+    result_df = df[['Full Name', 'Followers count']]
+
+    # Return the result as a dataframe
+    return { "type": "dataframe", "value": result_df }
+```
+
+2025-04-05 11:23:41 [INFO] Saving charts to C:/Users/Naveen1/AgenticAI/static/plots\f9298a4a-5900-418e-8513-67060b16eb99.png
+2025-04-05 11:23:41 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:/Users/Naveen1/AgenticAI/static/plots9298a4a-5900-418e-8513-67060b16eb99.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:/Users/Naveen1/AgenticAI/static/plots9298a4a-5900-418e-8513-67060b16eb99.png" }
+    """
+    df = dfs[0]
+    result_df = df[['Full Name', 'Followers count']]
+    return {'type': 'dataframe', 'value': result_df}
+        ```
+2025-04-05 11:23:41 [INFO] Executed in: 6.2397847175598145s
+2025-04-05 11:23:43 [INFO] 127.0.0.1 - - [05/Apr/2025 11:23:43] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-05 11:24:09 [INFO] Question: 
+
+Chat History:
+- assistant: 
+                                Hello! I'm your AI assistant. How can I help you today? You can:
+                                
+                                    Ask me questions
+                                    Upload files for analysis
+                                    Request email drafts
+                                    Get research assistance
+                                
+                                What would you like to do?
+                            
+- user: Create a table with only Full name and follower count
+- assistant: Please upload a CSV or Excel file first to use the Data Analysis tool.
+Create a table with only Full name and follower count
+2025-04-05 11:24:09 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-05 11:24:10 [INFO] Prompt ID: 2ea41d2f-6082-4b83-8c45-729fb0a404ff
+2025-04-05 11:24:15 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    # Step 1: Load the first dataframe
+    df = dfs[0]
+
+    # Step 2: Select only the 'Full Name' and 'Followers count' columns
+    result_df = df[['Full Name', 'Followers count']]
+
+    # Step 3: Return the result as a dataframe
+    return {
+        "type": "dataframe",
+        "value": result_df
+    }
+```
+
+2025-04-05 11:24:15 [INFO] Saving charts to C:/Users/Naveen1/AgenticAI/static/plots\2ea41d2f-6082-4b83-8c45-729fb0a404ff.png
+2025-04-05 11:24:15 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:/Users/Naveen1/AgenticAI/static/plotsea41d2f-6082-4b83-8c45-729fb0a404ff.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:/Users/Naveen1/AgenticAI/static/plotsea41d2f-6082-4b83-8c45-729fb0a404ff.png" }
+    """
+    df = dfs[0]
+    result_df = df[['Full Name', 'Followers count']]
+    return {'type': 'dataframe', 'value': result_df}
+        ```
+2025-04-05 11:24:15 [INFO] Executed in: 5.317354440689087s
+2025-04-05 11:24:17 [INFO] 127.0.0.1 - - [05/Apr/2025 11:24:17] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-05 11:25:11 [INFO] Question: 
+
+Chat History:
+- assistant: 
+                                Hello! I'm your AI assistant. How can I help you today? You can:
+                                
+                                    Ask me questions
+                                    Upload files for analysis
+                                    Request email drafts
+                                    Get research assistance
+                                
+                                What would you like to do?
+                            
+- user: Create a table with only Full name and follower count
+- assistant: Please upload a CSV or Excel file first to use the Data Analysis tool.
+- user: Create a table with only Full name and follower count
+- assistant: Analysis results for TEST.xlsx are ready in the Data panel.
+Create a table with only Full name and follower count
+2025-04-05 11:25:11 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-05 11:25:11 [INFO] Prompt ID: 127b34f7-d5dc-46c6-8164-91ab29945cdb
+2025-04-05 11:25:15 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    # Extract the first dataframe
+    df = dfs[0]
+
+    # Select only 'Full Name' and 'Followers count' columns
+    result_df = df[['Full Name', 'Followers count']]
+
+    # Return the result as a dataframe
+    return { "type": "dataframe", "value": result_df }
+```
+
+2025-04-05 11:25:15 [INFO] Saving charts to C:/Users/Naveen1/AgenticAI/static/plots\127b34f7-d5dc-46c6-8164-91ab29945cdb.png
+2025-04-05 11:25:15 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:/Users/Naveen1/AgenticAI/static/plotsWb34f7-d5dc-46c6-8164-91ab29945cdb.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:/Users/Naveen1/AgenticAI/static/plotsWb34f7-d5dc-46c6-8164-91ab29945cdb.png" }
+    """
+    df = dfs[0]
+    result_df = df[['Full Name', 'Followers count']]
+    return {'type': 'dataframe', 'value': result_df}
+        ```
+2025-04-05 11:25:15 [INFO] Executed in: 4.270592451095581s
+2025-04-05 11:25:18 [INFO] 127.0.0.1 - - [05/Apr/2025 11:25:18] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-05 11:31:28 [INFO] Question: 
+
+Chat History:
+- assistant: 
+                                Hello! I'm your AI assistant. How can I help you today? You can:
+                                
+                                    Ask me questions
+                                    Upload files for analysis
+                                    Request email drafts
+                                    Get research assistance
+                                
+                                What would you like to do?
+                            
+- user: Create a table with only Full name and follower count
+- assistant: Please upload a CSV or Excel file first to use the Data Analysis tool.
+- user: Create a table with only Full name and follower count
+- assistant: Analysis results for TEST.xlsx are ready in the Data panel.
+- user: Create a table with only Full name and follower count
+- assistant: Analysis results for TEST.xlsx are ready in the Data panel.
+Create a table with only Full name and follower count
+2025-04-05 11:31:28 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-05 11:31:28 [INFO] Prompt ID: 5a035198-aa62-47ca-b27e-7aa0039549df
+2025-04-05 11:31:32 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+
+    # Step 1: Prepare
+    df = dfs[0].copy()
+
+    # Step 2: Process
+    # Select only 'Full Name' and 'Followers count' columns
+    result_df = df[['Full Name', 'Followers count']]
+
+    # Step 3: Analyze
+    return {
+        "type": "dataframe",
+        "value": result_df
+    }
+```
+
+2025-04-05 11:31:32 [INFO] Saving charts to C:/Users/Naveen1/AgenticAI/static/plots\5a035198-aa62-47ca-b27e-7aa0039549df.png
+2025-04-05 11:31:32 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:/Users/Naveen1/AgenticAI/static/plotsa035198-aa62-47ca-b27e-7aa0039549df.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:/Users/Naveen1/AgenticAI/static/plotsa035198-aa62-47ca-b27e-7aa0039549df.png" }
+    """
+    df = dfs[0].copy()
+    result_df = df[['Full Name', 'Followers count']]
+    return {'type': 'dataframe', 'value': result_df}
+        ```
+2025-04-05 11:31:32 [INFO] Executed in: 4.079080581665039s
+2025-04-05 11:31:34 [INFO] 127.0.0.1 - - [05/Apr/2025 11:31:34] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-05 11:31:41 [INFO] Question: 
+
+Chat History:
+- assistant: 
+                                Hello! I'm your AI assistant. How can I help you today? You can:
+                                
+                                    Ask me questions
+                                    Upload files for analysis
+                                    Request email drafts
+                                    Get research assistance
+                                
+                                What would you like to do?
+                            
+Create a table with only Full name and follower count
+2025-04-05 11:31:41 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-05 11:31:41 [INFO] Prompt ID: 43a43f71-f710-48c5-bfe4-6ffc2e240a01
+2025-04-05 11:31:41 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Duke Properties,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,3501434573,dukecute3624@gmail.com...,2566.0,234.0,0162354838,"Abuja, Nigeria",Abuja,NO,YES,
+IMMOBILIENMAKLER BIELEFELD,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,4486595946,info@kriemelmann-immob...,761.0,49.0,4691127953,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann-immobilien.de/
+DREAM WALLS REALTORS - RESALE,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,5064724793,dreamwallsrealtors@gma...,5.0,91.0,3332215248,,,NO,YES,https://www.facebook.com/share/19rhugvycC/
+Espaces Atypiques Bordeaux - Arcachon - Cap Ferret,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,3947789848,bordeaux@espaces-atypi...,2286.0,33.0,7344631964,,,NO,NO,https://www.espaces-atypiques.com/bordeaux/
+SK Homes,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,1089012587,buildwithskhomes@gmail...,2.0,,5704579282,,,NO,YES,
+</dataframe>
+
+<conversation>
+User 1: 
+
+Chat History:
+- assistant: 
+                                Hello! I'm your AI assistant. How can I help you today? You can:
+                                
+                                    Ask me questions
+                                    Upload files for analysis
+                                    Request email drafts
+                                    Get research assistance
+                                
+                                What would you like to do?
+                            
+Create a table with only Full name and follower count
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-04-05 11:31:50 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+
+    # Extract the relevant dataframe
+    df = dfs[0]
+
+    # Select only 'Full Name' and 'Followers count' columns
+    result_df = df[['Full Name', 'Followers count']].copy()
+
+    return {
+        "type": "dataframe",
+        "value": result_df
+    }
+```
+
+2025-04-05 11:31:50 [INFO] Saving charts to C:/Users/Naveen1/AgenticAI/static/plots\43a43f71-f710-48c5-bfe4-6ffc2e240a01.png
+2025-04-05 11:31:50 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:/Users/Naveen1/AgenticAI/static/plots#a43f71-f710-48c5-bfe4-6ffc2e240a01.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:/Users/Naveen1/AgenticAI/static/plots#a43f71-f710-48c5-bfe4-6ffc2e240a01.png" }
+    """
+    df = dfs[0]
+    result_df = df[['Full Name', 'Followers count']].copy()
+    return {'type': 'dataframe', 'value': result_df}
+        ```
+2025-04-05 11:31:50 [INFO] Executed in: 8.960996627807617s
+2025-04-05 11:31:52 [INFO] 127.0.0.1 - - [05/Apr/2025 11:31:52] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-05 11:41:26 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\Home.py', reloading
+2025-04-05 11:41:26 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\data_analysis.py', reloading
+2025-04-05 11:41:26 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\llm\\ais_erniebot.py', reloading
+2025-04-05 11:41:26 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\middleware\\base.py', reloading
+2025-04-05 11:41:26 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\parser\\response_parser.py', reloading
+2025-04-05 11:41:26 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\send_email.py', reloading
+2025-04-05 11:41:26 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\test.py', reloading
+2025-04-05 11:41:26 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\util.py', reloading
+2025-04-05 12:31:15 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\logging\\__init__.py', reloading
+2025-04-05 12:31:16 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\encodings\\cp1252.py', reloading
+2025-04-05 12:31:16 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\pandasai\\helpers\\logger.py', reloading
+2025-04-05 12:31:16 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\pandasai\\smart_datalake\\__init__.py', reloading
+2025-04-05 12:31:16 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\pandasai\\agent\\__init__.py', reloading
+2025-04-05 12:31:16 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\flask\\app.py', reloading
+2025-04-05 12:31:16 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\werkzeug\\debug\\__init__.py', reloading
+2025-04-05 12:31:16 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\werkzeug\\serving.py', reloading
+2025-04-05 12:31:16 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\http\\server.py', reloading
+2025-04-05 12:31:16 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\socketserver.py', reloading
+2025-04-05 12:31:16 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\threading.py', reloading
+2025-04-05 12:33:08 [INFO] Question: 
+
+Chat History:
+- assistant: 
+                                    Hello! I'm your AI assistant. How can I help you today? You can:
+                                    
+                                        Ask me questions
+                                        Upload files for analysis
+                                        Request email drafts
+                                        Get research assistance
+                                    
+                                    What would you like to do?
+                                
+what is the excel file about
+2025-04-05 12:33:09 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-05 12:33:09 [INFO] Prompt ID: e9f03e3d-a683-49e1-8b22-e3c72d4d71ac
+2025-04-05 12:33:09 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\pandasai\\helpers\\output_types\\__init__.py', reloading
+2025-04-05 12:33:35 [INFO] Question: 
+
+Chat History:
+- assistant: 
+                                    Hello! I'm your AI assistant. How can I help you today? You can:
+                                    
+                                        Ask me questions
+                                        Upload files for analysis
+                                        Request email drafts
+                                        Get research assistance
+                                    
+                                    What would you like to do?
+                                
+- user: what is the excel file about
+- assistant: Data analysis failed: Failed to fetch
+what is the excel file about
+2025-04-05 12:33:36 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-05 12:33:36 [INFO] Prompt ID: 19ac7074-2698-4c12-84d5-802197334f09
+2025-04-05 12:33:37 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,2950496963,q2plnpb6c@yahoo.com,761.0,49.0,2456608446,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,9241649051,jg_4gjz0v1u@hotmail.com,2566.0,234.0,2246529510,"Abuja, Nigeria",Abuja,NO,YES,
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,1733400179,mm858lgqp3_2@outlook.com,5.0,91.0,2855861457,,,NO,YES,https://www.facebook.c...
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,0480624429,7one3f7@outlook.com,2286.0,33.0,2973043421,,,NO,NO,https://www.espaces-at...
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,6783862421,pe0r654b@zoho.com,2.0,,1145094162,,,NO,YES,
+</dataframe>
+
+<conversation>
+User 1: 
+
+Chat History:
+- assistant: 
+                                    Hello! I'm your AI assistant. How can I help you today? You can:
+                                    
+                                        Ask me questions
+                                        Upload files for analysis
+                                        Request email drafts
+                                        Get research assistance
+                                    
+                                    What would you like to do?
+                                
+- user: what is the excel file about
+- assistant: Data analysis failed: Failed to fetch
+what is the excel file about
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-04-05 12:33:41 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0]
+
+    # Extract basic information about the dataset
+    num_rows, num_cols = df.shape
+    column_names = df.columns.tolist()
+
+    description = (
+        f"The Excel file contains information about Instagram business profiles, "
+        f"likely from the real estate domain, with {num_rows} rows and {num_cols} columns. "
+        f"It includes metadata such as profile name, verification status, follower count, "
+        f"biography, contact details (email, phone), location, business status, and external URL."
+    )
+
+    return {
+        "type": "string",
+        "value": description
+    }
+```
+
+2025-04-05 12:33:41 [INFO] Saving charts to C:/Users/Naveen1/AgenticAI/static/plots\19ac7074-2698-4c12-84d5-802197334f09.png
+2025-04-05 12:33:41 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\pandasai\\helpers\\save_chart.py', reloading
+2025-04-05 12:33:41 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\anaconda3\\envs\\venv_data\\Lib\\site-packages\\pandasai\\helpers\\code_manager.py', reloading
+2025-04-05 12:33:41 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:/Users/Naveen1/AgenticAI/static/plots9ac7074-2698-4c12-84d5-802197334f09.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:/Users/Naveen1/AgenticAI/static/plots9ac7074-2698-4c12-84d5-802197334f09.png" }
+    """
+    df = dfs[0]
+    num_rows, num_cols = df.shape
+    column_names = df.columns.tolist()
+    description = f'The Excel file contains information about Instagram business profiles, likely from the real estate domain, with {num_rows} rows and {num_cols} columns. It includes metadata such as profile name, verification status, follower count, biography, contact details (email, phone), location, business status, and external URL.'
+    return {'type': 'string', 'value': description}
+        ```
+2025-04-05 12:33:41 [INFO] Answer: {'type': 'string', 'value': 'The Excel file contains information about Instagram business profiles, likely from the real estate domain, with 25 rows and 17 columns. It includes metadata such as profile name, verification status, follower count, biography, contact details (email, phone), location, business status, and external URL.'}
+2025-04-05 12:33:41 [INFO] Executed in: 6.042276620864868s
+2025-04-05 12:36:02 [INFO] Question: 
+
+Chat History:
+- assistant: 
+                                    Hello! I'm your AI assistant. How can I help you today? You can:
+                                    
+                                        Ask me questions
+                                        Upload files for analysis
+                                        Request email drafts
+                                        Get research assistance
+                                    
+                                    What would you like to do?
+                                
+what is the excel file about
+2025-04-05 12:36:02 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-05 12:36:02 [INFO] Prompt ID: 2d2a7a28-d61d-4723-a40d-ccfdff324a2d
+2025-04-05 12:36:03 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+Duke Properties,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,5095342656,dukecute3624@gmail.com...,2566.0,234.0,9085875648,"Abuja, Nigeria",Abuja,NO,YES,
+SK Homes,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,0862905976,buildwithskhomes@gmail...,2.0,,1798000350,,,NO,YES,
+IMMOBILIENMAKLER BIELEFELD,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,9404457388,info@kriemelmann-immob...,761.0,49.0,0772774210,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann-immobilien.de/
+Espaces Atypiques Bordeaux - Arcachon - Cap Ferret,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,1361867012,bordeaux@espaces-atypi...,2286.0,33.0,3071634049,,,NO,NO,https://www.espaces-atypiques.com/bordeaux/
+DREAM WALLS REALTORS - RESALE,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,4488384161,dreamwallsrealtors@gma...,5.0,91.0,2116595012,,,NO,YES,https://www.facebook.com/share/19rhugvycC/
+</dataframe>
+
+<conversation>
+User 1: 
+
+Chat History:
+- assistant: 
+                                    Hello! I'm your AI assistant. How can I help you today? You can:
+                                    
+                                        Ask me questions
+                                        Upload files for analysis
+                                        Request email drafts
+                                        Get research assistance
+                                    
+                                    What would you like to do?
+                                
+what is the excel file about
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-04-05 12:36:13 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    
+    df = dfs[0]
+
+    # Step 1: Prepare - Clean column names (optional)
+    df.columns = df.columns.str.strip()
+
+    # Step 2: Process and Analyze
+    summary = (
+        "The Excel file contains Instagram business profile data for 25 accounts across 17 attributes. "
+        "These attributes include profile name, profile link, verification status, follower and following counts, "
+        "biography, contact details (email, phone, address), business/private account status, and external URLs. "
+        "This data can be used to analyze marketing reach, business engagement, and contactability of real estate-related Instagram accounts."
+    )
+
+    return { "type": "string", "value": summary }
+```
+
+2025-04-05 12:36:13 [INFO] Saving charts to C:/Users/Naveen1/AgenticAI/static/plots\2d2a7a28-d61d-4723-a40d-ccfdff324a2d.png
+2025-04-05 12:36:13 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:/Users/Naveen1/AgenticAI/static/plotsd2a7a28-d61d-4723-a40d-ccfdff324a2d.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:/Users/Naveen1/AgenticAI/static/plotsd2a7a28-d61d-4723-a40d-ccfdff324a2d.png" }
+    """
+    df = dfs[0]
+    df.columns = df.columns.str.strip()
+    summary = 'The Excel file contains Instagram business profile data for 25 accounts across 17 attributes. These attributes include profile name, profile link, verification status, follower and following counts, biography, contact details (email, phone, address), business/private account status, and external URLs. This data can be used to analyze marketing reach, business engagement, and contactability of real estate-related Instagram accounts.'
+    return {'type': 'string', 'value': summary}
+        ```
+2025-04-05 12:36:13 [INFO] Answer: {'type': 'string', 'value': 'The Excel file contains Instagram business profile data for 25 accounts across 17 attributes. These attributes include profile name, profile link, verification status, follower and following counts, biography, contact details (email, phone, address), business/private account status, and external URLs. This data can be used to analyze marketing reach, business engagement, and contactability of real estate-related Instagram accounts.'}
+2025-04-05 12:36:13 [INFO] Executed in: 11.652116298675537s
+2025-04-05 12:36:15 [INFO] 127.0.0.1 - - [05/Apr/2025 12:36:15] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-05 12:36:50 [INFO] Question: 
+
+Chat History:
+- assistant: 
+                                    Hello! I'm your AI assistant. How can I help you today? You can:
+                                    
+                                        Ask me questions
+                                        Upload files for analysis
+                                        Request email drafts
+                                        Get research assistance
+                                    
+                                    What would you like to do?
+                                
+- user: what is the excel file about
+- assistant: The Excel file contains Instagram business profile data for 25 accounts across 17 attributes. These attributes include profile name, profile link, verification status, follower and following counts, biography, contact details (email, phone, address), business/private account status, and external URLs. This data can be used to analyze marketing reach, business engagement, and contactability of real estate-related Instagram accounts.
+Create a table with only Full Names and follower count
+2025-04-05 12:36:50 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-05 12:36:50 [INFO] Prompt ID: 0e822205-6da5-4f5d-8bba-807bd9885f57
+2025-04-05 12:36:50 [INFO] Using prompt: 
+You are provided with the following pandas DataFrames:
+
+<dataframe>
+Dataframe dfs[0], with 25 rows and 17 columns.
+This is the metadata of the dataframe dfs[0]:
+Full Name,Profile link,Avatar pic,Followed by viewer,Is verified,Followers count,Following count,Biography,Public email,Posts count,Phone country code,Phone number,City,Address,Is private,Is business,External url
+IMMOBILIENMAKLER BIELE...,https://www.instagram....,https://instagram.fhyd...,No,No,3914.0,944.0,8637181946,0jmt8v_@gmail.com,761.0,49.0,9929531137,"Bielefeld, Germany",Danziger Str. 64,NO,YES,http://www.kriemelmann...
+Espaces Atypiques Bord...,https://www.instagram....,https://instagram.fhyd...,No,No,11658.0,1206.0,4193864251,2mgf8g1na@icloud.com,2286.0,33.0,3930082600,,,NO,NO,https://www.espaces-at...
+SK Homes...,https://www.instagram....,https://instagram.fhyd...,No,No,0.0,0.0,6729595849,uu_f3p7her@aol.com,2.0,,7344282937,,,NO,YES,
+Duke Properties...,https://www.instagram....,https://instagram.fhyd...,No,No,6849.0,984.0,9008106067,k70kzvnp@icloud.com,2566.0,234.0,6215140299,"Abuja, Nigeria",Abuja,NO,YES,
+DREAM WALLS REALTORS -...,https://www.instagram....,https://instagram.fhyd...,No,No,14.0,1.0,7000245963,gqotjrp4-@yahoo.com,5.0,91.0,8202952108,,,NO,YES,https://www.facebook.c...
+</dataframe>
+
+<conversation>
+User 1: 
+
+Chat History:
+- assistant: 
+                                    Hello! I'm your AI assistant. How can I help you today? You can:
+                                    
+                                        Ask me questions
+                                        Upload files for analysis
+                                        Request email drafts
+                                        Get research assistance
+                                    
+                                    What would you like to do?
+                                
+- user: what is the excel file about
+- assistant: The Excel file contains Instagram business profile data for 25 accounts across 17 attributes. These attributes include profile name, profile link, verification status, follower and following counts, biography, contact details (email, phone, address), business/private account status, and external URLs. This data can be used to analyze marketing reach, business engagement, and contactability of real estate-related Instagram accounts.
+Create a table with only Full Names and follower count
+</conversation>
+
+This is the initial python code to be updated:
+```python
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+```
+
+Using the provided dataframes (`dfs`), update the python code based on the last question in the conversation.
+
+Updated code:
+
+2025-04-05 12:36:54 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0]
+
+    # Extract only 'Full Name' and 'Followers count' columns
+    result_df = df[['Full Name', 'Followers count']]
+
+    return {
+        "type": "dataframe",
+        "value": result_df
+    }
+```
+
+2025-04-05 12:36:54 [INFO] Saving charts to C:/Users/Naveen1/AgenticAI/static/plots\0e822205-6da5-4f5d-8bba-807bd9885f57.png
+2025-04-05 12:36:54 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    '\n    Analyze the data\n    1. Prepare: Preprocessing and cleaning data if necessary\n    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)\n    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:/Users/Naveen1/AgenticAI/static/plots\x00e822205-6da5-4f5d-8bba-807bd9885f57.png and do not show the chart.)\n    At the end, return a dictionary of:\n    - type (possible values "string", "number", "dataframe", "plot")\n    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)\n    Examples: \n        { "type": "string", "value": "The highest salary is $9,000." }\n        or\n        { "type": "number", "value": 125 }\n        or\n        { "type": "dataframe", "value": pd.DataFrame({...}) }\n        or\n        { "type": "plot", "value": "C:/Users/Naveen1/AgenticAI/static/plots\x00e822205-6da5-4f5d-8bba-807bd9885f57.png" }\n    '
+    df = dfs[0]
+    result_df = df[['Full Name', 'Followers count']]
+    return {'type': 'dataframe', 'value': result_df}
+        ```
+2025-04-05 12:36:54 [INFO] Executed in: 4.420217752456665s
+2025-04-05 12:36:56 [INFO] 127.0.0.1 - - [05/Apr/2025 12:36:56] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-05 12:37:09 [INFO] Question: 
+
+Chat History:
+- assistant: 
+                                    Hello! I'm your AI assistant. How can I help you today? You can:
+                                    
+                                        Ask me questions
+                                        Upload files for analysis
+                                        Request email drafts
+                                        Get research assistance
+                                    
+                                    What would you like to do?
+                                
+- user: what is the excel file about
+- assistant: The Excel file contains Instagram business profile data for 25 accounts across 17 attributes. These attributes include profile name, profile link, verification status, follower and following counts, biography, contact details (email, phone, address), business/private account status, and external URLs. This data can be used to analyze marketing reach, business engagement, and contactability of real estate-related Instagram accounts.
+- user: Create a table with only Full Names and follower count
+- assistant: Analysis results for TEST.xlsx are ready in the Data panel.
+Create a bar graph with it now
+2025-04-05 12:37:09 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-05 12:37:09 [INFO] Prompt ID: c4aa8c0c-2c11-489e-b11f-792a30ea4459
+2025-04-05 12:37:14 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0]
+
+    # Prepare: Select only necessary columns and drop rows with missing follower counts
+    plot_df = df[['Full Name', 'Followers count']].dropna()
+
+    # Convert follower count to numeric if not already
+    plot_df['Followers count'] = pd.to_numeric(plot_df['Followers count'], errors='coerce')
+    plot_df = plot_df.dropna(subset=['Followers count'])
+
+    # Sort by followers count for better visualization
+    plot_df = plot_df.sort_values(by='Followers count', ascending=False)
+
+    # Create the bar graph
+    plt.figure(figsize=(12, 6))
+    plt.bar(plot_df['Full Name'], plot_df['Followers count'], color='skyblue')
+    plt.xlabel('Full Name')
+    plt.ylabel('Followers Count')
+    plt.title('Instagram Followers Count by Profile')
+    plt.xticks(rotation=90)
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-04-05 12:37:14 [INFO] Saving charts to C:/Users/Naveen1/AgenticAI/static/plots\c4aa8c0c-2c11-489e-b11f-792a30ea4459.png
+2025-04-05 12:37:15 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:/Users/Naveen1/AgenticAI/static/plots\\c4aa8c0c-2c11-489e-b11f-792a30ea4459.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:/Users/Naveen1/AgenticAI/static/plots\\c4aa8c0c-2c11-489e-b11f-792a30ea4459.png" }
+    """
+    df = dfs[0]
+    plot_df = df[['Full Name', 'Followers count']].dropna()
+    plot_df['Followers count'] = pd.to_numeric(plot_df['Followers count'], errors='coerce')
+    plot_df = plot_df.dropna(subset=['Followers count'])
+    plot_df = plot_df.sort_values(by='Followers count', ascending=False)
+    plt.figure(figsize=(12, 6))
+    plt.bar(plot_df['Full Name'], plot_df['Followers count'], color='skyblue')
+    plt.xlabel('Full Name')
+    plt.ylabel('Followers Count')
+    plt.title('Instagram Followers Count by Profile')
+    plt.xticks(rotation=90)
+    plt.tight_layout()
+    plt.savefig('C:/Users/Naveen1/AgenticAI/static/plots\\c4aa8c0c-2c11-489e-b11f-792a30ea4459.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'C:/Users/Naveen1/AgenticAI/static/plots\\c4aa8c0c-2c11-489e-b11f-792a30ea4459.png'}
+        ```
+2025-04-05 12:37:18 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/Naveen1/AgenticAI/static/plots\\c4aa8c0c-2c11-489e-b11f-792a30ea4459.png'}
+2025-04-05 12:37:18 [INFO] Executed in: 8.299904346466064s
+2025-04-05 12:37:20 [INFO] 127.0.0.1 - - [05/Apr/2025 12:37:20] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-05 12:37:20 [INFO] 127.0.0.1 - - [05/Apr/2025 12:37:20] "GET /static/plots/432c528a-c26b-477e-9e57-2d1e9eab8f9f.png HTTP/1.1" 200 -
+2025-04-05 12:41:52 [INFO] Question: 
+
+Chat History:
+- assistant: 
+                                    Hello! I'm your AI assistant. How can I help you today? You can:
+                                    
+                                        Ask me questions
+                                        Upload files for analysis
+                                        Request email drafts
+                                        Get research assistance
+                                    
+                                    What would you like to do?
+                                
+make a bar graph with the follower count and names from the excel file
+2025-04-05 12:41:52 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-05 12:41:52 [INFO] Prompt ID: c822e121-fae9-4ee8-a77b-234bcfb8fbd6
+2025-04-05 12:41:58 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    # Step 1: Prepare
+    df = dfs[0].copy()
+    
+    # Ensure the 'Full Name' and 'Followers count' columns are present
+    if 'Full Name' not in df.columns or 'Followers count' not in df.columns:
+        return { "type": "string", "value": "Required columns not found in the dataframe." }
+
+    # Step 2: Process
+    df = df[['Full Name', 'Followers count']].dropna()
+    
+    # Convert 'Followers count' to numeric (if not already)
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    
+    # Drop rows with NaN follower counts
+    df = df.dropna(subset=['Followers count'])
+
+    # Sort by follower count descending
+    df_sorted = df.sort_values(by='Followers count', ascending=False)
+
+    # Step 3: Analyze (Plotting)
+    plt.figure(figsize=(12, 6))
+    plt.bar(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.title('Follower Count by Full Name')
+    plt.xlabel('Full Name')
+    plt.ylabel('Follower Count')
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+
+    # Save the chart
+    chart_path = 'temp_chart.png'
+    plt.savefig(chart_path)
+    plt.close()
+
+    return { "type": "plot", "value": chart_path }
+```
+
+2025-04-05 12:41:58 [INFO] Saving charts to C:/Users/Naveen1/AgenticAI/static/plots\c822e121-fae9-4ee8-a77b-234bcfb8fbd6.png
+2025-04-05 12:41:58 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:/Users/Naveen1/AgenticAI/static/plots\\c822e121-fae9-4ee8-a77b-234bcfb8fbd6.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:/Users/Naveen1/AgenticAI/static/plots\\c822e121-fae9-4ee8-a77b-234bcfb8fbd6.png" }
+    """
+    df = dfs[0].copy()
+    if 'Full Name' not in df.columns or 'Followers count' not in df.columns:
+        return {'type': 'string', 'value': 'Required columns not found in the dataframe.'}
+    df = df[['Full Name', 'Followers count']].dropna()
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+    df_sorted = df.sort_values(by='Followers count', ascending=False)
+    plt.figure(figsize=(12, 6))
+    plt.bar(df_sorted['Full Name'], df_sorted['Followers count'], color='skyblue')
+    plt.title('Follower Count by Full Name')
+    plt.xlabel('Full Name')
+    plt.ylabel('Follower Count')
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+    chart_path = 'C:/Users/Naveen1/AgenticAI/static/plots\\c822e121-fae9-4ee8-a77b-234bcfb8fbd6.png'
+    plt.savefig(chart_path)
+    plt.close()
+    return {'type': 'plot', 'value': chart_path}
+        ```
+2025-04-05 12:41:59 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/Naveen1/AgenticAI/static/plots\\c822e121-fae9-4ee8-a77b-234bcfb8fbd6.png'}
+2025-04-05 12:41:59 [INFO] Executed in: 7.078030824661255s
+2025-04-05 12:42:01 [INFO] 127.0.0.1 - - [05/Apr/2025 12:42:01] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-05 12:42:01 [INFO] 127.0.0.1 - - [05/Apr/2025 12:42:01] "GET /static/plots/c6fd5378-e026-4346-aff4-aed280fe2c0f.png HTTP/1.1" 200 -
+2025-04-05 12:42:30 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\Home.py', reloading
+2025-04-05 12:42:30 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\data_analysis.py', reloading
+2025-04-05 12:42:30 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\llm\\ais_erniebot.py', reloading
+2025-04-05 12:42:30 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\middleware\\base.py', reloading
+2025-04-05 12:42:30 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\parser\\response_parser.py', reloading
+2025-04-05 12:42:30 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\send_email.py', reloading
+2025-04-05 12:42:30 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\test.py', reloading
+2025-04-05 12:42:30 [INFO]  * Detected change in 'C:\\Users\\Naveen1\\AgenticAI\\util.py', reloading
+2025-04-05 12:45:38 [INFO] Question: 
+
+Chat History:
+- assistant: 
+                                    Hello! I'm your AI assistant. How can I help you today? You can:
+                                    
+                                        Ask me questions
+                                        Upload files for analysis
+                                        Request email drafts
+                                        Get research assistance
+                                    
+                                    What would you like to do?
+                                
+make a bar graph with the follower count and names from the excel file
+2025-04-05 12:45:39 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-05 12:45:39 [INFO] Prompt ID: 9229f213-67cb-42d2-83d4-f3d2eacaaf32
+2025-04-05 12:45:46 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    df = dfs[0]
+
+    # Step 1: Prepare - ensure relevant columns are clean and not null
+    df = df[['Full Name', 'Followers count']].dropna()
+
+    # Step 2: Process - convert follower counts to numeric (if not already)
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+
+    # Optional: Sort by follower count descending for better readability
+    df = df.sort_values(by='Followers count', ascending=False)
+
+    # Step 3: Analyze - plot the bar chart
+    plt.figure(figsize=(10, 6))
+    plt.barh(df['Full Name'], df['Followers count'], color='skyblue')
+    plt.xlabel('Follower Count')
+    plt.ylabel('Full Name')
+    plt.title('Instagram Follower Count by Account')
+    plt.gca().invert_yaxis()  # Highest first
+    plt.tight_layout()
+    plt.savefig('temp_chart.png')
+    plt.close()
+
+    return { "type": "plot", "value": "temp_chart.png" }
+```
+
+2025-04-05 12:45:46 [INFO] Saving charts to C:/Users/Naveen1/AgenticAI/static/plots\9229f213-67cb-42d2-83d4-f3d2eacaaf32.png
+2025-04-05 12:45:46 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:/Users/Naveen1/AgenticAI/static/plots\\9229f213-67cb-42d2-83d4-f3d2eacaaf32.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:/Users/Naveen1/AgenticAI/static/plots\\9229f213-67cb-42d2-83d4-f3d2eacaaf32.png" }
+    """
+    df = dfs[0]
+    df = df[['Full Name', 'Followers count']].dropna()
+    df['Followers count'] = pd.to_numeric(df['Followers count'], errors='coerce')
+    df = df.dropna(subset=['Followers count'])
+    df = df.sort_values(by='Followers count', ascending=False)
+    plt.figure(figsize=(10, 6))
+    plt.barh(df['Full Name'], df['Followers count'], color='skyblue')
+    plt.xlabel('Follower Count')
+    plt.ylabel('Full Name')
+    plt.title('Instagram Follower Count by Account')
+    plt.gca().invert_yaxis()
+    plt.tight_layout()
+    plt.savefig('C:/Users/Naveen1/AgenticAI/static/plots\\9229f213-67cb-42d2-83d4-f3d2eacaaf32.png')
+    plt.close()
+    return {'type': 'plot', 'value': 'C:/Users/Naveen1/AgenticAI/static/plots\\9229f213-67cb-42d2-83d4-f3d2eacaaf32.png'}
+        ```
+2025-04-05 12:45:48 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/Naveen1/AgenticAI/static/plots\\9229f213-67cb-42d2-83d4-f3d2eacaaf32.png'}
+2025-04-05 12:45:49 [INFO] Executed in: 10.034868717193604s
+2025-04-05 12:45:51 [INFO] 127.0.0.1 - - [05/Apr/2025 12:45:51] "POST /data_analysis_action HTTP/1.1" 200 -
+2025-04-05 12:45:51 [INFO] 127.0.0.1 - - [05/Apr/2025 12:45:51] "GET /static/plots/1e92feb9-f953-4df0-9ed0-27a739ab93d2.png HTTP/1.1" 200 -
+2025-04-05 12:46:25 [INFO] Question: 
+
+Chat History:
+- assistant: 
+                                    Hello! I'm your AI assistant. How can I help you today? You can:
+                                    
+                                        Ask me questions
+                                        Upload files for analysis
+                                        Request email drafts
+                                        Get research assistance
+                                    
+                                    What would you like to do?
+                                
+- user: make a bar graph with the follower count and names from the excel file
+- assistant:                                                                                                 Generated plot for TEST.xlsx.                   
+create a table with only Full Name and follower count
+2025-04-05 12:46:25 [INFO] Running PandasAI with langchain_openai-chat LLM...
+2025-04-05 12:46:25 [INFO] Prompt ID: 9eb0d8e2-5eaf-4e9f-b218-a182ea2535f7
+2025-04-05 12:46:31 [INFO] Code generated:
+```
+# TODO import all the dependencies required
+import pandas as pd
+
+def analyze_data(dfs: list[pd.DataFrame]) -> dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in temp_chart.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "temp_chart.png" }
+    """
+    # Step 1: Extract the first DataFrame
+    df = dfs[0]
+
+    # Step 2: Select only 'Full Name' and 'Followers count'
+    result_df = df[['Full Name', 'Followers count']].copy()
+
+    # Step 3: Return the result as a dataframe
+    return {
+        "type": "dataframe",
+        "value": result_df
+    }
+```
+
+2025-04-05 12:46:31 [INFO] Saving charts to C:/Users/Naveen1/AgenticAI/static/plots\9eb0d8e2-5eaf-4e9f-b218-a182ea2535f7.png
+2025-04-05 12:46:31 [INFO] 
+Code running:
+```
+def analyze_data(dfs: list[pd.DataFrame]) ->dict:
+    """
+    Analyze the data
+    1. Prepare: Preprocessing and cleaning data if necessary
+    2. Process: Manipulating data for analysis (grouping, filtering, aggregating, etc.)
+    3. Analyze: Conducting the actual analysis (if the user asks to plot a chart save it to an image in C:/Users/Naveen1/AgenticAI/static/plots\\9eb0d8e2-5eaf-4e9f-b218-a182ea2535f7.png and do not show the chart.)
+    At the end, return a dictionary of:
+    - type (possible values "string", "number", "dataframe", "plot")
+    - value (can be a string, a dataframe or the path of the plot, NOT a dictionary)
+    Examples: 
+        { "type": "string", "value": "The highest salary is $9,000." }
+        or
+        { "type": "number", "value": 125 }
+        or
+        { "type": "dataframe", "value": pd.DataFrame({...}) }
+        or
+        { "type": "plot", "value": "C:/Users/Naveen1/AgenticAI/static/plots\\9eb0d8e2-5eaf-4e9f-b218-a182ea2535f7.png" }
+    """
+    df = dfs[0]
+    result_df = df[['Full Name', 'Followers count']].copy()
+    return {'type': 'dataframe', 'value': result_df}
+        ```
+2025-04-05 12:46:31 [INFO] Executed in: 5.610910415649414s
+2025-04-05 12:46:33 [INFO] 127.0.0.1 - - [05/Apr/2025 12:46:33] "POST /data_analysis_action HTTP/1.1" 200 -
