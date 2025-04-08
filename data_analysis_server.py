@@ -14,7 +14,7 @@ from pandasai.smart_dataframe import SmartDataframe
 from parser.response_parser import CustomResponseParser
 from pandasai.callbacks import StdoutCallback
 from time import sleep
-app = Flask(__name__, static_folder='static')
+app = Flask(__name__, template_folder='templates', static_folder='static')
 CORS(app)  # Enable CORS for all routes
 import json
 PANDASAI_AVAILABLE = True
@@ -22,6 +22,19 @@ PANDASAI_AVAILABLE = True
 # Create directories if they don't exist
 os.makedirs('uploads', exist_ok=True)
 os.makedirs('static/plots', exist_ok=True)  # Only need plots directory for saving charts
+
+@app.route('/')
+def index():
+    return jsonify({'status': 'Data Analysis Server is running', 'port': 5001})
+
+@app.route('/ui')
+def ui():
+    # Serve the same template as the main backend for consistency
+    try:
+        from flask import render_template
+        return render_template('index.html')
+    except Exception as e:
+        return jsonify({'error': f'Could not render template: {str(e)}'}), 500
 
 @app.route('/data_analysis_action', methods=['POST'])
 def data_analysis_action():
@@ -33,8 +46,8 @@ def data_analysis_action():
 
     file = request.files['file']
     query = request.form['message']
-    openai_api_key = "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"
-    
+    openai_api_key = "AIzaSyAXztG7FmeaMKq0hwFqr2gV7Dj5ia4XNxQ"
+
     if not openai_api_key:
         return jsonify({'success': False, 'error': 'Missing OpenAI API key. Please set OPENAI_API_KEY environment variable.'}), 400
 
@@ -68,7 +81,7 @@ def data_analysis_action():
             if df is None or df.empty:
                 return jsonify({'success': False, 'error': 'Could not read or file is empty.'}), 400
 
-            llm = LangchainLLM(ChatOpenAI(openai_api_key=openai_api_key,openai_api_base="https://openrouter.ai/api/v1", model_name="openai/chatgpt-4o-latest"))
+            llm = LangchainLLM(ChatOpenAI(openai_api_key=openai_api_key,openai_api_base="https://generativelanguage.googleapis.com/v1beta/openai", model_name="gemini-2.5-pro-preview-03-25"))
             config = Config(
                 llm=llm,
                 callback=StdoutCallback(),
@@ -162,5 +175,14 @@ def data_analysis_action():
 
     return jsonify({'success': False, 'error': 'File processing failed'}), 500
 
+@app.route('/static/<path:filename>')
+def serve_static(filename):
+    return app.send_static_file(filename)
+
+@app.route('/static/plots/<path:filename>')
+def serve_plot(filename):
+    return app.send_static_file(f'plots/{filename}')
+
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5001)
+    print("Starting Data Analysis Server on http://127.0.0.1:5001")
+    app.run(debug=True, host='127.0.0.1', port=5001)
