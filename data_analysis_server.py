@@ -46,7 +46,7 @@ def data_analysis_action():
 
     file = request.files['file']
     query = request.form['message']
-    openai_api_key = "AIzaSyAXztG7FmeaMKq0hwFqr2gV7Dj5ia4XNxQ"
+    openai_api_key=
 
     if not openai_api_key:
         return jsonify({'success': False, 'error': 'Missing OpenAI API key. Please set OPENAI_API_KEY environment variable.'}), 400
